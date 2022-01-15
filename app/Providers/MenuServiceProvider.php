@@ -40,32 +40,32 @@ class MenuServiceProvider extends ServiceProvider
                                 'icon'=>'fa-th-large'
                             ],
                             [
-                                'route'=>'pelayanan',
-                                'path'=>'pelayanan',
+                                'route'=>'admin.pelayanan',
+                                'path'=>'admin.pelayanan.*',
                                 'title'=>'Pelayanan',
                                 'icon'=>'fa-people-arrows'
                             ],
                             [
-                                'route'=>'pertanyaan',
-                                'path'=>'pertanyaan',
+                                'route'=>'admin.pertanyaan',
+                                'path'=>'admin.pertanyaan.*',
                                 'title'=>'Daftar Pertanyaan',
                                 'icon'=>'fa-clipboard-list'
                             ],
                             [
-                                'route'=>'klien',
-                                'path'=>'klien',
+                                'route'=>'admin.klien',
+                                'path'=>'admin.klien.*',
                                 'title'=>'Data Pengunjung',
                                 'icon'=>'fa-users'
                             ],
                             [
-                                'route'=>'akun',
-                                'path'=>'akun',
+                                'route'=>'admin.akun',
+                                'path'=>'admin.akun.*',
                                 'title'=>'Akun User',
                                 'icon'=>'fa-user-friends'
                             ],
                             [
-                                'route'=>'pengaturan',
-                                'path'=>'pengaturan',
+                                'route'=>'admin.pengaturan',
+                                'path'=>'admin.pengaturan.*',
                                 'title'=>'Pengaturan',
                                 'icon'=>'fa-tools'
                             ],
