@@ -114,7 +114,7 @@ class klienSeeder extends Seeder
                     'refs' => [
                         'antrian' => $p->refs['kode'] . "00" . $i,
                         'daftar' => "online",
-                        'status' => "",
+                        'status' => "menunggu",
                     ]
                 ]);
             }
@@ -126,7 +126,7 @@ class klienSeeder extends Seeder
                 'refs' => [
                     'antrian' => $p->refs['kode'] . "006",
                     'daftar' => "onsite",
-                    'status' => "",
+                    'status' => "menunggu",
                 ]
             ]);
 

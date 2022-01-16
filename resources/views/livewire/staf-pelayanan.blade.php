@@ -54,7 +54,7 @@
                 <div class="w-24">
                     <div class="text-xs leading-3 text-center">status:</div>
                     <div class="px-2 text-sm leading-tight text-center border rounded-full {{$item->refs['status']=='selesai'?' bg-sky-500':''}}">
-                        {{ $item->refs['status']!=''?$item->refs['status']:'menunggu' }}
+                        {{ $item->refs['status']}}
                     </div>
                 </div>
 
