@@ -41,31 +41,31 @@ class MenuServiceProvider extends ServiceProvider
                             ],
                             [
                                 'route'=>'admin.pelayanan',
-                                'path'=>'admin.pelayanan.*',
+                                'path'=>'admin.pelayanan*',
                                 'title'=>'Pelayanan',
                                 'icon'=>'fa-people-arrows'
                             ],
                             [
                                 'route'=>'admin.pertanyaan',
-                                'path'=>'admin.pertanyaan.*',
+                                'path'=>'admin.pertanyaan*',
                                 'title'=>'Daftar Pertanyaan',
                                 'icon'=>'fa-clipboard-list'
                             ],
                             [
                                 'route'=>'admin.klien',
-                                'path'=>'admin.klien.*',
+                                'path'=>'admin.klien*',
                                 'title'=>'Data Pengunjung',
                                 'icon'=>'fa-users'
                             ],
                             [
                                 'route'=>'admin.akun',
-                                'path'=>'admin.akun.*',
+                                'path'=>'admin.akun*',
                                 'title'=>'Akun User',
                                 'icon'=>'fa-user-friends'
                             ],
                             [
                                 'route'=>'admin.pengaturan',
-                                'path'=>'admin.pengaturan.*',
+                                'path'=>'admin.pengaturan*',
                                 'title'=>'Pengaturan',
                                 'icon'=>'fa-tools'
                             ],
@@ -75,7 +75,7 @@ class MenuServiceProvider extends ServiceProvider
                         $router->push(
                             [
                                 'route'=>'dashboard',
-                                'path'=>'dashboard',
+                                'path'=>'dashboard*',
                                 'title'=>'Dashboard',
                                 'icon'=>'fa-th-large'
                             ],

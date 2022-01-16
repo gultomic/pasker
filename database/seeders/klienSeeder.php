@@ -77,6 +77,9 @@ class klienSeeder extends Seeder
                     'pelayanan_id' => $p->id,
                     'klien_id' => rand(1, $klien),
                     'tanggal' => Carbon::now()->format('Y-m-d'),
+                    'refs' => [
+                        'antrian' => ""
+                    ]
                 ]);
             }
             // echo "\n";

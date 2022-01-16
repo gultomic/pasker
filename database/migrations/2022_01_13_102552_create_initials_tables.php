@@ -51,7 +51,7 @@ class CreateInitialsTables extends Migration
         Schema::create('pelayanan_jadwal', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->unsignedBigInteger('pelayanan_id');
-            $table->unsignedBigInteger('klien_id');
+            $table->unsignedBigInteger('klien_id')->nullable();
             $table->unsignedBigInteger('pelaksana_id')->nullable();
             $table->date('tanggal');
             $table->json('refs')->nullable();

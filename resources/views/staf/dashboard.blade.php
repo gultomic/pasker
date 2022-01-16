@@ -33,10 +33,11 @@
                         </div>
                     </div>
 
-                    <div>
-                        @foreach ($item->antrianHariIni as $a)
-                            {{-- <div>{{ $a->refs['antrian'] }} - {{ $a->pengunjung->name }}</div> --}}
-                        @endforeach
+                    <div class="mb-2">
+                        <a href="{{ route('dashboard.pelayanan', ['id' => $item->id]) }}"
+                            class="block py-1 text-center bg-gray-500 border border-green-400 rounded-full hover:bg-gray-600">
+                            masuk untuk memulai pelayanan
+                        </a>
                     </div>
 
 
@@ -51,5 +52,4 @@
             </x-card-content>
         @endforeach
     </div>
-
 </x-app-layout>

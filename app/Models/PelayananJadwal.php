@@ -17,6 +17,7 @@ class PelayananJadwal extends Model
     // protected $fillable = [];
     protected $casts = [
         'refs' => AsCollection::class,
+        'tanggal' => 'date',
         'created_at' => 'datetime:Y-m-d H:i:s',
         'updated_at' => 'datetime:Y-m-d H:i:s',
         'deleted_at' => 'datetime:Y-m-d H:i:s',
@@ -34,5 +35,12 @@ class PelayananJadwal extends Model
         return \Carbon\Carbon::parse($value)
             ->timezone('Asia/Jakarta')
             ->format('Y-m-d H:i:s');
+    }
+
+    public function getTanggalAttribute($value)
+    {
+        return \Carbon\Carbon::parse($value)
+            ->timezone('Asia/Jakarta')
+            ->format('Y-m-d');
     }
 }
