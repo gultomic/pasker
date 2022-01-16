@@ -12,24 +12,37 @@
                 </x-slot>
 
                 <x-slot name="contentSection">
-                    <div class="flex justify-between pb-4 -mt-2">
-                        <div class="px-2 border rounded-md">
-                            <div>total antrian:</div>
+                    <div class="grid grid-cols-4 gap-2 pb-4 -mt-2">
+                        <div class="px-1 border rounded-md">
+                            <div>terdaftar:</div>
                             <div>
                                 {{ $item->antrianHariIni->count() }}
                             </div>
                         </div>
 
-                        <div class="px-2 border rounded-md">
-                            <div>limit antrian:</div>
+                        <div class="px-1 border rounded-md">
+                            <div>limit:</div>
                             <div>
                                 {{ $item->refs['antrian'] }}
                             </div>
                         </div>
 
-                        <div class="px-2 border rounded-md">
-                            <div>nomor antrian:</div>
-
+                        <div class="px-1 border rounded-md">
+                            <div>antrian:</div>
+                            <div>
+                                {{ $item->antrianHariIni()->where('refs->antrian', '!=', "")->count() }}
+                            </div>
+                        </div>
+                        <div class="px-1 border rounded-md">
+                            <div>dilayani:</div>
+                            <div>
+                                {{
+                                    $item->antrianHariIni()
+                                        ->where('refs->antrian', '!=', "")
+                                        ->where('pelaksana_id', '!=', null)
+                                        ->count()
+                                }}
+                            </div>
                         </div>
                     </div>
 

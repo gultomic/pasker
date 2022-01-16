@@ -18,7 +18,7 @@ class klienSeeder extends Seeder
      */
     public function run()
     {
-        $this->klien();
+        // $this->klien();
         $this->jadwal();
         $this->antrian();
     }
@@ -47,7 +47,6 @@ class klienSeeder extends Seeder
         $w = Carbon::now()->subDays(7)->startOfWeek();
         for ($i=1; $i <= 5 ; $i++) {
             foreach ($pel as $p) {
-                // $a = $p->refs['antrian'];
                 for ($n=1; $n <= $p->refs['antrian'] ; $n++) {
                     PJ::create([
                         'pelayanan_id' => $p->id,
@@ -70,9 +69,8 @@ class klienSeeder extends Seeder
         $klien = Klien::count();
 
         foreach ($pel as $p) {
-            // echo $p->refs['antrian'] . "\n";
-            for ($n=1; $n <= $p->refs['antrian'] ; $n++) {
-                // echo $n . " ";
+            $blank = $p->refs['antrian'] - 7;
+            for ($n=1; $n <= $blank ; $n++) {
                 PJ::create([
                     'pelayanan_id' => $p->id,
                     'klien_id' => rand(1, $klien),
@@ -82,7 +80,56 @@ class klienSeeder extends Seeder
                     ]
                 ]);
             }
-            // echo "\n";
+
+            // ADA TOKEN
+            PJ::create([ // **SELESAI DILAYANI
+                'pelayanan_id' => $p->id,
+                'klien_id' => rand(1, $klien),
+                'pelaksana_id' => 3,
+                'tanggal' => Carbon::now()->format('Y-m-d'),
+                'refs' => [
+                    'antrian' => $p->refs['kode'] . "001",
+                    'daftar' => "online",
+                    'status' => "selesai",
+                ]
+            ]);
+
+            PJ::create([ // **SEDANG DILAYANI
+                'pelayanan_id' => $p->id,
+                'klien_id' => rand(1, $klien),
+                'pelaksana_id' => 3,
+                'tanggal' => Carbon::now()->format('Y-m-d'),
+                'refs' => [
+                    'antrian' => $p->refs['kode'] . "001",
+                    'daftar' => "online",
+                    'status' => "berjalan",
+                ]
+            ]);
+
+            for ($i=3; $i <= 5 ; $i++) {
+                PJ::create([
+                    'pelayanan_id' => $p->id,
+                    'klien_id' => rand(30, $klien),
+                    'tanggal' => Carbon::now()->format('Y-m-d'),
+                    'refs' => [
+                        'antrian' => $p->refs['kode'] . "00" . $i,
+                        'daftar' => "online",
+                        'status' => "",
+                    ]
+                ]);
+            }
+            // DAFTAR ONSITE
+            PJ::create([
+                'pelayanan_id' => $p->id,
+                'klien_id' => rand(100, $klien),
+                'tanggal' => Carbon::now()->format('Y-m-d'),
+                'refs' => [
+                    'antrian' => $p->refs['kode'] . "006",
+                    'daftar' => "onsite",
+                    'status' => "",
+                ]
+            ]);
+
         }
     }
 }
