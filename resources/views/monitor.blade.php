@@ -1,3 +1,5 @@
+@section('title', $title)
+
 <x-public-layout>
     <div class="overflow-hidden bg-gray-800 shadow bg-opacity-80 sm:rounded-xl">
         <div class="grid grid-cols-1 md:grid-cols-2">
@@ -8,8 +10,8 @@
                             {{ $item }}
                         </div>
 
-                        <div id="loket_{{ $key }}" class="pt-3 font-mono font-black leading-9 text-white text-7xl"></div>
-                        <div class="pt-1 text-lg font-semibold truncate">adamhawa dan keturunannya.</div>
+                        <div id="loket_{{ $key }}" class="h-12 pt-3 font-mono font-black leading-9 text-white text-7xl"></div>
+                        <div id="name_{{ $key }}" class="p-1 text-lg font-semibold truncate"></div>
                     </div>
                 @endforeach
             </div>
@@ -37,6 +39,7 @@
             Echo.channel('QueuesEvent')
                 .listen('QueuesService', (e) => {
                     document.querySelector(`#loket_${e.collection.index}`).innerHTML = e.collection.token
+                    document.querySelector(`#name_${e.collection.index}`).innerHTML = e.collection.name
                 })
         </script>
     @endpush

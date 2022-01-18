@@ -5,12 +5,14 @@ use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return view('welcome', [
+        'title' => 'Beranda',
         'collection' => App\Models\Pelayanan::latest()->get()
     ]);
 })->name('home');
 
 Route::get('/monitor', function () {
     return view('monitor',[
+        'title' => 'Signane',
         'loket' => App\Models\Config::where('title', 'loket_pelayanan')
             ->first()
             ->refs

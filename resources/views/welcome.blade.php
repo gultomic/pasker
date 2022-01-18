@@ -1,3 +1,5 @@
+@section('title', $title)
+
 <x-public-layout>
     <div class="overflow-hidden bg-gray-800 shadow bg-opacity-80 sm:rounded-xl text-slate-300">
         <div class="grid grid-cols-1 md:grid-cols-3">
