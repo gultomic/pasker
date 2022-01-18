@@ -40,10 +40,16 @@ class StafPelayanan extends Component
         $item->save();
 
         if($act == 'panggil') {
+            ($item->klien_id != null)
+                ? $name = $item->pengunjung->name
+                : $name = '---';
+
             $keys = array_keys($this->loketList->toArray(), $this->loketAktif);
+
             event(new QueuesService([
                 'index' => $keys[0],
                 'token' => $item->refs['antrian'],
+                'name' => $name,
             ]));
         }
     }
