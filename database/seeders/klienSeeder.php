@@ -18,7 +18,7 @@ class klienSeeder extends Seeder
      */
     public function run()
     {
-        // $this->klien();
+        $this->klien();
         $this->jadwal();
         $this->antrian();
     }
@@ -100,7 +100,7 @@ class klienSeeder extends Seeder
                 'pelaksana_id' => 3,
                 'tanggal' => Carbon::now()->format('Y-m-d'),
                 'refs' => [
-                    'antrian' => $p->refs['kode'] . "001",
+                    'antrian' => $p->refs['kode'] . "002",
                     'daftar' => "online",
                     'status' => "berjalan",
                 ]

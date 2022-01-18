@@ -18,7 +18,7 @@
 
         @livewireStyles
     </head>
-    <body class="antialiased bg-teal-900">
+    <body class="antialiased bg-emerald-800">
         <div class="flex min-h-screen"
             x-data="mainFrame()"
             x-on:keydown.escape="showModal = false"
@@ -35,7 +35,7 @@
                         <button type="button"
                             x-on:click="toggleSidebar"
                             class="hidden w-8 h-8 ml-1 rounded-full hover:bg-opacity-25 hover:bg-green-300 lg:block">
-                            <span class="text-lg text-lime-300 fas" :class="fullSidebar?'fa-angle-double-left':'fa-angle-double-right'"></span>
+                            <span class="text-xs text-lime-300 fas" :class="fullSidebar?'fa-ellipsis-v':'fa-list-ul'"></span>
                         </button>
 
                         <div class="pl-3 my-auto">
