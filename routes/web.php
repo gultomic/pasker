@@ -4,8 +4,18 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome', [
+        'collection' => App\Models\Pelayanan::latest()->get()
+    ]);
 })->name('home');
+
+Route::get('/monitor', function () {
+    return view('monitor',[
+        'loket' => App\Models\Config::where('title', 'loket_pelayanan')
+            ->first()
+            ->refs
+    ]);
+})->name('monitor');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth'])
