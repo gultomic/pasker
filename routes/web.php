@@ -2,12 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RegistrationController;
 
-Route::get('/', function () {
-    return view('welcome', [
-        'collection' => App\Models\Pelayanan::latest()->get()
-    ]);
-})->name('home');
+// Route::get('/', function () {
+//     return view('welcome', [
+//         'collection' => App\Models\Pelayanan::latest()->get()
+//     ]);
+// })->name('home');
 
 Route::get('/monitor', function () {
     return view('monitor',[
@@ -28,5 +29,41 @@ Route::get('/pelayanan/{id}', function ($id) {
         'id' => $id,
     ]);
 })->middleware(['auth'])->name('dashboard.pelayanan');
+
+
+Route::get('/', function () {
+    return view('registration.online.home',[
+        'pelayanan' => App\Models\Pelayanan::latest()
+        ->where('refs->aktif', '=', true)
+        ->get()
+    ]);
+})->name('registration.online.home');
+
+
+Route::post('/regist', [RegistrationController::class, 'online_submit'])->name('registration.online.submit');
+
+
+
+Route::get('/register-success', function () {
+    return view('registration.online.success',[
+        'pelayanan' => App\Models\Pelayanan::latest()
+        ->where('refs->aktif', '=', true)
+        ->get()
+    ]);
+})->name('registration.online.success');
+
+
+Route::get('/kiosk', function () {
+    return view('registration.offline.home',[
+        'pelayanan' => App\Models\Pelayanan::latest()
+        ->where('refs->aktif', '=', true)
+        ->get()
+    ]);
+})->name('kiosk.homepage');
+
+Route::post('/kiosk/submit-phone', [RegistrationController::class, 'kiosk_submit_phone'])->name('kiosk.submit_phone');
+Route::post('/kiosk/submit', [RegistrationController::class, 'kiosk_submit'])->name('kiosk.submit');
+
+
 
 require __DIR__.'/auth.php';

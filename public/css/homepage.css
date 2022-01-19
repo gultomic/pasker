@@ -1,0 +1,137 @@
+.hero-home{
+    background-image: url(/assets/hero-bg-home.png);
+    background-size: cover;
+    color: #fff;
+    overflow: hidden;
+    position: relative;
+    padding-bottom: 6rem !important;
+    min-height: 700px;
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    background-color: #8064A2 !important;
+    border: none !important;
+}
+
+.hero-home:before{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background-image: url(/assets/home-testimonial-spike-bg.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50%;
+    content: "";
+    z-index: 1;
+}
+
+#about-pasar-kerja{
+    padding: 2rem 5rem 5rem 5rem;
+}
+
+.text-pasker{
+    color:#0A8178;
+}
+.container-footer,.container-content-kiosk{
+    max-width: 960px;
+}
+
+img.mascot-bottom{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 5;
+    height: 50%;
+}
+
+img.mascot-bottom-kiosk{
+    height: 40%;
+}
+
+#mTime{
+    font-size: 2.25rem;
+    
+    
+}
+#mDate{
+    font-size: 0.85rem;
+}
+.kiosk-btn-home{
+    min-height: 400px;
+    cursor: pointer;
+}
+
+.kiosk-btn-home:hover{
+    background-color: #ebebeb;
+}
+
+.kiosk-btn-home i.bi{
+    font-size:8rem;
+    color:#d34926;
+}
+
+.kiosk-btn-home i#offline{
+    font-size:8rem;
+    color:#E0A800;
+}
+
+.text-orange-pasker{
+    color:#d3a826;
+}
+
+.modal-kiosk .modal-footer{
+    /* justify-content: center; */
+}
+
+.btn-pasker-main{
+    background-color: #d34926 !important;
+    border: none !important;
+}
+
+#offlineModal .item-pelayanan{
+    background-color: #E0A800;
+    /* border-top: 2px solid #0A8178;
+    border-bottom: 2px solid #0A8178; */
+    cursor: pointer;
+    color: #fff;
+
+    /* display: inline-block;
+    width: 30%;
+    height: 100%;
+    margin: 5px; */
+    /* background-color: #555; */
+
+    /* border-radius: 0.5rem; */
+}
+
+.modal-kiosk i.bi{
+    font-size: 6rem;
+}
+
+
+.circle {
+    position: relative;
+    border-radius: 50%;
+    width: 100%;
+    height: auto;
+    padding-top: 100%;
+    background: white;
+    margin:auto;
+  }
+
+
+.span4 {
+    width: 33.0%;
+    height: auto;
+    display: inline-block;
+  }
+
+
+
+.span3 {
+    width: 24.6%;
+    height: auto;
+    display: inline-block;
+  }

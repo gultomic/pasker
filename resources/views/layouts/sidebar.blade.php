@@ -3,7 +3,7 @@
     x-cloak>
 
     <div class="flex flex-col items-center flex-shrink-0">
-        <a href="{{ route('home') }}"
+        <a href="{{ route('registration.online.home') }}"
             class="flex justify-center m-2 bg-white rounded-full bg-opacity-20"
             :class="fullSidebar?'p-0.5 lg:w-40 lg:h-40 lg:p-1.5':'p-0.5'">
             <x-application-logo class="block fill-current" />

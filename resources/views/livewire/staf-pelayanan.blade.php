@@ -65,15 +65,15 @@
                 </div>
 
                 <div class="flex-1">
-                    <div class="text-lg font-semibold leading-3">{{ $item->pengunjung->name }}</div>
+                    <div class="text-lg font-semibold leading-3">{{ $item->pengunjung ? $item->pengunjung->name : "-" }}</div>
                     <div class="inline-flex text-sm">
                         <div class="pr-2 text-sky-500">
                             <i class="fas fa-phone-square-alt"></i>
-                            {{ $item->pengunjung->phone }}
+                            {{ $item->pengunjung ? $item->pengunjung->phone :"-"}}
                         </div>
                         <div class="text-fuchsia-500">
                             <i class="fas fa-envelope-square"></i>
-                            {{ $item->pengunjung->email }}
+                            {{ $item->pengunjung ? $item->pengunjung->email :""}}
                         </div>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
                     @else
                         <div class="px-2 text-sm leading-tight text-center">
                     @endif
-                        {{ $item->refs['status']}}
+                        {{ $item->refs['status'] ?? "-"}}
                     </div>
                 </div>
 
