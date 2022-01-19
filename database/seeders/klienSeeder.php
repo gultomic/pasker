@@ -69,7 +69,7 @@ class klienSeeder extends Seeder
         $klien = Klien::count();
 
         foreach ($pel as $p) {
-            $blank = $p->refs['antrian'] - 7;
+            $blank = $p->refs['antrian'] - 10;
             for ($n=1; $n <= $blank ; $n++) {
                 PJ::create([
                     'pelayanan_id' => $p->id,
