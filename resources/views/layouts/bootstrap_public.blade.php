@@ -15,7 +15,8 @@
         integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="/css/jquery.datetimepicker.min.css">
+    <link rel="stylesheet" href="/css/public-vendors/jquery.datetimepicker.min.css">
+    <link rel="stylesheet" href="/css/public-vendors/kioskboard-2.0.0.min.css">
 
 
     <link href="/css/homepage.css" rel="stylesheet">
@@ -72,7 +73,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="/js/jquery.datetimepicker.full.min.js"></script>
+    <script src="/js/public-vendors/jquery.datetimepicker.full.min.js"></script>
+    <script src="/js/public-vendors/kioskboard-2.0.0.min.js"></script>
 
     <script>
         moment.locale('id');
