@@ -125,7 +125,7 @@ class klienSeeder extends Seeder
                 'tanggal' => Carbon::now()->format('Y-m-d'),
                 'refs' => [
                     'antrian' => $p->refs['kode'] . "006",
-                    'daftar' => "onsite",
+                    'daftar' => "goshow",
                     'status' => "menunggu",
                 ]
             ]);

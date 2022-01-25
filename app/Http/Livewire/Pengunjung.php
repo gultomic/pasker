@@ -18,4 +18,7 @@ class Pengunjung extends Component
             'collection' => Klien::latest()->paginate($this->paginate)
         ]);
     }
+
+    public function store()
+    {}
 }

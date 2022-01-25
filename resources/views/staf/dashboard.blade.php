@@ -4,7 +4,7 @@
 <x-app-layout>
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         @foreach ($collection['pelayanan'] as $item)
-            <x-card-content class="bg-black">
+            <x-card-content class="bg-blue-400">
                 <x-slot name="cardHeader">
                     <div class="text-xl font-extrabold uppercase">
                         {{ $item['title'] }}
@@ -48,7 +48,7 @@
 
                     <div class="mb-2">
                         <a href="{{ route('dashboard.pelayanan', ['id' => $item->id]) }}"
-                            class="block py-1 text-center bg-gray-500 border border-green-400 rounded-full hover:bg-gray-600">
+                            class="block py-1 text-center border rounded-full bg-neutral-400 hover:bg-neutral-300">
                             masuk untuk memulai pelayanan
                         </a>
                     </div>

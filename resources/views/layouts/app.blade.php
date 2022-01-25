@@ -18,24 +18,24 @@
 
         @livewireStyles
     </head>
-    <body class="antialiased bg-emerald-800">
-        <div class="flex min-h-screen"
+    <body class="antialiased bg-gradient-to-br from-slate-200 via-zinc-400 to-slate-300">
+        <div class="flex min-h-screen text-zinc-700"
             x-data="mainFrame()"
-            x-on:keydown.escape="showModal = false"
+            x-on:keydown.escape="showModal=false"
             x-cloak>
 
             <!-- Sidebar -->
             @include('layouts.sidebar')
 
             <!-- Main Section -->
-            <div class="flex-1 overflow-y-auto text-neutral-300">
+            <div class="flex-1 overflow-y-auto">
                 <!-- Page Heading -->
                 <header class="flex items-center justify-between h-12">
                     <div class="flex">
                         <button type="button"
                             x-on:click="toggleSidebar"
-                            class="hidden w-8 h-8 ml-1 rounded-full hover:bg-opacity-25 hover:bg-green-300 lg:block">
-                            <span class="text-xs text-lime-300 fas" :class="fullSidebar?'fa-ellipsis-v':'fa-list-ul'"></span>
+                            class="hidden w-8 h-8 ml-1 rounded-full hover:bg-opacity-50 hover:bg-blue-300 lg:block">
+                            <span class="text-xs fas" :class="fullSidebar?'fa-ellipsis-v':'fa-list-ul'"></span>
                         </button>
 
                         <div class="pl-3 my-auto">
@@ -88,6 +88,7 @@
             </div>
         </div>
 
+        <img src="/assets/sasageyo.png" class="fixed left-0 opacity-50 -bottom-10 md:h-3/6 -z-20"/>
         @livewireScripts
     </body>
 </html>

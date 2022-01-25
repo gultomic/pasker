@@ -1,9 +1,9 @@
-<x-card-content class="bg-neutral-900">
+<x-card-content class="bg-blue-400">
     <x-slot name="cardHeader">
         <div class="flex gap-2">
-            <span class="text-slate-400">Tanggal: </span>
+            <span class="text-slate-200">Tanggal: </span>
             <span class="font-extrabold">{{ $date }}</span>
-            <span class="text-slate-400">Loket Pelayanan: </span>
+            <span class="text-slate-200">Loket Pelayanan: </span>
 
             <x-dropdown align="left" width="48">
                 <x-slot name="trigger">
@@ -67,11 +67,11 @@
                 <div class="flex-1">
                     <div class="text-lg font-semibold leading-3">{{ $item->pengunjung ? $item->pengunjung->name : "-" }}</div>
                     <div class="inline-flex text-sm">
-                        <div class="pr-2 text-sky-500">
+                        <div class="pr-2 text-sky-100">
                             <i class="fas fa-phone-square-alt"></i>
                             {{ $item->pengunjung ? $item->pengunjung->phone :"-"}}
                         </div>
-                        <div class="text-fuchsia-500">
+                        <div class="text-fuchsia-200">
                             <i class="fas fa-envelope-square"></i>
                             {{ $item->pengunjung ? $item->pengunjung->email :""}}
                         </div>
@@ -79,9 +79,9 @@
                 </div>
 
                 <div class="w-24">
-                    <div class="text-xs leading-3 text-center">status:</div>
+                    <div class="text-xs leading-3 text-center text-slate-200">status:</div>
                     @if ($item->refs['status'] == 'selesai')
-                        <div class="px-2 text-sm leading-tight text-center border rounded-full border-sky-500 text-sky-500">
+                        <div class="px-2 text-sm leading-tight text-center border rounded-full border-sky-700 text-sky-700">
                     @elseif ($item->refs['status'] == 'tidak ada')
                         <div class="px-2 text-sm leading-tight text-center text-red-500 border border-red-500 rounded-full">
                     @else
@@ -92,13 +92,13 @@
                 </div>
 
                 <div>
-                    <div class="text-xs leading-3 text-center">pendaftaran:</div>
-                    <div class="leading-tight {{ $item->refs['daftar']=='online'?'text-emerald-500':'text-amber-500'}}"
+                    <div class="text-xs leading-3 text-center text-slate-200">pendaftaran:</div>
+                    <div class="leading-tight {{ $item->refs['daftar']=='online'?'text-green-700':'text-amber-700'}}"
                         >{{ $item->refs['daftar'] }}</div>
                 </div>
 
                 <div>
-                    <div class="text-xs leading-3 text-center">aksi:</div>
+                    <div class="text-xs leading-3 text-center text-slate-200">aksi:</div>
                     <div class="flex">
                         <button class="px-1 text-xs rounded-full hover:bg-sky-500"
                             wire:click='setAction("{{ $item->id }}","selesai")'>

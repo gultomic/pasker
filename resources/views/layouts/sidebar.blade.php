@@ -4,14 +4,16 @@
 
     <div class="flex flex-col items-center flex-shrink-0">
         <a href="{{ route('registration.online.home') }}"
-            class="flex justify-center m-2 bg-white rounded-full bg-opacity-20"
-            :class="fullSidebar?'p-0.5 lg:w-40 lg:h-40 lg:p-1.5':'p-0.5'">
-            <x-application-logo class="block fill-current" />
+            class="flex justify-center m-2 bg-blue-300 rounded-full"
+            :class="fullSidebar?'lg:w-40 lg:h-40':''">
+            <img src="{{ Auth::user()->profile->refs['photo'] }}" class="object-cover rounded-full"/>
         </a>
 
         <div x-show="fullSidebar"
-            class="hidden mx-2 text-2xl font-bold text-center uppercase lg:block">
-            PUSAT PASAR KERJA</div>
+            class="hidden mx-2 text-2xl font-bold text-center lg:block">
+            {{-- {{ Auth::user()->profile->refs['fullname'] }} --}}
+            PaskerID
+        </div>
 
     </div>
 

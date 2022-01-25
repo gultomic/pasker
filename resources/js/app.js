@@ -8,6 +8,7 @@ window.moment = Moment
 
 Alpine.data('mainFrame', () => ({
     fullSidebar: true,
+    showModal: false,
     init() {
         let _fs = localStorage.getItem('fullSidebar')
 

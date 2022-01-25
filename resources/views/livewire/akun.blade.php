@@ -1,4 +1,4 @@
-<x-card-content class="border border-gray-500">
+<x-card-content class="bg-blue-400">
     <x-slot name="cardHeader">
         <div class="flex items-center justify-between gap-6 pb-2">
             <div>
@@ -31,7 +31,7 @@
                     </tr>
                 </thead>
 
-                <tbody class="font-medium divide-y divide-gray-600">
+                <tbody class="font-medium divide-y divide-gray-400">
                     @foreach ($collection as $item)
                         <tr>
                             <td class="p-2">

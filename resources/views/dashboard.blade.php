@@ -2,7 +2,7 @@
 @section('header', $header)
 
 <x-app-layout>
-    <x-card-content class="bg-black">
+    <x-card-content class="bg-blue-400">
         <x-slot name="contentSection">
             <div>
                 Yay you're logged in!
