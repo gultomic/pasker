@@ -1,4 +1,4 @@
-<x-card-content class="border border-gray-500">
+<x-card-content class="bg-blue-400">
     <x-slot name="cardHeader">
         <div class="flex items-center justify-between gap-6 pb-2">
             <div>
@@ -31,14 +31,14 @@
                     </tr>
                 </thead>
 
-                <tbody class="font-medium divide-y divide-gray-600">
+                <tbody class="font-medium divide-y divide-sky-500">
                     @foreach ($collection as $item)
                         <tr>
                             <td class="p-2">
                                 <div class="text-left">{{ $item->name }}</div>
                             </td>
                             <td class="p-2">
-                                <div class="text-center text-blue-400">{{ $item->phone }}</div>
+                                <div class="text-center">{{ $item->phone }}</div>
                             </td>
                             <td class="p-2">
                                 <div class="text-center">{{ $item->email }}</div>

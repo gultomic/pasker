@@ -8,4 +8,46 @@ $fa-font-path: "../webfonts";
 @tailwind components;
 @tailwind utilities;
 
+.modal {
+    &.primary {
+        &-text {
+            @apply text-blue-500;
+        }
+
+        &-bg {
+            @apply bg-blue-500 hover:bg-blue-600;
+        }
+    }
+
+    &.success {
+        &-text {
+            @apply text-green-600;
+        }
+
+        &-bg{
+            @apply bg-green-600 hover:bg-green-700;
+        }
+    }
+
+    &.info {
+        &-text {
+            @apply text-sky-500;
+        }
+
+        &-bg{
+            @apply bg-sky-500 hover:bg-sky-600;
+        }
+    }
+
+    &.warning {
+        &-text {
+            @apply text-amber-600;
+        }
+
+        &-bg{
+            @apply bg-amber-600 hover:bg-amber-700;
+        }
+    }
+}
+
 [x-cloak] { display: none !important; }

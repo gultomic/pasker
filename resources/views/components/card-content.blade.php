@@ -1,5 +1,5 @@
 <div {{ $attributes->merge([
-    'class' => "overflow-hidden shadow-sm bg-opacity-50 sm:rounded-lg rounded-2xl shadow-xl"
+    'class' => "overflow-hidden shadow-sm bg-opacity-70 rounded-2xl shadow-xl"
 ]) }} >
 
     @if ($cardHeader ?? null)

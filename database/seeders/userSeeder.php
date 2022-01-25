@@ -7,6 +7,7 @@ use App\Models\User;
 use Faker\Factory as Faker;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use DB;
 
 class userSeeder extends Seeder
 {
@@ -18,6 +19,8 @@ class userSeeder extends Seeder
     public function run()
     {
         User::truncate();
+        DB::table('roles')->truncate();
+        DB::table('profiles')->truncate();
 
         $faker = Faker::create('id_ID');
         $stafs = [
@@ -38,7 +41,8 @@ class userSeeder extends Seeder
             ]);
             $x->profile()->create([
                 'refs'=>[
-                    'fullname'=>$faker->name()
+                    'fullname'=>$faker->name(),
+                    'photo'=>'/assets/uploads/beard.png',
                 ]
             ]);
         }
@@ -57,7 +61,8 @@ class userSeeder extends Seeder
         ]);
         $admin->profile()->create([
             'refs'=>[
-                'fullname'=>'Administrator'
+                'fullname'=>'Administrator',
+                'photo'=>'/assets/uploads/hacker.png',
             ]
         ]);
 
@@ -75,7 +80,8 @@ class userSeeder extends Seeder
         ]);
         $master->profile()->create([
             'refs'=>[
-                'fullname'=>'Origin'
+                'fullname'=>'Origin',
+                'photo'=>'/assets/uploads/hacker.png',
             ]
         ]);
     }

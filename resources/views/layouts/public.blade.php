@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="my-auto text-3xl font-black text-center text-slate-50">
-                    PUSAT PASAR KERJA
+                    PaskerID
                 </div>
 
                 {{-- <div class="text-white">
