@@ -1,4 +1,27 @@
-.hero-home{
+@font-face {
+    font-family: 'groboldregular';
+    src: url('/fonts/public/grobold/grobold-webfont.woff2') format('woff2'),
+    url('/fonts/public/grobold/grobold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+.head_grobold{
+    font-family: groboldregular;
+    font-size: 4rem;
+    text-shadow: 4px 5px 1px #FA8334;
+}
+.subhead_page{
+    background-color: #FA8334;
+    color: #fff;
+    padding: 10px 30px;
+    display: inline-block;
+    font-size: 1.5rem;
+    margin-bottom: 35px;
+    box-shadow: 8px 8px 0px -4px #FFFFFF;
+    -webkit-box-shadow: 8px 8px 0px -4px #FFFFFF;
+    -moz-box-shadow: 8px 8px 0px -4px #FFFFFF;
+}
+.hero-home {
     background-image: url(/assets/hero-bg-home.png);
     background-size: cover;
     color: #fff;
@@ -13,7 +36,7 @@
     border: none !important;
 }
 
-.hero-home:before{
+.hero-home:before {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -27,18 +50,19 @@
     z-index: 1;
 }
 
-#about-pasar-kerja{
+#about-pasar-kerja {
     padding: 2rem 5rem 5rem 5rem;
 }
 
-.text-pasker{
-    color:#0A8178;
+.text-pasker {
+    color: #0A8178;
 }
-.container-footer,.container-content-kiosk{
+
+.container-footer, .container-content-kiosk {
     max-width: 960px;
 }
 
-img.mascot-bottom{
+img.mascot-bottom {
     position: fixed;
     bottom: 0;
     right: 0;
@@ -46,55 +70,89 @@ img.mascot-bottom{
     height: 50%;
 }
 
-img.mascot-bottom-kiosk{
+img.mascot-bottom-kiosk {
+    height: 40%;
+}
+img.mascot-bottom-signage{
+    z-index: 0 !important;
     height: 40%;
 }
 
-#mTime{
-    font-size: 2.25rem;
-    
-    
+#mTime {
+    color: #FFFFFF;
+    font-size: 3.5rem;
+    text-shadow: 4px 4px 0px #FA8334;
+
 }
-#mDate{
+
+#mDate {
     font-size: 0.85rem;
+    color: #FFFFFF;
 }
-.kiosk-btn-home{
+
+.kiosk-btn-home {
     min-height: 400px;
     cursor: pointer;
 }
 
-.kiosk-btn-home:hover{
+.kiosk-btn-home:hover {
     background-color: #ebebeb;
 }
 
-.kiosk-btn-home i.bi{
-    font-size:8rem;
-    color:#d34926;
+.kiosk-btn-home i.bi {
+    font-size: 8rem;
+    color: #d34926;
 }
 
-.kiosk-btn-home i#offline{
-    font-size:8rem;
-    color:#E0A800;
+.kiosk-btn-home i#offline {
+    font-size: 8rem;
+    color: #E0A800;
 }
 
-.text-orange-pasker{
-    color:#d3a826;
+.text-orange-pasker {
+    color: #d3a826;
+}
+.text-orange-pasker-light {
+    color: #FA8334;
 }
 
-.modal-kiosk .modal-footer{
+.modal-kiosk .modal-footer {
     /* justify-content: center; */
 }
 
-.btn-pasker-main{
+.modal-kiosk input#phone.active{
+    border: 1px solid #469278 !important;
+    box-shadow: 10px 10px 0px -4px #469278;
+    -webkit-box-shadow: 10px 10px 0px -4px #469278;
+    -moz-box-shadow: 10px 10px 0px -4px #469278;
+}
+
+.modal-kiosk#onlineModal .input-group-prepend .input-group-text{
+    background-color: #469278 !important;;
+    color: #FFFFFF !important;
+}
+
+.blink_me {
+
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+.btn-pasker-main {
     background-color: #d34926 !important;
     border: none !important;
 }
 
-#offlineModal .item-pelayanan{
-    background-color: #E0A800;
+#offlineModal .item-pelayanan {
+    background-color: #FA8334;
     /* border-top: 2px solid #0A8178;
     border-bottom: 2px solid #0A8178; */
     cursor: pointer;
+    border: 2px dotted #dfdfdf;
     color: #fff;
 
     /* display: inline-block;
@@ -106,7 +164,7 @@ img.mascot-bottom-kiosk{
     /* border-radius: 0.5rem; */
 }
 
-.modal-kiosk i.bi{
+.modal-kiosk i.bi {
     font-size: 6rem;
 }
 
@@ -118,20 +176,115 @@ img.mascot-bottom-kiosk{
     height: auto;
     padding-top: 100%;
     background: white;
-    margin:auto;
-  }
+    margin: auto;
+}
 
 
 .span4 {
     width: 33.0%;
     height: auto;
     display: inline-block;
-  }
-
+}
 
 
 .span3 {
     width: 24.6%;
     height: auto;
     display: inline-block;
+}
+
+
+/*SIGNAGE*/
+
+body#signage{
+    /*background: #469278;  !* fallback for old browsers *!*/
+    /*background: -webkit-linear-gradient(to left, #38ef7d, #469278);  !* Chrome 10-25, Safari 5.1-6 *!*/
+    /*background: linear-gradient(to left, #38ef7d, #469278); !* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ *!*/
+    /*!*max-height: 100%;*!*/
+    /*!*overflow: hidden;*!*/
+
+    /*  margin: 0px;*/
+    /*  width: 100vw;*/
+    /*  height;: 100vh;*/
+    /*  background-color: #469278;*/
+    /*  !*background-image:*!*/
+    /*  !*   radial-gradient(ellipse farthest-corner at 80vw 15vh ,*!*/
+    /*  !*    rgba( 250, 240, 128, 0.5) 5%, rgba( 250,240,128,0) 95%*!*/
+    /*  !*);*!*/
+    /*  background-attachment:fixed;*/
+    overflow: hidden;
+}
+
+
+.glass {
+    /* From https://css.glass */
+background: rgba(255, 255, 255, 0.2);
+border-radius: 0.3rem !important;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(5px);
+-webkit-backdrop-filter: blur(5px);
+border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+#signage .videoarea{
+padding: 3rem;
+}
+#signage .background-orange{
+    /*border: 1px solid rgba(255, 255, 255, 0.3);*/
+    background: rgba(250,131,52,0.95);
+    color: #FFFFFF;
+}
+
+#signage .content-active{
+    /*color: #fff;*/
+
+    font-size: 3rem;
+    font-weight: 500;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    min-height: 105px;
+
+}
+
+#signage .header-content-active{
+    border-top-left-radius: 0.3rem!important;
+    border-top-right-radius: 0.3rem!important;
+    font-size: 0.85rem;
+}
+
+#signage .background-red-pasker{
+    background-color: #FFE882;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-size: 0.9rem;
+    color: #0a0a0a;
+}
+
+.blinking {
+
+    animation: opacity 2s ease-in-out infinite;
+    opacity: 1;
+}
+
+.content-loket {
+    font-size: 3.2rem;
+}
+@keyframes opacity {
+  0% {
+    opacity: 1;
   }
+
+  50% {
+    opacity: 0
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+.content-loket{
+    min-height: 90px;
+    font-weight: 500;
+}
+
+

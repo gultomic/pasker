@@ -20,6 +20,15 @@ Route::get('/monitor', function () {
     ]);
 })->name('monitor');
 
+Route::get('/signage', function () {
+    return view('signage',[
+        'title' => 'Signane',
+        'loket' => App\Models\Config::where('title', 'loket_pelayanan')
+            ->first()
+            ->refs
+    ]);
+})->name('monitor');
+
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth'])
     ->name('dashboard');
