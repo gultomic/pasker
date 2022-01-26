@@ -7,16 +7,19 @@ use Carbon\Carbon;
 use App\Models\PelayananJadwal as PJ;
 use App\Models\Config;
 use App\Events\QueuesService;
+use Auth;
 
 class StafPelayanan extends Component
 {
     public $pid;
-    public $loketAktif = '...?';
-    public $loketList;
+    public $loketAktif = null;
+    public $loketList = [];
+    public $pelayanan;
 
     public function mount()
     {
-        $this->loketList = Config::where('title', 'loket_pelayanan')->first()->refs;
+        $this->pelayanan = \App\Models\Pelayanan::find($this->pid);
+        // $this->loketList = Config::where('title', 'loket_pelayanan')->first()->refs;
     }
 
     public function render()
@@ -52,5 +55,64 @@ class StafPelayanan extends Component
                 'name' => $name,
             ]));
         }
+    }
+
+    public function getAktifLoket()
+    {
+        $aktif = Config::where('title', 'loket_aktif')->first()->refs;
+        $loket = Config::where('title', 'loket_pelayanan')->first()->refs;
+        $list = collect();
+
+
+        foreach ($loket as $l) {
+            $a = $aktif->where('nama', $l)->first();
+
+            if ($a != null) {
+                if ($a['tanggal'] != Carbon::now()->format('Y-m-d'))
+                    $list->push($l);
+            } else {
+                $list->push($l);
+            }
+        }
+
+        $this->loketList = $list;
+    }
+
+    public function setAktifLoket($loket)
+    {
+        $row = Config::where('title', 'loket_aktif');
+        if ($this->loketAktif != null) {
+            $aktif = $row->first()->refs->map(function($q) {
+                if($q['nama'] == $this->loketAktif) {
+                    $q['tanggal'] = '';
+                    $q['pelaksana'] = '';
+                    $q['pelayanan'] = '';
+                }
+                return $q;
+            });
+
+            $row->update(['refs'=>$aktif]);
+        }
+
+        if ($row->first()->refs->contains('nama', $loket)) {
+            $aktif = $row->first()->refs->map(function($q) use($loket) {
+                if($q['nama'] == $loket) {
+                    $q['tanggal'] = Carbon::now()->format('Y-m-d');
+                    $q['pelaksana'] = Auth::user()->profile->refs['fullname'];
+                    $q['pelayanan'] = $this->pelayanan->title;
+                }
+                return $q;
+            });
+        } else {
+            $aktif = $row->first()->refs->push([
+                'nama' => $loket,
+                'tanggal' => Carbon::now()->format('Y-m-d'),
+                'pelaksana' => Auth::user()->profile->refs['fullname'],
+                'pelayanan' => $this->pelayanan->title,
+            ]);
+        }
+
+        $row->update(['refs'=>$aktif]);
+        $this->loketAktif = $loket;
     }
 }

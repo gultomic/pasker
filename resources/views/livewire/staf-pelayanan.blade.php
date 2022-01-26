@@ -7,8 +7,9 @@
 
             <x-dropdown align="left" width="48">
                 <x-slot name="trigger">
-                    <button class="flex items-center mt-1 text-sm font-medium transition duration-150 ease-in-out focus:outline-none">
-                        <div class="uppercase">{{ $loketAktif }}</div>
+                    <button class="flex items-center mt-1 text-sm font-medium transition duration-150 ease-in-out focus:outline-none"
+                        wire:click='getAktifLoket'>
+                        <div class="uppercase">{{ ($loketAktif == null) ? '...?' : $loketAktif }}</div>
 
                         <div class="ml-1">
                             <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -21,7 +22,7 @@
                 <x-slot name="content">
                     @foreach ($loketList as $item)
                         <div class="p-2 text-black cursor-pointer hover:bg-slate-300"
-                            wire:click="$set('loketAktif', '{{ $item }}')">
+                            wire:click="setAktifLoket('{{ $item }}')">
                             {{ $item }}
                         </div>
                     @endforeach
