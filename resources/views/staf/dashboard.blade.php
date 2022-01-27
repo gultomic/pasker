@@ -1,10 +1,10 @@
 @section('title', $title)
 @section('header', $header)
 
-<x-app-layout>
+<x-midone-layout>
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         @foreach ($collection['pelayanan'] as $item)
-            <x-card-content class="bg-white">
+            <x-card-content class="bg-white intro-y">
                 <x-slot name="cardHeader">
                     <div class="text-xl font-extrabold uppercase">
                         {{ $item['title'] }}
@@ -65,4 +65,4 @@
             </x-card-content>
         @endforeach
     </div>
-</x-app-layout>
+</x-midone-layout>

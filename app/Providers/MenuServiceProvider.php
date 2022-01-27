@@ -37,37 +37,37 @@ class MenuServiceProvider extends ServiceProvider
                                 'route'=>'dashboard',
                                 'path'=>'dashboard',
                                 'title'=>'Dashboard',
-                                'icon'=>'fa-th-large'
+                                'icon'=>'fas fa-th-large'
                             ],
                             [
                                 'route'=>'admin.pelayanan',
                                 'path'=>'admin.pelayanan*',
                                 'title'=>'Pelayanan',
-                                'icon'=>'fa-people-arrows'
+                                'icon'=>'fas fa-people-arrows'
                             ],
                             [
                                 'route'=>'admin.pertanyaan',
                                 'path'=>'admin.pertanyaan*',
                                 'title'=>'Daftar Pertanyaan',
-                                'icon'=>'fa-clipboard-list'
+                                'icon'=>'fas fa-clipboard-list'
                             ],
                             [
                                 'route'=>'admin.klien',
                                 'path'=>'admin.klien*',
                                 'title'=>'Data Pengunjung',
-                                'icon'=>'fa-users'
+                                'icon'=>'fas fa-users'
                             ],
                             [
                                 'route'=>'admin.akun',
                                 'path'=>'admin.akun*',
                                 'title'=>'Akun User',
-                                'icon'=>'fa-user-friends'
+                                'icon'=>'fas fa-user-friends'
                             ],
                             [
                                 'route'=>'admin.pengaturan',
                                 'path'=>'admin.pengaturan*',
                                 'title'=>'Pengaturan',
-                                'icon'=>'fa-tools'
+                                'icon'=>'fas fa-tools'
                             ],
                         );
                         break;
@@ -77,19 +77,19 @@ class MenuServiceProvider extends ServiceProvider
                                 'route'=>'dashboard',
                                 'path'=>'dashboard*',
                                 'title'=>'Dashboard',
-                                'icon'=>'fa-th-large'
+                                'icon'=>'fas fa-th-large'
                             ],
                             [
                                 'route'=>'staf.pelayanan.history',
                                 'path'=>'staf.pelayanan*',
                                 'title'=>'History Pelayanan',
-                                'icon'=>'fa-history'
+                                'icon'=>'fas fa-history'
                             ],
                             [
                                 'route'=>'staf.profile',
                                 'path'=>'staf.profile*',
                                 'title'=>'Profil',
-                                'icon'=>'fa-address-card'
+                                'icon'=>'fas fa-address-card'
                             ],
                         );
                         break;
