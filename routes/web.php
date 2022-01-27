@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RegistrationController;
+use App\Faker;
 
 
 // Route::get('/', function () {
@@ -19,6 +20,37 @@ Route::get('/monitor', function () {
             ->refs
     ]);
 })->name('monitor');
+
+Route::get('/midone/dashboard1', function () {
+
+
+$fakerData = [];
+for ($i = 0; $i < 20; $i++) {
+    $fakerData[] = [
+        'users' => Faker::fakeUsers(),
+        'photos' => Faker::fakePhotos(),
+        'images' => Faker::fakeImages(),
+        'dates' => Faker::fakeDates(),
+        'times' => Faker::fakeTimes(),
+        'formatted_times' => Faker::fakeFormattedTimes(),
+        'totals' => Faker::fakeTotals(),
+        'true_false' => Faker::fakeTrueFalse(),
+        'stocks' => Faker::fakeStocks(),
+        'products' => Faker::fakeProducts(),
+        'news' => Faker::fakeNews(),
+        'files' => Faker::fakeFiles(),
+        'jobs' => Faker::fakeJobs(),
+        'notification_count' => Faker::fakeNotificationCount(),
+        'foods' => Faker::fakeFoods()
+    ];
+}
+
+
+    return view('midone.pages.modal',[
+        'fakers'=>$fakerData,
+        'layout'=>'side-menu'
+    ]);
+})->name('midone.dashboard');
 
 Route::get('/signage', function () {
     return view('signage',[
