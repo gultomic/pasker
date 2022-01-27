@@ -36,9 +36,15 @@
                     </a>
                 </div>
                 <div class="p-2 border-t border-theme-27 dark:border-dark-3">
-                    <a href="{{ route('logout') }}" class="flex items-center p-2 transition duration-300 ease-in-out rounded-md hover:bg-theme-1 dark:hover:bg-dark-3">
-                        <i data-feather="toggle-right" class="w-4 h-4 mr-2"></i> Logout
-                    </a>
+                    <!-- Authentication -->
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <a href="{{ route('logout') }}"
+                            class="flex items-center p-2 transition duration-300 ease-in-out rounded-md hover:bg-theme-1 dark:hover:bg-dark-3"
+                            onclick="event.preventDefault(); this.closest('form').submit();">
+                            <i data-feather="toggle-right" class="w-4 h-4 mr-2"></i> Logout
+                        </a>
+                    </form>
                 </div>
             </div>
         </div>
