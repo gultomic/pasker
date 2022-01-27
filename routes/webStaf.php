@@ -7,7 +7,7 @@ Route::name('staf.')
     ->middleware(['auth'])
     ->group(function() {
         Route::get('/history-pelayanan', function () {
-            return view('dashboard', [
+            return view('staf.pelayanan-history', [
                 'title' => 'Riwayat',
                 'header' => 'History Pelayanan',
             ]);

@@ -30,6 +30,11 @@ class PelayananJadwal extends Model
         return $this->belongsTo(Klien::class, 'klien_id', 'id');
     }
 
+    public function pelayanan()
+    {
+        return $this->belongsTo(Pelayanan::class, 'pelayanan_id', 'id');
+    }
+
     public function getCreatedAtAttribute($value)
     {
         return \Carbon\Carbon::parse($value)

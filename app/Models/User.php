@@ -53,4 +53,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Profile::class, 'user_id', 'id');
     }
+
+    public function historyPelayanan()
+    {
+        return $this->hasMany(PelayananJadwal::class, 'pelaksana_id', 'id');
+    }
 }
