@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-4">
-    <x-card-content class="bg-white">
+    <x-card-content class="bg-white intro-x">
         <x-slot name="contentSection">
             <div class="grid grid-cols-2 gap-2">
                 <div class="text-xl">
@@ -38,11 +38,11 @@
         </x-slot>
     </x-card-content>
 
-    <x-card-content class="bg-white">
+    <x-card-content class="bg-white intro-x">
         <x-slot name="contentSection">
         @if ($collection->count() > 0)
             @foreach ($collection as $item)
-                <div class="flex gap-4 px-2 py-1 hover:bg-slate-200 hover:bg-opacity-10">
+                <div class="flex gap-4 px-2 py-1 hover:bg-slate-200 hover:bg-opacity-10 intro-x">
                     <div class="px-3 my-auto text-2xl font-bold text-gray-700 rounded-full bg-lime-500">
                         {{ $item->refs['antrian'] }}
                     </div>

@@ -9,10 +9,10 @@
     <div class="flex">
         <!-- BEGIN: Simple Menu -->
         <nav class="side-nav side-nav--simple">
-                <a href="" class="intro-x flex items-center pl-5 pt-4">
+                <a href="" class="flex items-center pt-4 pl-5 intro-x">
                     <img alt="Rubick Tailwind HTML Admin Template" class="w-6" src="dist/images/logo.svg">
                 </a>
-                <div class="side-nav__devider my-6"></div>
+                <div class="my-6 side-nav__devider"></div>
                 <ul>
                     <li>
                         <a href="javascript:;" class="side-menu">
@@ -108,7 +108,7 @@
                             <div class="side-menu__title"> Calendar </div>
                         </a>
                     </li>
-                    <li class="side-nav__devider my-6"></li>
+                    <li class="my-6 side-nav__devider"></li>
                     <li>
                         <a href="javascript:;" class="side-menu">
                             <div class="side-menu__icon"> <i data-feather="edit"></i> </div>
@@ -364,7 +364,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="side-nav__devider my-6"></li>
+                    <li class="my-6 side-nav__devider"></li>
                     <li>
                         <a href="javascript:;.html" class="side-menu side-menu--active">
                             <div class="side-menu__icon"> <i data-feather="inbox"></i> </div>
