@@ -1,8 +1,8 @@
 @section('title', $title)
 @section('header', $header)
 
-<x-app-layout>
-    <x-card-content class="bg-blue-400">
+<x-midone-layout>
+    <x-card-content class="intro-x">
         <x-slot name="contentSection">
             <div>
                 Yay you're logged in!
@@ -10,4 +10,4 @@
             </div>
         </x-slot>
     </x-card-content>
-</x-app-layout>
+</x-midone-layout>
