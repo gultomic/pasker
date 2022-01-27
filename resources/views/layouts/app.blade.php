@@ -18,7 +18,7 @@
 
         @livewireStyles
     </head>
-    <body class="antialiased bg-gradient-to-br from-slate-200 via-zinc-400 to-slate-300">
+    <body class="antialiased bg-gradient-to-br from-slate-200 via-zinc-400 to-neutral-500">
         <div class="flex min-h-screen text-zinc-700"
             x-data="mainFrame()"
             x-on:keydown.escape="showModal=false"
@@ -88,7 +88,7 @@
             </div>
         </div>
 
-        <img src="/assets/sasageyo.png" class="fixed left-0 opacity-50 -bottom-10 md:h-3/6 -z-20"/>
+        <img src="/assets/sasageyo.png" class="fixed left-0 opacity-60 -bottom-10 md:h-3/6 -z-20"/>
         @livewireScripts
     </body>
 </html>

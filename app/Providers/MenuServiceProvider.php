@@ -79,6 +79,18 @@ class MenuServiceProvider extends ServiceProvider
                                 'title'=>'Dashboard',
                                 'icon'=>'fa-th-large'
                             ],
+                            [
+                                'route'=>'staf.pelayanan.history',
+                                'path'=>'staf.pelayanan*',
+                                'title'=>'History Pelayanan',
+                                'icon'=>'fa-history'
+                            ],
+                            [
+                                'route'=>'staf.profile',
+                                'path'=>'staf.profile*',
+                                'title'=>'Profil',
+                                'icon'=>'fa-address-card'
+                            ],
                         );
                         break;
                 }

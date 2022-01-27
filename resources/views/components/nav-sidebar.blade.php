@@ -5,11 +5,11 @@
 
 @php
     $classes = ($active ?? false)
-        ? 'border-blue-500 hover:border-sky-300'
+        ? 'border-blue-500 hover:border-sky-400'
         : 'border-transparent';
 @endphp
 
-<a {{ $attributes->merge(['class' => "relative rounded-r-full flex py-2 pl-2 border-l-4 $classes hover:bg-blue-300 hover:text-blue-500 hover:bg-opacity-70"]) }}>
+<a {{ $attributes->merge(['class' => "relative rounded-r-full flex py-2 pl-2 border-l-4 $classes hover:bg-sky-400 hover:bg-opacity-70"]) }}>
     <i class='mr-2 text-xl fas {{ $icon }}'></i>
 
     <span x-show="fullSidebar"

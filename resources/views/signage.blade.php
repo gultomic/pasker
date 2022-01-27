@@ -1,44 +1,44 @@
 <x-signage-layout>
-    <div class="container-fluid  hero-home pb-5 pb-5">
-        <div class=" d-flex justify-content-between mt-3">
-            <div class="col pt-3 text-left">
+    <div class="pb-5 container-fluid hero-home">
+        <div class="mt-3  d-flex justify-content-between">
+            <div class="pt-3 text-left col">
                 <div class="row">
-                    <div class="col-6 ml-5 ">
+                    <div class="ml-5 col-6 ">
                         <img class="img-fluid" src="/assets/logo_light.png" alt="">
                     </div>
                 </div>
             </div>
-            <div class="col text-center pt-3">
+            <div class="pt-3 text-center col">
                 <h1 class="text-white">Pasker ID</h1>
                 <p class="text-white" style="font-size: 1rem;font-weight: 500">#GetAJobLiveBetter</p>
             </div>
-            <div class="col text-right mr-5 pt-2">
+            <div class="pt-2 mr-5 text-right col">
                 <div id="mDate" class="text-uppercase " style="font-size: 0.9em"></div>
                 <div id="mTime" class="mt-n-1" style="margin-top: -5px"></div>
             </div>
         </div>
-        <div class="row mt-4">
+        <div class="mt-4 row">
             <div class="col-6">
-                <div class="row mb-2">
+                <div class="mb-2 row">
                     <div class="col-6 ">
-                        <div class="row glass mx-1">
-                            <div class="background-orange d-block w-100 text-center  header-content-active"
+                        <div class="mx-1 row glass">
+                            <div class="text-center background-orange d-block w-100 header-content-active"
                                  style="padding-top: 20px;padding-bottom: 20px">
                                 NO ANTRIAN
                             </div>
-                            <div class="content-active-token content-active text-center w-100 blinking" id="call_token">
+                            <div class="text-center content-active-token content-active w-100 blinking" id="call_token">
 
                             </div>
 
                         </div>
                     </div>
                     <div class="col-6">
-                        <div class="row glass mx-1">
-                            <div class="background-orange d-block w-100 text-center header-content-active"
+                        <div class="mx-1 row glass">
+                            <div class="text-center background-orange d-block w-100 header-content-active"
                                  style="padding-top: 20px;padding-bottom: 20px">
                                 LOKET
                             </div>
-                            <div class="content-active-token content-active text-center w-100 blinking" id="call_loket">
+                            <div class="text-center content-active-token content-active w-100 blinking" id="call_loket">
 
                             </div>
 
@@ -46,16 +46,16 @@
                     </div>
                 </div>
 
-                <div class="row mt-5">
+                <div class="mt-5 row">
 
                     @foreach ($loket as $key => $item)
                         <div class="col-4 ">
-                            <div class="row glass mx-1 mb-3">
-                                <div class="background-red-pasker d-block w-100 text-center  header-content-active"
+                            <div class="mx-1 mb-3 row glass">
+                                <div class="text-center background-red-pasker d-block w-100 header-content-active"
                                 >
                                     {{ $item }}
                                 </div>
-                                <div class="content-active-token content-loket text-center w-100 " id="loket_{{ $key }}">
+                                <div class="text-center content-active-token content-loket w-100 " id="loket_{{ $key }}">
 
                                 </div>
 
@@ -67,7 +67,7 @@
                 </div>
             </div>
 
-            <div class="col-6 glass videoarea d-block rounded">
+            <div class="rounded col-6 glass videoarea d-block">
                 <div class="plyr__video-embed" id="player">
                   <iframe
                     src="https://www.youtube.com/embed/bTqVqk7FSmY?autoplay=1&mute=1"

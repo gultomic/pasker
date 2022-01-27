@@ -15,10 +15,20 @@ class StafPelayanan extends Component
     public $loketAktif = null;
     public $loketList = [];
     public $pelayanan;
+    public $looking;
 
     public function mount()
     {
         $this->pelayanan = \App\Models\Pelayanan::find($this->pid);
+
+        $loket = Config::where('title', 'loket_aktif')
+            ->first()->refs
+            ->where('pelaksana', '=', Auth::user()->profile->refs['fullname'])
+            ->where('tanggal', '=', Carbon::now()->format('Y-m-d'))
+            ->pluck('nama');
+
+        if (count($loket) > 0)
+            $this->loketAktif = $loket[0];
         // $this->loketList = Config::where('title', 'loket_pelayanan')->first()->refs;
     }
 
@@ -30,6 +40,7 @@ class StafPelayanan extends Component
             'collection' => PJ::where('pelayanan_id', $this->pid)
                 ->where('tanggal', '=', $date)
                 ->where('refs->antrian', '!=', "")
+                ->where('refs->status', '!=', 'selesai')
                 ->orderBy("refs->antrian")
                 ->get(),
             'date' => $date,
@@ -39,15 +50,20 @@ class StafPelayanan extends Component
     public function setAction($id, $act)
     {
         $item = PJ::find($id);
+
+        if ( $act == 'selesai' || $act == 'berjalan')
+            $item->pelaksana_id = Auth::user()->id;
+
         $item->refs['status'] = $act;
         $item->save();
 
-        if($act == 'panggil') {
+        if ($act == 'panggil') {
             ($item->klien_id != null)
                 ? $name = $item->pengunjung->name
                 : $name = '---';
 
-            $keys = array_keys($this->loketList->toArray(), $this->loketAktif);
+            $loket = Config::where('title', 'loket_pelayanan')->first()->refs;
+            $keys = array_keys($loket->toArray(), $this->loketAktif);
 
             event(new QueuesService([
                 'index' => $keys[0],
