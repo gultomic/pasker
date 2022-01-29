@@ -1,20 +1,11 @@
-<x-card-content class="bg-blue-400">
-    <x-slot name="cardHeader">
-        <div class="flex items-center justify-between gap-6 pb-2">
-            <div>
-                ...
-            </div>
-
-            <div>
-                +++
-            </div>
-        </div>
-    </x-slot>
+<x-card-content class="bg-white intro-x">
+    {{-- <x-slot name="cardHeader">
+    </x-slot> --}}
 
     <x-slot name="contentSection">
         <div class="overflow-x-auto">
-            <table class="w-full table-auto">
-                <thead class="text-xs text-gray-500 uppercase">
+            <table class="table">
+                <thead class="text-xs uppercase">
                     <tr>
                         <th class="p-2 bg-gray-200 rounded-l-lg">
                             <div class="font-semibold text-left">Nama</div>
@@ -31,9 +22,9 @@
                     </tr>
                 </thead>
 
-                <tbody class="font-medium divide-y divide-sky-500">
+                <tbody class="font-medium divide-y">
                     @foreach ($collection as $item)
-                        <tr>
+                        <tr class="hover:bg-gray-200 intro-x">
                             <td class="p-2">
                                 <div class="text-left">{{ $item->name }}</div>
                             </td>

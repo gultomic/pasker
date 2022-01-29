@@ -2,5 +2,5 @@
 @section('header', $header)
 
 <x-midone-layout>
-    <livewire:akun>
+    <livewire:kuesioner key="parent" :pelayanan="$id">
 </x-midone-layout>

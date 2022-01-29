@@ -1,6 +1,6 @@
 @section('title', $title)
 @section('header', $header)
 
-<x-app-layout>
-    <livewire:pelayanan>
-</x-app-layout>
+<x-midone-layout>
+    <livewire:pelayanan key="parent">
+</x-midone-layout>

@@ -1,4 +1,4 @@
-@include('midone/layout/components/mobile-menu')
+{{-- @include('midone/layout/components/mobile-menu') --}}
 <!-- BEGIN: Simple Menu -->
 <nav class="side-nav">
     <a href="/" class="flex items-center lg:p-4 intro-x">

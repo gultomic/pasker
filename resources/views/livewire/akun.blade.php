@@ -1,4 +1,4 @@
-<x-card-content class="bg-blue-400">
+<x-card-content class="bg-white intro-x">
     <x-slot name="cardHeader">
         <div class="flex items-center justify-between gap-6 pb-2">
             <div>
@@ -13,27 +13,27 @@
 
     <x-slot name="contentSection">
         <div class="overflow-x-auto">
-            <table class="w-full table-auto">
-                <thead class="text-xs text-gray-500 uppercase">
+            <table class="table">
+                <thead class="text-xs uppercase">
                     <tr>
-                        <th class="p-2 bg-gray-200 rounded-l-lg">
+                        <th class="p-2 bg-gray-300 rounded-l-lg">
                             <div class="font-semibold text-left">Email</div>
                         </th>
-                        <th class="p-2 bg-gray-200">
+                        <th class="p-2 bg-gray-300">
                             <div class="font-semibold text-center">Username</div>
                         </th>
-                        <th class="p-2 bg-gray-200">
+                        <th class="p-2 bg-gray-300">
                             <div class="font-semibold text-center">Telp</div>
                         </th>
-                        <th class="p-2 bg-gray-200 rounded-r-lg">
+                        <th class="p-2 bg-gray-300 rounded-r-lg">
                             <div class="font-semibold text-center">Aksi</div>
                         </th>
                     </tr>
                 </thead>
 
-                <tbody class="font-medium divide-y divide-gray-400">
+                <tbody class="font-medium divide-y">
                     @foreach ($collection as $item)
-                        <tr>
+                        <tr class="hover:bg-gray-200 intro-x">
                             <td class="p-2">
                                 <div class="text-left">{{ $item->email }}</div>
                             </td>
