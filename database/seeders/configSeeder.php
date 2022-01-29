@@ -48,5 +48,57 @@ class configSeeder extends Seeder
                 ],
             ]
         ]);
+
+        // LOKET JAM PELAJAYANAN
+        //MINGGU is 0 OF DAY OF WEEK NUMBER
+
+        Config::create([
+            'title' => 'loket_jam',
+            'refs' => [
+                [
+                    'jam_buka' => '09:00',
+                    'jam_tutup' => '15:00',
+                    'kuota_per_jam' => '5',
+                    'libur'=>1
+                ],
+                [
+                    'jam_buka' => '09:00',
+                    'jam_tutup' => '15:00',
+                    'kuota_per_jam' => '5',
+                    'libur'=>0
+                ],
+                [
+                    'jam_buka' => '09:00',
+                    'jam_tutup' => '15:00',
+                    'kuota_per_jam' => '5',
+                    'libur'=>0
+                ],
+                [
+                    'jam_buka' => '09:00',
+                    'jam_tutup' => '15:00',
+                    'kuota_per_jam' => '5',
+                    'libur'=>0
+                ],
+                [
+                    'jam_buka' => '09:00',
+                    'jam_tutup' => '15:00',
+                    'kuota_per_jam' => '5',
+                    'libur'=>0
+                ],
+                [
+                    'jam_buka' => '09:00',
+                    'jam_tutup' => '11:00',
+                    'kuota_per_jam' => '5',
+                    'libur'=>0
+                ],
+                [
+                    'jam_buka' => '09:00',
+                    'jam_tutup' => '15:00',
+                    'kuota_per_jam' => '5',
+                    'libur'=>1
+                ],
+
+            ]
+        ]);
     }
 }

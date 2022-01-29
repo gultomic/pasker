@@ -116,6 +116,10 @@ img.mascot-bottom-signage{
     color: #FA8334;
 }
 
+.text-red-pasker-light {
+    color: #f64e4e;
+}
+
 .modal-kiosk .modal-footer {
     /* justify-content: center; */
 }
@@ -287,4 +291,16 @@ padding: 3rem;
     font-weight: 500;
 }
 
+#registration_form label.error{
+    font-size: 0.7rem;
+    background-color: #d34926;
+    padding: 6px 10px;
+    margin-top: 5px;
+}
+
+.link-site a{
+    color: #15406A;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
 

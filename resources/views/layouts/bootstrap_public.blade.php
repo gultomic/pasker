@@ -33,6 +33,10 @@
                 <div class="row mb-3">
                     <div class="col-6 col-md">
                         <img class="mb-2" src="/assets/logo_blue.png" alt="" width="200">
+                        <div class="link-site pl-3 mt-3">
+                            <a class="d-block mb-2" href="https://kemnaker.go.id/" target="_blank"><i class="bi bi-globe"></i>&nbsp;<u>Kemnaker.go.id</u></a>
+                            <a class="d-block" href="https://karirhub.kemnaker.go.id/" target="_blank"><i class="bi bi-globe"></i>&nbsp;<u>#KARIRhub</u></a>
+                        </div>
                     </div>
                     <div class="col-6 col-md text-secondary">
                         <h5 class="text-pasker">Pasker ID</h5>

@@ -1,9 +1,4 @@
 @extends('layouts.bootstrap_public')
-
-{{-- todo: add loading scene --}}
-{{-- todo: add validation input phone  --}}
-{{-- todo: ajax call list pelayanan  --}}
-
 @section('content')
 <div class="container-fluid hero-home pb-5">
     <div class=" d-flex justify-content-between mt-3">
@@ -66,19 +61,30 @@
         <div class="modal-content px-5">
             <div class="modal-body text-center">
 
+                <div class="row text-center justify-content-center spinnerkiosk-online" style="display: none">
+                    <div class=" spinner-border text-success" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+
                 <div class="py-5 step-state" id="init-state">
                     <h2 class="text-center text-pasker ">Masukkan No. Handphone</h2>
                     <p class="text-center">Masukkan No. Handphone yang anda daftarkan pada saat registrasi online</p>
-
-                    <div class="input-group input-group w-100 ">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="inputGroup-sizing-sm" >+62</span>
-                        </div>
+                    <div class="alert alert-danger phonenot0" style="display: none;font-size: 0.9rem">
+                        No Handphone harus diawali dengan angka 0
+                    </div>
+                    <div class="input-phone-area">
                         <input data-kioskboard-type="numpad" type="number" id="phone" class="form-control js-num-virtual-keyboard"
-                        placeholder="Masukkan No Handphone">
+                            placeholder="Masukkan No Handphone diawali">
+{{--                        <div class="input-group input-group w-100 ">--}}
+{{--                            <div class="input-group-prepend">--}}
+{{--                                <span class="input-group-text" id="inputGroup-sizing-sm" >+62</span>--}}
+{{--                            </div>--}}
+{{--                            --}}
+{{--                        </div>--}}
                     </div>
 
-                    <button id="submit-phone" data-href="{{route('kiosk.submit_phone')}}" class="btn btn-pasker-main btn-lg text-white mt-4">SUBMIT</button>
+                    <button id="submit-phone" disabled data-href="{{route('kiosk.submit_phone')}}" class="btn btn-pasker-main btn-lg text-white mt-4">SUBMIT</button>
                 </div>
 
 
@@ -127,6 +133,7 @@
                 </button>
             </div> --}}
             <div class="modal-body text-center">
+
                 <div class="py-5 step-state" id="pick-layanan-state">
                     <h2 class="text-center text-pasker ">Pilih Layanan</h2>
                     <p class="text-center">Silahkan pilih layanan yang ingin anda ambil</p>
@@ -140,7 +147,12 @@
                             </div>
                             @endforeach
                         </div> --}}
-                        <div class="row text-center justify-content-center">
+                        <div class="row text-center justify-content-center spinnerkiosk-offline" style="display: none">
+                            <div class=" spinner-border text-success" role="status">
+                              <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                        <div class="row text-center justify-content-center list-layanan-active">
                             @foreach ($pelayanan as $item)
 
                             <span class="col-md-3 text-center item-pelayanan text-uppercase ml-4 py-5 pt-5 rounded"
@@ -277,12 +289,15 @@
 
         KioskBoard.run('.js-num-virtual-keyboard');
 
+
         $('#online-btn').on('click',function(){
             $('#onlineModal').modal('show')
 
         })
 
+
         $('#onlineModal').on('shown.bs.modal', function (e) {
+            $( "#submit-phone" ).prop( "disabled", true );
             $('.modal-kiosk .step-state').hide();
             $('.modal-kiosk .step-state#init-state').show();
             $('#phone').removeClass('active').addClass('active');
@@ -316,70 +331,129 @@
             }, 1000)
         }
 
+        function onLoadingKioskButton(status,location) {
+            if(status=='on'){
+                $('.spinnerkiosk-'+location).show()
+                $('.list-layanan-active').hide();
+            }else{
+                $('.spinnerkiosk-'+location).hide()
+                $('.list-layanan-active').show();
+            }
+
+            if(location == 'online'){
+                setTimeout(function () {
+                    $('#phone').focus();
+                }, 500);
+
+
+
+            }
+
+        }
+
         //submit online
+
+        document.getElementById("phone").addEventListener("change", (e) => {
+            var value = document.getElementById("phone").value;
+
+            if(value.substr(0,1)!="0" || value.length <=0){
+                $('.phonenot0').show()
+                $( "#submit-phone" ).prop( "disabled", true );
+            }else{
+                $('.phonenot0').hide()
+                $( "#submit-phone" ).prop( "disabled", false );
+            }
+
+
+            //console.log(document.getElementById("phone").value);
+        });
+
+
         $('#submit-phone').on('click',function(e){
 
             //e.preventDefault();
+            //this.prop( "disabled", true );
             let action = $(this).data('href');
             let phone = $('#phone').val();
             //todo: ganti dengan notify biar lebih gede tombol nya
             if(phone==""){
+                onLoadingKioskButton('off','online');
                 alert('Masukkan No Handphone')
                 return
             }
-            //todo : disable enable
+            if(phone.substr(0,1)!='0'){
+                // console.log(phone.substr(0,1))
+
+                alert('No Handphone harus diawali dengan 0')
+                $('#phone').val('');
+
+                onLoadingKioskButton('off','online');
+                return
+            }
+
 
             //$('.modal-kiosk .step-state').hide();
             // $('.modal-kiosk .step-state#error-state').show();
+
+            onLoadingKioskButton('on','online');
             axios.post(action, {
                 phone: phone
             })
             .then(function (response) {
                 //todo: handle ajax error with SAlert
-                console.log(response.data);
+
                 // return
                 if(response.data.success == 1){
                     //this is not found data
+                    onLoadingKioskButton('off','online');
                     statePrint(response.data.noAntrian);
                     return
                 }else{
+                    onLoadingKioskButton('off','online');
                     stateNotFoundData();
                     return
                 }
             })
             .catch(function (error) {
-                console.log(error);
+                alert('Terjadi kesalahan silahkan ulangi')
+                onLoadingKioskButton('off','online');
+
+            }).then(function (){
+                onLoadingKioskButton('off','online');
             });
         })
 
-        $('.item-pelayanan').on('click',function(e){
+        $('.modal-kiosk').on('click','.item-pelayanan',function(e){
 
             //e.preventDefault();
             let action = $('#kiosk-submit-url').val();
             let pelayananId = $(this).data('pelayanan');
 
-
+            onLoadingKioskButton('on','offline');
             axios.post(action, {
                 pelayanan_id: pelayananId
             })
             .then(function (response) {
                 //todo: handle ajax error with SAlert
-                console.log(response.data);
+                onLoadingKioskButton('off','offline');
                 // return
                 if(response.data.success == 1){
                     //this is not found data
                     statePrint(response.data.noAntrian);
-                    return
                 }
+
             })
             .catch(function (error) {
+                alert('Terjadi kesalahan silahkan ulanagi')
                 console.log(error);
                 console.log(error.response.data.message)
-            });
+            }).then(function (){
+                onLoadingKioskButton('off','offline');
+            })
         })
 
-
         $('#retry-input-phone').on('click',function(){
+            $( "#submit-phone" ).prop( "disabled", true );
             $('.modal-kiosk .step-state').hide();
             $('.modal-kiosk .step-state#init-state').show();
             $('#phone').val('');
@@ -392,15 +466,51 @@
 
         })
 
+        var templatelayanan = function (id,title){
+            return `<span class="col-md-3 text-center item-pelayanan text-uppercase ml-4 py-5 pt-5 rounded"
+                            data-pelayanan="${id}">${title}</span>`;
+        }
+
         $('#offline-btn').on('click',function(){
             $('#offlineModal').modal('show')
+            $('#pick-layanan-state').hide();
+            onLoadingKioskButton('on','offline');
+            $('.list-layanan-active').empty();
+
+            axios.get('{{ route('pelayanan.list.json') }}')
+              .then(function (response) {
+                  onLoadingKioskButton('off','offline');
+                  if(response.data.length <= 0){
+                       $('.list-layanan-active').append('<span class="text-red-pasker-light">Pelayanan tidak ditemukan</span>')
+                  }
+                  for (var i = 0; i < response.data.length; i++) {
+                      $('.list-layanan-active').append(templatelayanan(response.data[i].id,response.data[i].title))
+                  }
+              })
+              .catch(function (error) {
+                // handle error
+
+                  onLoadingKioskButton('off','offline');
+                  $('.list-layanan-active').append('<span class="text-red-pasker-light">Terjadi kesalahan, silahkan ulangi</span>')
+                  return
+
+              })
+              .then(function () {
+                // always executed
+              });
         })
 
         $('#offlineModal').on('shown.bs.modal', function (e) {
             // $('#input-phone-online').focus();
+
+            //get pelayanan active
+
+
             $('#pick-layanan-state').show()
 
         })
+
+
 
 
     });
