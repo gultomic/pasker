@@ -12,7 +12,7 @@
     <!-- END: Breadcrumb -->
     <!-- BEGIN: Account Menu -->
     <div class="w-8 h-8 intro-x dropdown">
-        <div class="w-8 h-8 overflow-hidden rounded-full shadow-lg dropdown-toggle image-fit zoom-in" role="button" aria-expanded="false">
+        <div class="w-8 h-8 overflow-hidden bg-gray-400 rounded-full shadow-lg dropdown-toggle image-fit zoom-in" role="button" aria-expanded="false">
             <i class="text-2xl fas fa-user-cog"></i>
         </div>
         <div class="w-56 dropdown-menu">

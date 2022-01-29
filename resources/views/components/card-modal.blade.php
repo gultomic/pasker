@@ -17,7 +17,7 @@
     x-cloak>
     <div class="relative mx-2 my-10 opacity-100 sm:w-3/4 md:w-1/2 lg:w-1/3 sm:mx-auto">
         <div
-            class="relative z-20 text-gray-900 bg-white shadow-lg rounded-2xl"
+            class="relative z-auto text-gray-900 bg-white shadow-lg rounded-2xl"
             @click.away="showModal = false"
             x-show="showModal"
             x-transition:enter="transition transform duration-300"

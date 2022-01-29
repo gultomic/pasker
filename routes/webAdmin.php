@@ -13,6 +13,14 @@ Route::name('admin.')
             ]);
         })->name('pelayanan');
 
+        Route::get('/pelayanan/{id}/kuesioner', function ($id) {
+            return view('admin.kuesioner', [
+                'title' => 'Kuesioner',
+                'header' => 'Kuesioner Pertanyaan',
+                'id' => $id,
+            ]);
+        })->name('pelayanan.kuesioner');
+
         Route::get('/akun', function () {
             return view('admin.akun', [
                 'title' => 'Akun',
@@ -35,7 +43,7 @@ Route::name('admin.')
         })->name('pengaturan');
 
         Route::get('/pertanyaan', function () {
-            return view('dashboard', [
+            return view('admin.pertanyaan', [
                 'title' => 'Pertanyaan',
                 'header' => 'Daftar Pertanyaan',
             ]);

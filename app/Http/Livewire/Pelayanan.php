@@ -10,10 +10,10 @@ class Pelayanan extends Component
 {
     use WithPagination;
 
-    public $paginate = 10 ;
+    public $paginate = 5 ;
     public $rowId, $title, $kode, $antrian, $deskripsi, $aktif = true;
 
-    public function render()
+    public function render ()
     {
         return view('livewire.pelayanan', [
             'collection' => PE::latest()->paginate($this->paginate)
@@ -29,15 +29,26 @@ class Pelayanan extends Component
         $row->title = $this->title;
         $row->refs = [
             'kode' => $this->kode,
-            'antrian' => $this->antrian,
+            'antrian' => strtoupper($this->antrian),
             'deskripsi' => $this->deskripsi,
             'aktif' => $this->aktif,
         ];
 
         $row->save();
+        $this->resetForm();
+        $this->resetPage();
     }
 
-    public function show($id)
+    public function resetForm ()
+    {
+        $this->title = '';
+        $this->kode = '';
+        $this->antrian = '';
+        $this->deskripsi = '';
+        $this->aktif = true;
+    }
+
+    public function show ($id)
     {
         if($id != '') {
             $row = PE::find($id);
@@ -55,5 +66,10 @@ class Pelayanan extends Component
             $this->deskripsi = '';
             $this->aktif = true;
         }
+    }
+
+    public function updated ()
+    {
+      //
     }
 }

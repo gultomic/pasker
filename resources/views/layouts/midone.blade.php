@@ -22,7 +22,7 @@
         <div class="flex">
             @include('layouts.sidenav')
             <!-- BEGIN: Content -->
-            <div class="content">
+            <div class="content" style="min-height: auto;">
                 @include('layouts.topbar')
                 {{ $slot }}
             </div>
@@ -30,8 +30,8 @@
         </div>
 
         <!-- Scripts -->
+        @livewireScripts
         <script src="{{ asset('midone/dist/js/app.js') }}"></script>
         @stack('script')
-        @livewireScripts
     </body>
 </html>
