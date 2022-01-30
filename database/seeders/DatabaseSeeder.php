@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             userSeeder::class,
             configSeeder::class,
             pelayananSeeder::class,
+            pertanyaanSeeder::class,
             klienSeeder::class,
         ]);
     }

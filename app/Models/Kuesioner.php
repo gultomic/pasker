@@ -25,4 +25,9 @@ class Kuesioner extends Model
     {
         return $this->belongsTo(Pertanyaan::class, 'pertanyaan_id', 'id');
     }
+
+    public function survei()
+    {
+        return $this->hasMany(Survei::class, 'kuesioner_id', 'id');
+    }
 }
