@@ -14,7 +14,7 @@ class DashboardController extends Controller
 
         switch ($level) {
             case 'master':
-                $view = 'dashboard';
+                $view = 'admin.dashboard';
                 $data = '';
                 break;
             case 'staf':

@@ -21,6 +21,15 @@ Route::name('admin.')
             ]);
         })->name('pelayanan.kuesioner');
 
+        Route::get('/pelayanan/{id}/history', function ($id) {
+            return view('pelayanan.history', [
+                'title' => 'History',
+                'header' => 'Riwayat Pengunjung',
+                'id' => $id,
+            ]);
+        }
+        )->name('pelayanan.history');
+
         Route::get('/akun', function () {
             return view('admin.akun', [
                 'title' => 'Akun',

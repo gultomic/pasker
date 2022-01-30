@@ -49,7 +49,8 @@ class CreateInitialsTables extends Migration
         });
 
         Schema::create('pelayanan_jadwal', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            // $table->uuid('id')->primary();
+            $table->id();
             $table->unsignedBigInteger('pelayanan_id');
             $table->unsignedBigInteger('klien_id')->nullable();
             $table->unsignedBigInteger('pelaksana_id')->nullable();
@@ -85,9 +86,14 @@ class CreateInitialsTables extends Migration
         });
 
         Schema::create('survei', function (Blueprint $table) {
+            // $table->char('jadwal_id', 36);
             $table->unsignedBigInteger('jadwal_id');
             $table->unsignedBigInteger('kuesioner_id');
-            $table->unsignedInteger('point');
+            $table->double('skor', 3, 2);
+            $table->index([
+                'jadwal_id',
+                'kuesioner_id',
+            ]);
         });
     }
 

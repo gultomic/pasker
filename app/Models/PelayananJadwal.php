@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
-use App\Traits\Uuid;
+// use App\Traits\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Casts\AsCollection;
 
 class PelayananJadwal extends Model
 {
-    use Uuid, SoftDeletes;
+    // use Uuid;
+    use SoftDeletes;
 
     protected $table = 'pelayanan_jadwal';
-    protected $keyType = 'uuid';
+    // protected $keyType = 'string';
+    // protected $primaryKey = 'uuid';
     // protected $guarded = [];
     // protected $fillable = [];
     protected $casts = [
@@ -23,7 +25,7 @@ class PelayananJadwal extends Model
         'deleted_at' => 'datetime:Y-m-d H:i:s',
     ];
 
-    public $incrementing = false;
+    // public $incrementing = false;
 
     public function pengunjung()
     {
@@ -33,6 +35,11 @@ class PelayananJadwal extends Model
     public function pelayanan()
     {
         return $this->belongsTo(Pelayanan::class, 'pelayanan_id', 'id');
+    }
+
+    public function survei()
+    {
+        return $this->hasMany(Survei::class, 'jadwal_id', 'id');
     }
 
     public function getCreatedAtAttribute($value)

@@ -118,10 +118,15 @@
                                     </button>
 
                                     <a href="{{ route('admin.pelayanan.kuesioner', ['id' => $item->id]) }}"
-                                        class="flex items-center font-light"
-                                        >
+                                        class="flex items-center font-light">
                                         <i data-feather="file-text" class="block w-4 mr-0.5 mx-auto"></i>
                                         Kuesioner
+                                    </a>
+
+                                    <a href="{{ route('admin.pelayanan.history', ['id' => $item->id]) }}"
+                                        class="flex items-center font-light text-theme-9">
+                                        <i data-feather="anchor" class="block w-4 mr-0.5 mx-auto"></i>
+                                        Riwayat
                                     </a>
                                 </div>
                             </td>

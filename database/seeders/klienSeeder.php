@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Models\Klien;
 use App\Models\Pelayanan;
 use App\Models\PelayananJadwal as PJ;
+use App\Models\Survei;
 
 class klienSeeder extends Seeder
 {
@@ -20,7 +21,7 @@ class klienSeeder extends Seeder
     {
         $this->klien();
         $this->jadwal();
-        $this->antrian();
+        $this->antrianHariIni();
     }
 
     public function klien()
@@ -40,30 +41,77 @@ class klienSeeder extends Seeder
     public function jadwal()
     {
         PJ::truncate();
+        Survei::truncate();
 
         $pel = Pelayanan::all();
         $klien = Klien::count();
 
-        $w = Carbon::now()->subDays(7)->startOfWeek();
-        for ($i=1; $i <= 5 ; $i++) {
-            foreach ($pel as $p) {
-                for ($n=1; $n <= $p->refs['antrian'] ; $n++) {
-                    PJ::create([
-                        'pelayanan_id' => $p->id,
-                        'klien_id' => rand(1, $klien),
-                        'pelaksana_id' => rand(1, 3),
-                        'tanggal' => $w->format('Y-m-d'),
-                        'refs' => [
-                            'antrian' => $p->refs['kode'] . sprintf('%03d', $n),
-                        ],
-                    ]);
+        $w = Carbon::now()->startOfMonth()->subMonths(2);
+        for ($m=1; $m <= 9 ; $m++) {
+            for ($i=1; $i <= 5 ; $i++) {
+                foreach ($pel as $p) {
+                    $x;
+                    $f =  $p->refs['antrian'] / 3;
+                    $j = rand(5, floor($f) * 2);
+                    for ($n=1; $n <= $j ; $n++) {
+                        $c = PJ::create([
+                            'pelayanan_id' => $p->id,
+                            'klien_id' => rand(1, $klien),
+                            'pelaksana_id' => rand(1, 3),
+                            'tanggal' => $w->format('Y-m-d'),
+                            'refs' => [
+                                'antrian' => $p->refs['kode'] . sprintf('%03d', $n),
+                                'status' => 'selesai',
+                                'daftar' => 'online'
+                            ],
+                        ]);
+                        $x = $n;
+
+                        foreach ($p->kuesioner as $k) {
+                            # code...
+                            survei::create([
+                                'jadwal_id' => $c->id,
+                                'kuesioner_id' => $k->id,
+                                'skor' => rand(1, 3)
+                            ]);
+                            // echo $k->pertanyaan_id . "\r";
+                        }
+                    }
+
+                    $g = rand(5, floor($f));
+                    for ($n=1; $n <= $g ; $n++) {
+                        $x++;
+                        $c = PJ::create([
+                            'pelayanan_id' => $p->id,
+                            'klien_id' => rand(50, $klien),
+                            'pelaksana_id' => rand(1, 3),
+                            'tanggal' => $w->format('Y-m-d'),
+                            'refs' => [
+                                'antrian' => $p->refs['kode'] . sprintf('%03d', $x),
+                                'status' => 'selesai',
+                                'daftar' => 'goshow'
+                            ],
+                        ]);
+
+                        foreach ($p->kuesioner as $k) {
+                            # code...
+                            survei::create([
+                                'jadwal_id' => $c->id,
+                                'kuesioner_id' => $k->id,
+                                'skor' => rand(1, 3)
+                            ]);
+                            // echo $k->pertanyaan_id . "\r";
+                        }
+                    }
                 }
+                echo $w." \r";
+                $w->addDays(1);
             }
-            $w->addDays(1);
+            $w->addDays(2);
         }
     }
 
-    public function antrian()
+    public function antrianHariIni()
     {
         $pel = Pelayanan::all();
         $klien = Klien::count();
