@@ -12,7 +12,7 @@
             <div class="flex flex-wrap gap-3 pb-4">
                 <div>Total pengunjung: {{ number_format($tope, 0, ',', '.') }}</div>
                 <div>Total survei: {{ number_format($tosu, 0, ',', '.') }}</div>
-                <div>Tingkat kepuasan: {{ round((($avsk/3)/$juso) * 100) }} %</div>
+                <div>Indeks kepuasan: {{ round((($avsk/3)/$juso) * 100) }} %</div>
                 <div>Skor: {{ number_format($tosk, 0, ',', '.') }}</div>
                 <div>{{ $avsk }}</div>
             </div>

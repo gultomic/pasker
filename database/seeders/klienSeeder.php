@@ -72,7 +72,7 @@ class klienSeeder extends Seeder
                             survei::create([
                                 'jadwal_id' => $c->id,
                                 'kuesioner_id' => $k->id,
-                                'skor' => rand(1, 3)
+                                'skor' => 3
                             ]);
                             // echo $k->pertanyaan_id . "\r";
                         }
