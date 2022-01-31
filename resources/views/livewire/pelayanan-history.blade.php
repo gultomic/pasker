@@ -14,6 +14,7 @@
                 <div>Total survei: {{ number_format($tosu, 0, ',', '.') }}</div>
                 <div>Tingkat kepuasan: {{ round((($avsk/3)/$juso) * 100) }} %</div>
                 <div>Skor: {{ number_format($tosk, 0, ',', '.') }}</div>
+                <div>{{ $avsk }}</div>
             </div>
 
             @if ($collection->count() > 0)
