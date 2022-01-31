@@ -24,13 +24,15 @@ class userSeeder extends Seeder
 
         $faker = Faker::create('id_ID');
         $stafs = [
-            'staf', 'user', 'demo'
+            ['nama'=>'staf','photo'=>'young-man.png'],
+            ['nama'=>'user','photo'=>'beauty.png'],
+            ['nama'=>'demo','photo'=>'beard.png']
         ];
 
         foreach ($stafs as $key => $value) {
             $x = User::create([
-                'username'=>$value,
-                'email'=>"$value@example.com",
+                'username'=>$value['nama'],
+                'email'=>$value['nama']."@example.com",
                 'phone'=>$faker->numerify('08##########'),
                 'password'=> Hash::make('login123'),
                 'email_verified_at'=>\Carbon\Carbon::now(),
@@ -42,7 +44,7 @@ class userSeeder extends Seeder
             $x->profile()->create([
                 'refs'=>[
                     'fullname'=>$faker->name(),
-                    'photo'=>'/assets/uploads/beard.png',
+                    'photo'=>"/assets/uploads/".$value['photo'],
                 ]
             ]);
         }

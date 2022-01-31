@@ -18,18 +18,22 @@ class Pelayanan extends Model
         'refs' => AsCollection::class,
     ];
 
-    public function kuesioner()
+    public function kuesioner ()
     {
         return $this->hasMany(Kuesioner::class, 'pelayanan_id', 'id');
     }
 
-    public function pengunjung()
+    public function jadwal ()
     {
-        return $this->hasMany(PelayananJadwal::class, 'pelayanan_id', 'id')
-            ->whereNotNull('pelaksana_id');
+        return $this->hasMany(PelayananJadwal::class, 'pelayanan_id', 'id');
     }
 
-    public function antrianHariIni()
+    public function pengunjung ()
+    {
+        return $this->jadwal()->whereNotNull('pelaksana_id');
+    }
+
+    public function antrianHariIni ()
     {
         return $this->pengunjung()
             ->where('tanggal', '=', Carbon::now()->format('Y-m-d'))
