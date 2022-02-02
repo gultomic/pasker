@@ -35,10 +35,7 @@ class Pelayanan extends Model
 
     public function antrianHariIni ()
     {
-        return $this->pengunjung()
-            ->where('tanggal', '=', Carbon::now()->format('Y-m-d'))
-            // ->where('refs->antrian', '!=', null)
-            // ->orderBy('refs->antrian', 'asc')
-            ;
+        return $this->jadwal()
+            ->where('tanggal', '=', Carbon::now()->format('Y-m-d'));
     }
 }

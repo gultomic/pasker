@@ -32,6 +32,7 @@
 
         <!-- Scripts -->
         @livewireScripts
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
         <script src="{{ asset('midone/dist/js/app.js') }}"></script>
         @stack('script')
     </body>
