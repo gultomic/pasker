@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use App\Models\Pelayanan;
+use App\Models\PelayananJadwal as PE;
 use App\Models\Config;
 use App\Models\User;
 use Carbon\Carbon;
 use Auth;
+use DB;
 
 class DashboardController extends Controller
 {
@@ -23,6 +25,8 @@ class DashboardController extends Controller
                     'pelayanan' => $this->adminPelayanan(),
                     'loket' => $this->adminLoket(),
                     'staf' => $this->adminStaf(),
+                    'status' => Pelayanan::latest()->where('refs->aktif', '=', true)->get(),
+                    'chart' => $this->adminChart(),
                 ];
                 break;
             case 'staf':
@@ -53,7 +57,8 @@ class DashboardController extends Controller
                 'id' => $q->id,
                 'title' => $q->title,
                 'status' => $q->refs['aktif'],
-                'pengunjung' => number_format($q->pengunjung->count(), 0, ',', '.'),
+                'pengunjung' => $q->pengunjung->count(),
+                // 'pengunjung' => number_format($q->pengunjung->count(), 0, ',', '.'),
                 'kepuasan' => round($p),
             ];
         })->all();
@@ -114,6 +119,23 @@ class DashboardController extends Controller
 
             // dd($data);
             return $data;
+    }
+
+    public function adminChart ()
+    {
+        $data = [
+            'bar' => PE::all()
+                ->groupBy('tanggal')
+                // ->groupBy(function($d) {
+                //     return Carbon::parse($d->tanggal)->format('Y-m');
+                // })
+                ->mapWithKeys(function($q, $k) {
+                    return [$k => $q->count()];
+                }),
+            'pie' => $this->adminPelayanan(),
+        ];
+        // dd($pie);
+        return $data;
     }
 
     public function stafPelayanan ()
