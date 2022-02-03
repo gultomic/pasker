@@ -3,7 +3,7 @@
         <div class="mt-3  d-flex justify-content-between">
             <div class="pt-3 text-left col">
                 <div class="row">
-                    <div class="ml-5 col-6 ">
+                    <div class="ml-5 col-6 " id="logopasker">
                         <img class="img-fluid" src="/assets/logo_light.png" alt="">
                     </div>
                 </div>
@@ -79,10 +79,31 @@
             </div>
 
         </div>
+
+
+
+
+
+
         <img class="mascot-bottom-kiosk mascot-bottom" src="/assets/pose01_preview_small.png">
     </div>
     @push('scripts')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.core.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.spatial.min.js"></script>
         <script>
+
+            $(function(){
+                $("#logopasker").trigger("click");
+            })
+
+            var sound_test = new Howl({
+                src: '{{asset('/assets/suara_antrian/def_noantrian.wav')}}',
+                preload: true,
+                onend: function () {
+
+                }
+            })
+
 
             Echo.channel('QueuesEvent')
                 .listen('QueuesService', (e) => {
@@ -91,8 +112,128 @@
                     document.querySelector(`#loket_${e.collection.index}`).innerHTML = e.collection.token
                     //document.querySelector(`#name_${e.collection.index}`).innerHTML = e.collection.name
                     document.querySelector('#call_token').innerHTML = e.collection.token
-                    document.querySelector(`#call_loket`).innerHTML = e.collection.index+1
+                    document.querySelector(`#call_loket`).innerHTML = e.collection.index + 1
+                    startCallAntrian(e.collection.token.replace(/\s/g, ''),e.collection.index+1);
+
                 })
+
+            var list_nomor = [];
+
+            for (let i = 0; i < 10; i++) {
+                list_nomor.push(`/assets/suara_antrian/angka/${i}.wav`)
+                // more statements
+            }
+
+            var list_abjad = [];
+
+            for (let i = 0; i < 26; i++) {
+                list_abjad.push(`/assets/suara_antrian/abjad/abjad_${i}.wav`)
+                // more statements
+            }
+            //console.log(list_nomor);
+
+
+            var soundNomor = []
+
+            for (const x in list_nomor) {
+                // console.log(list_nomor[x]);
+                var sound = new Howl({
+                    src: [list_nomor[x]],
+                    autoplay: false,
+                    onload: function () {
+
+                    }
+                });
+
+                soundNomor.push(sound)
+            }
+
+            var soundAbjad = []
+
+            for (const x in list_abjad) {
+                // console.log(list_nomor[x]);
+                var sound = new Howl({
+                    src: [list_abjad[x]],
+                    autoplay: false,
+                    onload: function () {
+
+                    }
+                });
+
+                soundAbjad.push(sound)
+            }
+            const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
+
+            function startCallAntrian(noAntrian,noLoket){
+
+
+                var arrNoAntrian = [];
+                for (var i = 0; i < noAntrian.length; i++) {
+                    arrNoAntrian.push(noAntrian[i]);
+                }
+
+                // console.log(arrNoAntrian);
+                var list = [];
+                list.push(soundAbjad[alphabet.indexOf(arrNoAntrian[0].toLowerCase())]);
+                for (let i = 1; i < arrNoAntrian.length; i++) {
+                    list.push(soundNomor[parseInt(arrNoAntrian[i])])
+                }
+
+
+                var sound_pre = new Howl({
+                    src: '{{asset('/assets/suara_antrian/def_noantrian.wav')}}',
+                    preload: true,
+                    onend: function () {
+                        noantrianSound(0, list, false)
+                    }
+                })
+
+                var silakankeloket = new Howl({
+                    src: '{{asset('/assets/suara_antrian/def_silakan.wav')}}',
+                    preload: true,
+                    onend: function () {
+                        soundNomor[noLoket].play()
+                        //noantrianSound(0, list_loket, true)
+                    }
+                })
+
+                function noantrianSound(i, list, end) {
+                    //console.log(list[i])
+                    //console.log(i)
+                    if ((i + 1) == list.length) {
+                        //autoplay(0, list)
+                        if (!end) {
+                            setTimeout(function () {
+                                silakankeloket.play()
+                            }, 900)
+                        }
+                    } else {
+                        //setTimeout(myGreeting, 5000);
+                        setTimeout(function () {
+                            noantrianSound(i + 1, list)
+                        }, 700)
+                        //console.log(list.length)
+                    }
+                    list[i].play();
+                    // console.log(i)
+                    // console.log(list.length)
+                }
+
+                //START CALL
+                sound_pre.play()
+
+            }
+
+
+            $('body').on('click', function () {
+                // console.log(soundAll[0])
+                // console.log(soundAll)
+                // alert('sfd')
+                sound_test.play()
+                // console.log(soundAll)
+            })
+
+
         </script>
     @endpush
 </x-signage-layout>
