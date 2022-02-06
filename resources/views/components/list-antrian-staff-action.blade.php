@@ -55,11 +55,14 @@ $cleanType = strtolower(str_replace(' ', '', $title));
                             @endif
 
                             @if (in_array("pending", $btnActive))
+                                @if($cleanType == "berjalan" && $item->pelaksana_id != auth()->user()->id)
+                                @else
                                 <button title="pending"
                                         wire:click='setAction("{{ $item->id }}","pending")'
                                         class="btn btn-warning mr-1 mb-2">
                                     <i class="bi bi-stopwatch"></i>
                                 </button>
+                                @endif
                             @endif
 
                             @if (in_array("proses", $btnActive))
@@ -74,12 +77,15 @@ $cleanType = strtolower(str_replace(' ', '', $title));
                             @endif
 
                             @if (in_array("absent", $btnActive))
+                                @if($cleanType == "berjalan" && $item->pelaksana_id != auth()->user()->id)
+                                @else
                                 <button title="Tidak Hadir"
                                         onclick="confirm('Yakin ingin menyatakan pengunjung tidak hadir ?') || event.stopImmediatePropagation()"
                                         wire:click='setAction("{{ $item->id }}","tidak_hadir")'
                                         class="btn btn-danger mr-1 mb-2">
                                     <i class="bi bi-person-x-fill"></i>
                                 </button>
+                                @endif
                             @endif
                         </div>
 
@@ -99,7 +105,7 @@ $cleanType = strtolower(str_replace(' ', '', $title));
                     </div>
                 </div>
                 <div class="text-center whitespace-nowrap text-xs font-medium ">
-                    <div class="uppercase p-1">{{ $item->staff ? $item->staff->name : "-" }}</div>
+                    <div class="uppercase p-1">{{ $item->staff ? $item->staff->profile->refs['fullname'] : "-" }}</div>
                 </div>
                 <div class="text-center whitespace-nowrap text-xs font-medium ">
                     <div class="uppercase p-1">{{ $item->refs['daftar'] }}</div>

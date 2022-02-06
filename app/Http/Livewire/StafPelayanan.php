@@ -107,6 +107,11 @@ class StafPelayanan extends Component
     {
 
         //dd($closeModal);
+        if(empty($this->loketAktif)){
+            return $this->dispatchBrowserEvent('loketIsEmpty');
+        }
+
+
         $item = PJ::find($id);
         $call = false;
         $keys_call = 0;
