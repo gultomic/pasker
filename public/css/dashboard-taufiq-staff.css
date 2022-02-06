@@ -1,0 +1,28 @@
+.text-antrian-call-modal {
+    font-size: 5rem;
+}
+
+
+.blink_me {
+  animation: blinker 1.5s linear infinite;
+}
+
+ @keyframes blinker{
+   0%{
+     opacity: 0;
+   }
+   50%{
+     opacity: 1;
+   }
+   100%{
+     opacity: 0;
+   }
+ }
+
+
+ .text-orange-pasker {
+    color: #d3a826;
+}
+.text-orange-pasker-light {
+    color: #FA8334;
+}

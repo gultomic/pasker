@@ -1,8 +1,9 @@
 <?php
 //TODO : should we update existing client with same phone number ? for now not update current data
-
+//TODO: Refactor code get no atrian from total to get last number
 namespace App\Http\Controllers;
 
+use App\Events\QueuesService;
 use App\Models\Config;
 use App\Models\Klien;
 use Illuminate\Http\Request;
@@ -185,7 +186,7 @@ class RegistrationController extends Controller
         $newPJ->save();
 
 
-
+        event(new QueuesService(['call'=>false]));
 
         return response()->json([
             'success' => 1,

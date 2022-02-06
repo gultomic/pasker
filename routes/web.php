@@ -45,7 +45,7 @@ for ($i = 0; $i < 20; $i++) {
         'foods' => Faker::fakeFoods()
     ];
 }
-    return view('midone.pages.modal',[
+    return view('midone.pages.regular-form',[
         'fakers'=>$fakerData,
         'layout'=>'side-menu'
     ]);

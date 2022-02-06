@@ -32,6 +32,7 @@ class userSeeder extends Seeder
         foreach ($stafs as $key => $value) {
             $x = User::create([
                 'username'=>$value['nama'],
+                'name'=>$faker->name,
                 'email'=>$value['nama']."@example.com",
                 'phone'=>$faker->numerify('08##########'),
                 'password'=> Hash::make('login123'),
@@ -51,6 +52,7 @@ class userSeeder extends Seeder
 
         // ADMIN CREDENTIAL
         $admin = User::create([
+            'name'=>$faker->name,
             'username'=>'admin',
             'email'=>'admin@example.com',
             'phone'=>'084444444',
@@ -70,6 +72,7 @@ class userSeeder extends Seeder
 
         // CREATOR CREDENTIAL
         $master = User::create([
+            'name'=>$faker->name,
             'username'=>'origin',
             'email'=>'origin@example.com',
             'phone'=>'08000000',

@@ -5597,11 +5597,11 @@ select {
 .h-screen {
   height: 100vh;
 }
-.h-16 {
-  height: 4rem;
-}
 .h-10 {
   height: 2.5rem;
+}
+.h-16 {
+  height: 4rem;
 }
 .h-32 {
   height: 8rem;
@@ -5779,6 +5779,14 @@ select {
 }
 .origin-top-right {
   transform-origin: top right;
+}
+.translate-y-4 {
+  --tw-translate-y: 1rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.translate-y-0 {
+  --tw-translate-y: 0px;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 .-rotate-90 {
   --tw-rotate: -90deg;
@@ -6179,13 +6187,13 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
-.bg-green-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
-}
 .bg-gray-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+}
+.bg-green-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
 }
 .bg-blue-500 {
   --tw-bg-opacity: 1;
@@ -6430,11 +6438,11 @@ select {
 .pl-3 {
   padding-left: 0.75rem;
 }
-.pl-10 {
-  padding-left: 2.5rem;
-}
 .pb-10 {
   padding-bottom: 2.5rem;
+}
+.pl-10 {
+  padding-left: 2.5rem;
 }
 .pr-12 {
   padding-right: 3rem;
@@ -6513,6 +6521,9 @@ select {
 }
 .align-middle {
   vertical-align: middle;
+}
+.align-bottom {
+  vertical-align: bottom;
 }
 .font-mono {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -6754,14 +6765,17 @@ select {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.opacity-60 {
-  opacity: 0.6;
-}
 .opacity-0 {
   opacity: 0;
 }
 .opacity-100 {
   opacity: 1;
+}
+.opacity-75 {
+  opacity: 0.75;
+}
+.opacity-60 {
+  opacity: 0.6;
 }
 .shadow-sm {
   --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
@@ -7164,6 +7178,10 @@ select {
   .sm\:col-span-3 {
     grid-column: span 3 / span 3;
   }
+  .sm\:my-8 {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
   .sm\:-mx-6 {
     margin-left: -1.5rem;
     margin-right: -1.5rem;
@@ -7266,6 +7284,9 @@ select {
   .sm\:block {
     display: block;
   }
+  .sm\:inline-block {
+    display: inline-block;
+  }
   .sm\:flex {
     display: flex;
   }
@@ -7274,6 +7295,9 @@ select {
   }
   .sm\:hidden {
     display: none;
+  }
+  .sm\:h-screen {
+    height: 100vh;
   }
   .sm\:h-24 {
     height: 6rem;
@@ -7286,6 +7310,9 @@ select {
   }
   .sm\:h-5 {
     height: 1.25rem;
+  }
+  .sm\:w-full {
+    width: 100%;
   }
   .sm\:w-56 {
     width: 14rem;
@@ -7320,9 +7347,6 @@ select {
   .sm\:w-60 {
     width: 15rem;
   }
-  .sm\:w-full {
-    width: 100%;
-  }
   .sm\:w-64 {
     width: 16rem;
   }
@@ -7340,6 +7364,20 @@ select {
   }
   .sm\:flex-1 {
     flex: 1 1 0%;
+  }
+  .sm\:translate-y-0 {
+    --tw-translate-y: 0px;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+  .sm\:scale-95 {
+    --tw-scale-x: .95;
+    --tw-scale-y: .95;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+  .sm\:scale-100 {
+    --tw-scale-x: 1;
+    --tw-scale-y: 1;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   }
   .sm\:flex-row {
     flex-direction: row;
@@ -7397,6 +7435,9 @@ select {
   }
   .sm\:border-b-0 {
     border-bottom-width: 0px;
+  }
+  .sm\:p-0 {
+    padding: 0px;
   }
   .sm\:px-6 {
     padding-left: 1.5rem;
@@ -7473,6 +7514,9 @@ select {
   }
   .sm\:text-right {
     text-align: right;
+  }
+  .sm\:align-middle {
+    vertical-align: middle;
   }
   .sm\:text-sm {
     font-size: 0.875rem;

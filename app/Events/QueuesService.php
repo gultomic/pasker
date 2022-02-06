@@ -33,7 +33,11 @@ class QueuesService implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('QueuesEvent');
+        return [
+            new Channel('QueuesEvent.signage'),
+            new Channel('QueuesEvent.stafroom.'.$this->collection['pid'])
+        ];
+
         // return new PrivateChannel('channel-name');
     }
 }

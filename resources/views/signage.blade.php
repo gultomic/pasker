@@ -105,15 +105,17 @@
             })
 
 
-            Echo.channel('QueuesEvent')
+            Echo.channel('QueuesEvent.signage')
                 .listen('QueuesService', (e) => {
 
                     console.log(e.collection)
-                    document.querySelector(`#loket_${e.collection.index}`).innerHTML = e.collection.token
-                    //document.querySelector(`#name_${e.collection.index}`).innerHTML = e.collection.name
-                    document.querySelector('#call_token').innerHTML = e.collection.token
-                    document.querySelector(`#call_loket`).innerHTML = e.collection.index + 1
-                    startCallAntrian(e.collection.token.replace(/\s/g, ''),e.collection.index+1);
+                    if(e.collection.call) {
+                        document.querySelector(`#loket_${e.collection.index}`).innerHTML = e.collection.token
+                        //document.querySelector(`#name_${e.collection.index}`).innerHTML = e.collection.name
+                        document.querySelector('#call_token').innerHTML = e.collection.token
+                        document.querySelector(`#call_loket`).innerHTML = e.collection.index + 1
+                        startCallAntrian(e.collection.token.replace(/\s/g, ''), e.collection.index + 1);
+                    }
 
                 })
 
