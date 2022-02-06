@@ -56,7 +56,8 @@
                                 >
                                     {{ $item }}
                                 </div>
-                                <div class="text-center content-active-token content-loket w-100 " id="loket_{{ $key }}">
+                                <div class="text-center content-active-token content-loket w-100 "
+                                     id="loket_{{ $key }}">
 
                                 </div>
 
@@ -70,20 +71,16 @@
 
             <div class="rounded col-6 glass videoarea d-block">
                 <div class="plyr__video-embed" id="player">
-                  <iframe
-                    src="https://www.youtube.com/embed/bTqVqk7FSmY?autoplay=1&mute=1"
-                    allowfullscreen
-                    allowtransparency
-                    allow="autoplay"
-                  ></iframe>
+{{--                    <iframe--}}
+{{--                        src="https://www.youtube.com/embed/bTqVqk7FSmY?autoplay=1&mute=1"--}}
+{{--                        allowfullscreen--}}
+{{--                        allowtransparency--}}
+{{--                        allow="autoplay"--}}
+{{--                    ></iframe>--}}
                 </div>
             </div>
 
         </div>
-
-
-
-
 
 
         <img class="mascot-bottom-kiosk mascot-bottom" src="/assets/pose01_preview_small.png">
@@ -93,7 +90,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.spatial.min.js"></script>
         <script>
 
-            $(function(){
+            $(function () {
                 $("#logopasker").trigger("click");
             })
 
@@ -109,16 +106,51 @@
             Echo.channel('QueuesEvent.signage')
                 .listen('QueuesService', (e) => {
 
-                    console.log(e.collection)
-                    if(e.collection.call) {
+
+                    if (e.collection.call) {
                         document.querySelector(`#loket_${e.collection.index}`).innerHTML = e.collection.token
                         //document.querySelector(`#name_${e.collection.index}`).innerHTML = e.collection.name
                         document.querySelector('#call_token').innerHTML = e.collection.token
                         document.querySelector(`#call_loket`).innerHTML = e.collection.index + 1
-                        startCallAntrian(e.collection.token.replace(/\s/g, ''), e.collection.index + 1);
+
+                        appendToListCall(e.collection.token.replace(/\s/g, ''), e.collection.index + 1);
+                        console.log("tes");
+                        console.log(e.collection)
+
                     }
 
                 })
+
+            var listToCall = [];
+
+            function appendToListCall(noAntrian, noLoket) {
+                //append 2 array in one time
+                // for (let i = 0; i < 2; i++) {
+                //
+                // }
+
+                listToCall.push({
+                    'token': noAntrian,
+                    'loket': noLoket
+                })
+
+                if(listToCall.length == 1){
+                    startCallAntrian();
+                }
+
+                listToCall.push({
+                    'token': noAntrian,
+                    'loket': noLoket
+                })
+
+                // listToCall.push({
+                //     'token': noAntrian,
+                //     'loket': noLoket
+                // })
+
+
+
+            }
 
             var list_nomor = [];
 
@@ -133,7 +165,6 @@
                 list_abjad.push(`/assets/suara_antrian/abjad/abjad_${i}.wav`)
                 // more statements
             }
-            //console.log(list_nomor);
 
 
             var soundNomor = []
@@ -144,6 +175,10 @@
                     src: [list_nomor[x]],
                     autoplay: false,
                     onload: function () {
+
+                    },
+                    onend:function(){
+
 
                     }
                 });
@@ -167,7 +202,17 @@
             }
             const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
 
-            function startCallAntrian(noAntrian,noLoket){
+            function startCallAntrian() {
+
+                console.log(listToCall);
+
+                if (listToCall.length <= 0) {
+                    return;
+                }
+
+
+                var noAntrian = listToCall[0].token;
+                var noLoket = listToCall[0].loket;
 
 
                 var arrNoAntrian = [];
@@ -195,10 +240,20 @@
                     src: '{{asset('/assets/suara_antrian/def_silakan.wav')}}',
                     preload: true,
                     onend: function () {
-                        soundNomor[noLoket].play()
+
+                        soundNomor[noLoket].play();
+
+                        setTimeout(function () {
+                            listToCall.shift();
+                            console.log(listToCall);
+                            startCallAntrian();
+                        }, 1200)
+
                         //noantrianSound(0, list_loket, true)
                     }
                 })
+
+
 
                 function noantrianSound(i, list, end) {
                     //console.log(list[i])
@@ -224,6 +279,7 @@
 
                 //START CALL
                 sound_pre.play()
+
 
             }
 

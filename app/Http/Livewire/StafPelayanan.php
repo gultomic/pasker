@@ -165,6 +165,7 @@ class StafPelayanan extends Component
             'pid'=>$this->pid,
             'name' => $name_call,
             'call'=>$call,
+            'cID'=>$item->id
         ]));
 
 

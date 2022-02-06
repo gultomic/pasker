@@ -32,7 +32,12 @@
 
         <div class=" flex justify-center py-5 intro-y">
 
-            <button type="button" class="btn  w-32 btn-primary ml-3 mb-2" wire:click='setActionModal("{{ $data->id }}","panggil")'><i class="bi bi-megaphone"></i>&nbsp;Panggil Ulang</button>
+            <button type="button" class="btn  w-32 btn-primary ml-3 mb-2"
+                    x-on:click="buttonDisabled = true;setTimeout(() => buttonDisabled = false, 10000)"
+                    wire:click='setActionModal("{{ $data->id }}","panggil")'
+                    x-data="{ buttonDisabled: true }" x-bind:disabled="buttonDisabled" x-init="setTimeout(() => buttonDisabled = false, 10000)"
+            >
+                <i class="bi bi-megaphone"></i>&nbsp;Panggil Ulang</button>
             <button type="button" class="btn  w-32 btn-warning ml-3 mb-2" wire:click='setActionModal("{{ $data->id }}","pending")'><i class="bi bi-stopwatch"></i>&nbsp;Pending</button>
             <button type="button" class="btn  w-32 btn-danger ml-3 mb-2" onclick="confirm('Yakin ingin menyatakan pengunjung tidak hadir ?') || event.stopImmediatePropagation()" wire:click='setActionModal("{{ $data->id }}","tidak_hadir")'>
                 <i class="bi bi-person-x-fill"></i>&nbsp;Tidak Hadir</button>
