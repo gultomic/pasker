@@ -82,7 +82,7 @@
 
     <div class="grid grid-cols-12 gap-6 mt-5 mb-5">
 
-        <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+        <div class="col-span-12 sm:col-span-3 xl:col-span-3 intro-y">
             <div class="report-box zoom-in" wire:click='goToCard("menunggu")'>
                 <div class="box p-5">
                     <div class="flex">
@@ -94,7 +94,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+        <div class="col-span-12 sm:col-span-3 xl:col-span-3 intro-y">
             <div class="report-box zoom-in" wire:click='goToCard("pending")' >
                 <div class="box p-5">
                     <div class="flex">
@@ -106,7 +106,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+        <div class="col-span-12 sm:col-span-3 xl:col-span-3 intro-y">
             <div class="report-box zoom-in" wire:click='goToCard("selesai")' >
                 <div class="box p-5">
                     <div class="flex">
@@ -118,7 +118,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+        <div class="col-span-12 sm:col-span-3 xl:col-span-3 intro-y">
             <div class="report-box zoom-in" wire:click='goToCard("tidakhadir")' >
                 <div class="box p-5">
                     <div class="flex">

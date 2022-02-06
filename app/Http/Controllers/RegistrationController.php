@@ -1,6 +1,8 @@
 <?php
 //TODO : should we update existing client with same phone number ? for now not update current data
 //TODO: Refactor code get no atrian from total to get last number
+//TODO: Seragamin crate antrian on model
+
 namespace App\Http\Controllers;
 
 use App\Events\QueuesService;
@@ -172,7 +174,7 @@ class RegistrationController extends Controller
         ->count();
 
         $trailing_no  = str_pad($cont_serve_pelayanan+1, 3, '0', STR_PAD_LEFT);
-        $no_antrian  = $pelayanan->refs['kode'].' '.$trailing_no;
+        $no_antrian  = $pelayanan->refs['kode'].''.$trailing_no;
 
         //create new PJ
 
@@ -186,7 +188,7 @@ class RegistrationController extends Controller
         $newPJ->save();
 
 
-        event(new QueuesService(['call'=>false]));
+        event(new QueuesService(['call'=>false,'pid'=>$request->pelayanan_id]));
 
         return response()->json([
             'success' => 1,

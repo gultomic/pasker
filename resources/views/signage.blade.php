@@ -1,3 +1,4 @@
+{{--todo: multiple letter on pelayanan TTS--}}
 <x-signage-layout>
     <div class="pb-5 container-fluid hero-home">
         <div class="mt-3  d-flex justify-content-between">
