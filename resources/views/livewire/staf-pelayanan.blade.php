@@ -5,7 +5,7 @@
 
             <div class="lg:ml-2 lg:mr-auto  mt-3 lg:mt-0 ">
                 <div class="text-gray-600 text-xs">Selamat Bekerja,</div>
-                <div class="font-bold text-2xl  mt-0.5">{{ auth()->user()->name }}</div>
+                <div class="font-bold text-2xl  mt-0.5">{{ Auth::user()->profile->refs['fullname'] }}</div>
             </div>
 
 
@@ -147,7 +147,10 @@
     window.addEventListener('gotocard', event => {
         // alert(event.detail.card)
         document.getElementById("card_"+event.detail.card).scrollIntoView({ behavior: 'smooth', block: 'start'})
+    })
 
+    window.addEventListener('loketIsEmpty', event => {
+        alert("Silahkan Pilih Loket Terlebih Dahulu");
     })
 
     // Show modal
