@@ -32,6 +32,11 @@ class PelayananJadwal extends Model
         return $this->belongsTo(Klien::class, 'klien_id', 'id');
     }
 
+    public function staff()
+    {
+        return $this->belongsTo(User::class, 'pelaksana_id', 'id');
+    }
+
     public function pelayanan()
     {
         return $this->belongsTo(Pelayanan::class, 'pelayanan_id', 'id');

@@ -190,6 +190,9 @@
 
     //TODO : disable on holiday
     // TODO : show only available quota
+    // TODO : send event to staffrom
+    // TODO: start date end date
+
 
 
     jQuery.datetimepicker.setLocale('id');

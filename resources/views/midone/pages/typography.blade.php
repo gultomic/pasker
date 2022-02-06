@@ -1,4 +1,4 @@
-@extends('../layout/' . $layout)
+@extends('midone/layout/' . $layout)
 
 @section('subhead')
     <title>Typography - Rubick - Tailwind HTML Admin Template</title>
@@ -45,24 +45,7 @@
                         <div class="overflow-y-auto mt-3 rounded-md">
                             <pre id="copy-heading" class="source-preview">
                                 <code class="text-xs p-0 rounded-md html pl-5 pt-8 pb-4 -mb-10 -mt-10">
-                                    {{ \Hp::formatCode('
-                                        <div>
-                                            <h1 class="text-4xl font-medium leading-none">h1. Heading 1</h1>
-                                            <h2 class="text-3xl font-medium leading-none mt-3">h2. Heading 2</h2>
-                                            <h3 class="text-2xl font-medium leading-none mt-3">h3. Heading 3</h3>
-                                            <h4 class="text-xl font-medium leading-none mt-3">h4. Heading 4</h4>
-                                            <h5 class="text-lg font-medium leading-none mt-3">h5. Heading 5</h5>
-                                            <h6 class="font-medium leading-none mt-3">h6. Heading 6</h6>
-                                        </div>
-                                        <div class="mt-5">
-                                            <h1 class="text-4xl text-theme-1 font-medium leading-none">h1. Heading 1</h1>
-                                            <h2 class="text-3xl text-gray-700 dark:text-gray-600 font-medium leading-none mt-3">h2. Heading 2</h2>
-                                            <h3 class="text-2xl text-theme-9 font-medium leading-none mt-3">h3. Heading 3</h3>
-                                            <h4 class="text-xl text-theme-12 font-medium leading-none mt-3">h4. Heading 4</h4>
-                                            <h5 class="text-lg text-theme-6 font-medium leading-none mt-3">h5. Heading 5</h5>
-                                            <h6 class="text-gray-600 font-medium leading-none mt-3">h6. Heading 6</h6>
-                                        </div>
-                                    ') }}
+
                                 </code>
                             </pre>
                         </div>
@@ -102,21 +85,7 @@
                         <div class="overflow-y-auto mt-3 rounded-md">
                             <pre id="copy-text-settings" class="source-preview">
                                 <code class="text-xs p-0 rounded-md html pl-5 pt-8 pb-4 -mb-10 -mt-10">
-                                    {{ \Hp::formatCode('
-                                        <div>
-                                            <div class="font-normal">Example text</div>
-                                            <div class="font-medium">Example medium text</div>
-                                            <div class="font-semibold">Example semibold text</div>
-                                            <div class="font-bold">Example bolder text</div>
-                                            <div class="font-extrabold">Example boldest text</div>
-                                        </div>
-                                        <div class="mt-5">
-                                            <div class="uppercase">Example uppercase text</div>
-                                            <div class="lowercase">Example lowercase text</div>
-                                            <div class="capitalize">Example capitalized text</div>
-                                            <div class="normal-case">Example cursive text</div>
-                                        </div>
-                                    ') }}
+
                                 </code>
                             </pre>
                         </div>
@@ -151,16 +120,7 @@
                         <div class="overflow-y-auto mt-3 rounded-md">
                             <pre id="copy-common-elements" class="source-preview">
                                 <code class="text-xs p-0 rounded-md html pl-5 pt-8 pb-4 -mb-10 -mt-10">
-                                    {{ \Hp::formatCode('
-                                        <div>You can use the mark tag to <mark class="p-1 bg-yellow-200">highlight</mark> text.</div>
-                                        <del class="block mt-1">This line of text is meant to be treated as deleted text.</del>
-                                        <s class="block mt-1">This line of text is meant to be treated as no longer accurate.</s>
-                                        <ins class="block mt-1">This line of text is meant to be treated as an addition to the document.</ins>
-                                        <u class="block mt-1">This line of text will render as underlined</u>
-                                        <small class="block mt-1">This line of text is meant to be treated as fine print.</small>
-                                        <strong class="block mt-1">This line rendered as bold text.</strong>
-                                        <em class="block mt-1">This line rendered as italicized text.</em>
-                                    ') }}
+
                                 </code>
                             </pre>
                         </div>
@@ -240,59 +200,7 @@
                         <div class="overflow-y-auto mt-3 rounded-md">
                             <pre id="copy-badge" class="source-preview">
                                 <code class="text-xs p-0 rounded-md html pl-5 pt-8 pb-4 -mb-10 -mt-10">
-                                    {{ \Hp::formatCode('
-                                        <div class="font-medium">Basic Badge</div>
-                                        <div class="mt-2">
-                                            <span class="text-xs px-1 rounded-full bg-theme-1 text-white mr-1">1</span>
-                                            <span class="text-xs px-1 rounded-full border text-gray-700 dark:text-gray-600 dark:border-dark-5 mr-1">2</span>
-                                            <span class="text-xs px-1 rounded-full bg-theme-9 text-white mr-1">3</span>
-                                            <span class="text-xs px-1 rounded-full bg-theme-12 text-white mr-1">4</span>
-                                            <span class="text-xs px-1 rounded-full bg-theme-6 text-white mr-1">5</span>
-                                            <span class="text-xs px-1 rounded-full bg-gray-200 text-gray-600 mr-1">6</span>
-                                        </div>
-                                        <div class="font-medium mt-6">Badge Sizes</div>
-                                        <div class="mt-3">
-                                            <span class="px-2 py-1 rounded-full bg-theme-1 text-white mr-1">1</span>
-                                            <span class="px-2 py-1 rounded-full border text-gray-700 dark:text-gray-600 dark:border-dark-5 mr-1">2</span>
-                                            <span class="px-2 py-1 rounded-full bg-theme-9 text-white mr-1">3</span>
-                                            <span class="px-2 py-1 rounded-full bg-theme-12 text-white mr-1">4</span>
-                                            <span class="px-2 py-1 rounded-full bg-theme-6 text-white mr-1">5</span>
-                                            <span class="px-2 py-1 rounded-full bg-gray-200 text-gray-600 mr-1">6</span>
-                                        </div>
-                                        <div class="mt-4">
-                                            <span class="px-3 py-2 rounded-full bg-theme-1 text-white mr-1">1</span>
-                                            <span class="px-3 py-2 rounded-full border text-gray-700 dark:text-gray-600 dark:border-dark-5 mr-1">2</span>
-                                            <span class="px-3 py-2 rounded-full bg-theme-9 text-white mr-1">3</span>
-                                            <span class="px-3 py-2 rounded-full bg-theme-12 text-white mr-1">4</span>
-                                            <span class="px-3 py-2 rounded-full bg-theme-6 text-white mr-1">5</span>
-                                            <span class="px-3 py-2 rounded-full bg-gray-200 text-gray-600 mr-1">6</span>
-                                        </div>
-                                        <div class="mt-6">
-                                            <span class="px-4 py-3 rounded-full bg-theme-1 text-white mr-1">1</span>
-                                            <span class="px-4 py-3 rounded-full border text-gray-700 dark:text-gray-600 dark:border-dark-5 mr-1">2</span>
-                                            <span class="px-4 py-3 rounded-full bg-theme-9 text-white mr-1">3</span>
-                                            <span class="px-4 py-3 rounded-full bg-theme-12 text-white mr-1">4</span>
-                                            <span class="px-4 py-3 rounded-full bg-theme-6 text-white mr-1">5</span>
-                                            <span class="px-4 py-3 rounded-full bg-gray-200 text-gray-600 mr-1">6</span>
-                                        </div>
-                                        <div class="font-medium mt-10">Square Badge</div>
-                                        <div class="mt-2">
-                                            <span class="text-xs px-1 bg-theme-1 text-white mr-1">1</span>
-                                            <span class="text-xs px-1 border text-gray-700 dark:text-gray-600 dark:border-dark-5 mr-1">2</span>
-                                            <span class="text-xs px-1 bg-theme-9 text-white mr-1">3</span>
-                                            <span class="text-xs px-1 bg-theme-12 text-white mr-1">4</span>
-                                            <span class="text-xs px-1 bg-theme-6 text-white mr-1">5</span>
-                                            <span class="text-xs px-1 bg-gray-200 text-gray-600 mr-1">6</span>
-                                        </div>
-                                        <div class="font-medium mt-6">Outline Badge</div>
-                                        <div class="mt-4">
-                                            <span class="px-3 py-2 rounded-full border border-theme-1 text-theme-1 dark:text-theme-10 dark:border-theme-10 mr-1">1</span>
-                                            <span class="px-3 py-2 rounded-full border text-gray-700 dark:text-gray-600 dark:border-dark-5 mr-1">2</span>
-                                            <span class="px-3 py-2 rounded-full border border-theme-9 text-theme-9 dark:border-theme-9 mr-1">3</span>
-                                            <span class="px-3 py-2 rounded-full border border-theme-12 text-theme-12 dark:border-theme-12 mr-1">4</span>
-                                            <span class="px-3 py-2 rounded-full border border-theme-6 text-theme-6 dark:border-theme-6 mr-1">5</span>
-                                        </div>
-                                    ') }}
+
                                 </code>
                             </pre>
                         </div>
@@ -321,10 +229,7 @@
                         <div class="overflow-y-auto mt-3 rounded-md">
                             <pre id="copy-separator" class="source-preview">
                                 <code class="text-xs p-0 rounded-md html pl-5 pt-8 pb-4 -mb-10 -mt-10">
-                                    {{ \Hp::formatCode('
-                                        <div class="w-full border-t border-gray-200 dark:border-dark-5 border-dashed"></div>
-                                        <div class="w-full border-t border-gray-200 dark:border-dark-5 mt-5"></div>
-                                    ') }}
+
                                 </code>
                             </pre>
                         </div>
@@ -354,11 +259,7 @@
                         <div class="overflow-y-auto mt-3 rounded-md">
                             <pre id="copy-devider" class="source-preview">
                                 <code class="text-xs p-0 rounded-md html pl-5 pt-8 pb-4 -mb-10 -mt-10">
-                                    {{ \Hp::formatCode('
-                                        <div class="w-full flex justify-center border-t border-gray-200 dark:border-dark-5 mt-2">
-                                            <div class="bg-white dark:bg-dark-3 px-5 -mt-3 text-gray-600">or</div>
-                                        </div>
-                                    ') }}
+
                                 </code>
                             </pre>
                         </div>
@@ -399,22 +300,7 @@
                         <div class="overflow-y-auto mt-3 rounded-md">
                             <pre id="copy-link" class="source-preview">
                                 <code class="text-xs p-0 rounded-md html pl-5 pt-8 pb-4 -mb-10 -mt-10">
-                                    {{ \Hp::formatCode('
-                                        <div>
-                                            <a href="" class="text-theme-1 block font-normal">Example text</a>
-                                            <a href="" class="text-theme-1 block font-medium">Example medium text</a>
-                                            <a href="" class="text-theme-1 block font-semibold">Example semibold text</a>
-                                            <a href="" class="text-theme-1 block font-bold">Example bolder text</a>
-                                            <a href="" class="text-theme-1 block font-extrabold">Example boldest text</a>
-                                        </div>
-                                        <div class="mt-5">
-                                            <a href="" class="text-theme-1 block">Primary state</a>
-                                            <a href="" class="text-gray-700 dark:text-gray-600 block">Secondary state</a>
-                                            <a href="" class="text-theme-9 block">Success state</a>
-                                            <a href="" class="text-theme-12 block">Warning state</a>
-                                            <a href="" class="text-theme-6 block">Danger state</a>
-                                        </div>
-                                    ') }}
+
                                 </code>
                             </pre>
                         </div>
@@ -423,5 +309,5 @@
             </div>
             <!-- END: Links -->
         </div>
-    </div>    
+    </div>
 @endsection

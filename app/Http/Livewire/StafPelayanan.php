@@ -8,6 +8,8 @@ use App\Models\PelayananJadwal as PJ;
 use App\Models\Config;
 use App\Events\QueuesService;
 use Auth;
+//use LivewireUI\Modal\ModalComponent;
+
 
 class StafPelayanan extends Component
 {
@@ -16,16 +18,38 @@ class StafPelayanan extends Component
     public $loketList = [];
     public $pelayanan;
     public $looking;
+    public $pelayananAktif;
+    public $pelayananList;
+
+
+
+      protected function getListeners()
+    {
+        return [
+            "echo:QueuesEvent.stafroom.{$this->pid},QueuesService" => '$refresh',
+            "setActions" => 'setAction',
+            "refreshList" => '$refresh'
+        ];
+    }
+
+    //protected $listeners = [,'setActions'=>'setAction','refreshList' => '$refresh'];
+
+
 
     public function mount()
     {
         $this->pelayanan = \App\Models\Pelayanan::find($this->pid);
-
+        $this->pelayananAktif = $this->pelayanan->title;
         $loket = Config::where('title', 'loket_aktif')
             ->first()->refs
             ->where('pelaksana', '=', Auth::user()->profile->refs['fullname'])
             ->where('tanggal', '=', Carbon::now()->format('Y-m-d'))
             ->pluck('nama');
+
+        $this->pelayananList = \App\Models\Pelayanan::latest()
+            ->where('refs->aktif', '=', true)
+            ->where('id', '!=', $this->pid)
+            ->get();
 
         if (count($loket) > 0)
             $this->loketAktif = $loket[0];
@@ -36,26 +60,80 @@ class StafPelayanan extends Component
     {
         $date = Carbon::now()->format('Y-m-d');
 
-        return view('livewire.staf-pelayanan', [
-            'collection' => PJ::where('pelayanan_id', $this->pid)
+        $today_coll = PJ::where('pelayanan_id', $this->pid)
                 ->where('tanggal', '=', $date)
                 ->where('refs->antrian', '!=', "")
-                ->where('refs->status', '!=', 'selesai')
                 ->orderBy("refs->antrian")
-                ->get(),
-            'date' => $date,
-        ]);
+                ->get();
+
+
+        $waiting_coll = $today_coll->filter(function ($item, $key)  {
+            return $item->refs['status'] =="menunggu";
+        });
+
+        $pending_coll = $today_coll->filter(function ($item, $key)  {
+            return $item->refs['status'] =="pending";
+        });
+
+        $calling_coll = $today_coll->filter(function ($item, $key)  {
+            return $item->refs['status'] =="panggil";
+        });
+
+        $processing_coll = $today_coll->filter(function ($item, $key)  {
+            return $item->refs['status'] =="berjalan";
+        });
+
+        $completed_coll = $today_coll->filter(function ($item, $key)  {
+            return $item->refs['status'] =="selesai";
+        });
+
+        $absent_coll = $today_coll->filter(function ($item, $key) {
+            return $item->refs['status'] == "tidak_hadir";
+        });
+
+
+        return view('livewire.staf-pelayanan', [
+            'collection'=>$waiting_coll,
+            'collection_pending'=>$pending_coll,
+            'collection_memanggil'=>$calling_coll,
+            'collection_berjalan'=>$processing_coll,
+            'collection_selesai'=>$completed_coll,
+            'collection_tidakhadir'=>$absent_coll,
+             'date' => Carbon::now()->translatedFormat('d F Y'),
+            ]);
     }
 
-    public function setAction($id, $act)
+    public function setAction($id, $act,$openmodal=false,$closeModal=false)
     {
+
+        //dd($closeModal);
         $item = PJ::find($id);
+        $call = false;
+        $keys_call = 0;
+        $token_call = "";
+        $name_call = "";
+
+
+        if($act == "edit_biodata") {
+
+            $this->emit('openModal', 'staff-pelayanan-modal-call',['pj'=>$item,'state'=>'biodata','form_type'=>'only_edit']);
+            return ;
+        }
+
+
+
+        if($act == 'biodata'){
+
+            $this->emit('openModal', 'staff-pelayanan-modal-call',['pj'=>$item,'state'=>'biodata']);
+            return;
+        }
 
         if ( $act == 'selesai' || $act == 'berjalan')
             $item->pelaksana_id = Auth::user()->id;
 
         $item->refs['status'] = $act;
         $item->save();
+
 
         if ($act == 'panggil') {
             ($item->klien_id != null)
@@ -64,13 +142,27 @@ class StafPelayanan extends Component
 
             $loket = Config::where('title', 'loket_pelayanan')->first()->refs;
             $keys = array_keys($loket->toArray(), $this->loketAktif);
+            $keys_call = $keys[0];
+            $token_call =$item->refs['antrian'];
+            $name_call = $name;
+            $call = true;
 
-            event(new QueuesService([
-                'index' => $keys[0],
-                'token' => $item->refs['antrian'],
-                'name' => $name,
-            ]));
+            $this->emit('openModal', 'staff-pelayanan-modal-call',['pj'=>$item,'state'=>'call']);
+
         }
+
+//        if($closeModal)
+//            $this->forceClose()->closeModal();
+
+        event(new QueuesService([
+            'index' => $keys_call,
+            'token' => $token_call,
+            'pid'=>$this->pid,
+            'name' => $name_call,
+            'call'=>$call,
+        ]));
+
+
     }
 
     public function getAktifLoket()
@@ -131,4 +223,15 @@ class StafPelayanan extends Component
         $row->update(['refs'=>$aktif]);
         $this->loketAktif = $loket;
     }
+
+    public function setAktifPelayanan($id){
+        //$this->pid = 3;
+        return redirect(route('dashboard.pelayanan', ['id' => 2]));
+    }
+
+    public function goToCard($card){
+        $this->dispatchBrowserEvent('gotocard', ['card' => $card]);
+    }
+
+
 }
