@@ -37,12 +37,28 @@ Route::name('admin.')
             ]);
         })->name('akun');
 
+        Route::get('/akun/{id}/show', function ($id) {
+            return view('admin.akunShow', [
+                'title' => 'Akun',
+                'header' => 'Rincian Data Member',
+                'id' => $id,
+            ]);
+        })->name('akun.show');
+
         Route::get('/data-pengunjung', function () {
             return view('admin.pengunjung', [
                 'title' => 'Pengunjung',
                 'header' => 'Data Pengunjung',
             ]);
         })->name('klien');
+
+        Route::get('/data-pengunjung/{id}/show', function ($id) {
+            return view('admin.pengunjungShow', [
+                'title' => 'Pengunjung',
+                'header' => 'Rincian Data Pengunjung',
+                'id' => $id,
+            ]);
+        })->name('klien.show');
 
         Route::get('/pengaturan', function () {
             return view('dashboard', [

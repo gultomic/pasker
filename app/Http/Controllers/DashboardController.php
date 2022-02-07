@@ -58,7 +58,6 @@ class DashboardController extends Controller
                 'title' => $q->title,
                 'status' => $q->refs['aktif'],
                 'pengunjung' => $q->pengunjung->count(),
-                // 'pengunjung' => number_format($q->pengunjung->count(), 0, ',', '.'),
                 'kepuasan' => round($p),
             ];
         })->all();
@@ -99,12 +98,19 @@ class DashboardController extends Controller
             })
             ->get()
             ->map(function ($q) {
-                $skor = $q->historyPelayanan->map(function ($q) {
-                    return $q->survei->average('skor');
-                })->sum();
-
-                $total = $q->historyPelayanan->count();
                 $jumlah = $q->historyPelayanan->groupBy('pelayanan_id')->count();
+                $total = $q->historyPelayanan->count();
+
+                if ($total == 0) {
+                    $skor = 0;
+                    $indeks = 0;
+                } else {
+                    $skor = $q->historyPelayanan->map(function ($q) {
+                        return $q->survei->average('skor');
+                    })->sum();
+                    $indeks = ($skor / 3) / $total * 100;
+                }
+
 
                 return [
                     'nama' => $q->profile->refs['fullname'],
@@ -112,11 +118,10 @@ class DashboardController extends Controller
                     'photo' => $q->profile->refs['photo'],
                     'total_pelayanan' => $total,
                     'jumlah_pelayanan' => $jumlah,
-                    'skor_survei' => $skor / 3,
-                    'indeks_kepuasan' => ($skor / 3) / $total * 100,
+                    'skor_survei' => $skor,
+                    'indeks_kepuasan' => $indeks,
                 ];
             });
-
             // dd($data);
             return $data;
     }

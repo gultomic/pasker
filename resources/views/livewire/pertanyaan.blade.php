@@ -1,6 +1,6 @@
 <x-card-content class="bg-white intro-x">
     <x-slot name="cardHeader">
-        <form action="" class="intro-x">
+        <form class="intro-x" wire:submit.prevent="store">
             <div class="p-2 mt-3 border rounded-lg bg-theme-22">
                 <div>
                     <label for="" class="text-xs form-label">Pertanyaan</label>
@@ -13,7 +13,7 @@
                 <div class="flex pt-3">
                     <button type="submit"
                         class="w-24 mb-2 mr-1 btn btn-sm btn-rounded-primary"
-                        wire:click.prevent="store">simpan</button>
+                        >simpan</button>
                     <button type="button"
                         class="w-24 mb-2 mr-1 btn btn-sm btn-rounded-warning"
                         wire:click.prevent="resetForm">reset</button>
@@ -23,7 +23,7 @@
     </x-slot>
 
     <x-slot name="contentSection">
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto" wire:poll>
             @if ($collection->count() > 0)
                 <table class="table">
                     <thead class="text-xs uppercase">

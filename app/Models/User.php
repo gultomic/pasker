@@ -44,6 +44,12 @@ class User extends Authenticatable
         'phone_verified_at' => 'datetime',
     ];
 
+    public function list ()
+    {
+        return $this->where('email', '!=', 'origin@example.com')
+            ->where('id', '!=', Auth::user()->id);
+    }
+
     public function role()
     {
         return $this->hasOne(Role::class, 'user_id', 'id');
