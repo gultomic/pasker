@@ -1,7 +1,7 @@
 {{-- @include('midone/layout/components/mobile-menu') --}}
 <!-- BEGIN: Simple Menu -->
 <nav class="side-nav">
-    <a href="/" class="flex items-center lg:p-4 intro-x">
+    <a href="/" class="flex items-center lg:p-8 -intro-y">
         <img alt="{{ Auth::user()->profile->refs['fullname'] }} image"
             class="object-cover bg-gray-500 rounded-full"
             src="{{ Auth::user()->profile->refs['photo'] }}">

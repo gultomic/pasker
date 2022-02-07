@@ -141,7 +141,7 @@
                             <tr class="intro-x">
                                 <td class="w-40">
                                     <div class="flex">
-                                        <div class="w-10 h-10 image-fit zoom-in">
+                                        <div class="w-10 h-10 rounded-full image-fit zoom-in">
                                             <img alt="{{ $staf['nama'] }}"
                                                 class="rounded-full tooltip"
                                                 src="{{ asset($staf['photo']) }}"

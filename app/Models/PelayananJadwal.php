@@ -42,6 +42,11 @@ class PelayananJadwal extends Model
         return $this->belongsTo(Pelayanan::class, 'pelayanan_id', 'id');
     }
 
+    public function pelaksana()
+    {
+        return $this->belongsTo(Profile::class, 'pelaksana_id', 'user_id');
+    }
+
     public function survei()
     {
         return $this->hasMany(Survei::class, 'jadwal_id', 'id');
