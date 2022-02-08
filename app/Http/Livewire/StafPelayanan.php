@@ -167,7 +167,7 @@ class StafPelayanan extends Component
             'token' => $token_call,
             'pid'=>$this->pid,
             'name' => $name_call,
-            'loket' => $loket_call,
+            'loket' => $loket_call ?? "",
             'call'=>$call,
             'cID'=>$item->id
         ]));
