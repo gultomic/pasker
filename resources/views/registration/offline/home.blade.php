@@ -18,7 +18,7 @@
         <div class="col-12 ">
             <p class="m-0 text-uppercase" style="font-size: 1rem">Selamat Datang di</p>
             <p class="m-0 text-uppercase" style="font-size: 1rem">ANTRILAH</p>
-            <h1>Pasker ID</h1>
+            <h1 class="poppinsmedium">Pasker.ID</h1>
         </div>
     </div>
 

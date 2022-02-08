@@ -29,6 +29,12 @@
         <div class="flex justify-center  py-3">
             <span class="px-4 py-3 text-antrian-call-modal text-orange-pasker-light leading-6 font-bold blink_me">{{ $data->refs['antrian'] }}</span>
         </div>
+        @if(!empty($data->pengunjung))
+            <div class="row text-center pb-2">
+                <div class="font-medium">{{ $data->pengunjung->name }}</div>
+                <div class="">{{ $data->pengunjung->phone }}</div>
+            </div>
+        @endif
 
         <div class=" flex justify-center py-5 intro-y">
 

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Antrian Online PASKER ID</title>
+    <title>Antrian Online PASKER.ID</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -39,7 +39,7 @@
                         </div>
                     </div>
                     <div class="col-6 col-md text-secondary">
-                        <h5 class="text-pasker">Pasker ID</h5>
+                        <h5 class="text-pasker poppinsmedium">Pasker.ID</h5>
                         <p class="text-orange-pasker-light" style="font-size: 1rem;font-weight: 500">#GetAJobLiveBetter</p>
                         <p>
                             Gatot Subroto Kav. 44, Kuningan Barat, Mampang Prapatan, Jakarta Selatan.

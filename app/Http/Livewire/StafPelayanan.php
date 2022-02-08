@@ -1,5 +1,5 @@
 <?php
-
+//TODO: add function when not connected to WS
 namespace App\Http\Livewire;
 
 use Livewire\Component;
@@ -143,11 +143,14 @@ class StafPelayanan extends Component
         if ($act == 'panggil') {
             ($item->klien_id != null)
                 ? $name = $item->pengunjung->name
-                : $name = '---';
+                : $name = '';
 
-            $loket = Config::where('title', 'loket_pelayanan')->first()->refs;
-            $keys = array_keys($loket->toArray(), $this->loketAktif);
-            $keys_call = $keys[0];
+//            $loket = Config::where('title', 'loket_pelayanan')->first()->refs;
+//            $keys = array_keys($loket->toArray(), $this->loketAktif);
+
+//            $keys_call = $keys[0];
+            $loket_call = str_replace(' ', '', strtolower($this->loketAktif));
+            $keys_call = str_replace('loket', '', $loket_call);
             $token_call =$item->refs['antrian'];
             $name_call = $name;
             $call = true;
@@ -160,10 +163,11 @@ class StafPelayanan extends Component
 //            $this->forceClose()->closeModal();
 
         event(new QueuesService([
-            'index' => $keys_call,
+            'index' => (int)$keys_call,
             'token' => $token_call,
             'pid'=>$this->pid,
             'name' => $name_call,
+            'loket' => $loket_call,
             'call'=>$call,
             'cID'=>$item->id
         ]));

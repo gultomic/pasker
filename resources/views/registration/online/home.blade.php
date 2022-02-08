@@ -14,7 +14,7 @@
         <div class="col-lg-5 pb-4 text-right">
             <!-- <img class="position-absolute" style="bottom:0;right:0;" src="/assets/young-man.png" alt=""> -->
             <img class="img-fluid text-right" src="/assets/pose01_preview_small.png" alt="">
-            <small class="text-left d-block" style="color: #eef9f6">JOBI - Maskot Pasker ID</small>
+            <small class="text-left d-block" style="color: #eef9f6">JOBI - Maskot Pasker.ID</small>
         </div>
         <div class="col-lg-4 pb-5 mt-n4 text-center">
             <h1 class="head_grobold">Malas Antri ?</h1>
@@ -95,7 +95,7 @@
                     <div class="col-md-6">
                         <a class="d-block text-white" href="#!" onclick="document.getElementById('about-pasar-kerja').scrollIntoView({behavior: 'smooth'});
                             ">
-                            <u>Apa itu Pasker ID ?</u>
+                            <u>Apa itu Pasker.ID ?</u>
                         </a>
                     </div>
                     <div class="col-md-4 ml-auto text-right">
@@ -116,7 +116,7 @@
             <img class="img-fluid" src="/assets/ibuida.png" alt="">
         </div>
         <div class="col-lg-6 text-left">
-            <h3 class="text-pasker mb-3"> Selamat Datang di <strong>Pasker ID</strong></h3>
+            <h3 class="text-pasker mb-3 "> Selamat Datang di <strong class="poppinsmedium">Pasker.ID</strong></h3>
             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
                 industry's standard dummy text ever since the 1500s</p>
             <p>when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has
@@ -148,7 +148,7 @@
             </div>
             <div class="modal-body " style="font-size: 0.9rem">
                 <div class="" id="">
-                    <h2 class="text-center text-pasker mb-4">Disclaimer Pasker ID</h2>
+                    <h2 class="text-center text-pasker mb-4">Disclaimer Pasker.ID</h2>
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
                         the
                         industry's standard dummy text ever since the 1500s</p>
@@ -246,9 +246,10 @@
             $this.find('.xdsoft_time').removeClass('xdsoft_disabled');
         },
         format: 'd M Y',
+
         scrollInput: false,
-        minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
-        maxDate: '+1970/01/03'//tomorrow is maximum date calendar
+        //minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
+        //maxDate: '+1970/01/03'//tomorrow is maximum date calendar
         // dayOfWeek: [
         //     "Sen", "Sel", "Rab", "Kam",
         //     "Jum"
