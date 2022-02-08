@@ -1,3 +1,4 @@
+{{--TODO: when selesai reload window--}}
 <div class="flex flex-col gap-4">
 
     <x-card-content-midone class="intro-x">

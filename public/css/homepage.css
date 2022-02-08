@@ -5,6 +5,40 @@
     font-weight: normal;
     font-style: normal;
 }
+
+@font-face {
+    font-family: 'poppinsbold';
+    src: url('/fonts/public/poppins/poppins-bold-webfont.woff2') format('woff2'),
+         url('/fonts/public/poppins/poppins-bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'poppinslight';
+    src: url('/fonts/public/poppins/poppins-light-webfont.woff2') format('woff2'),
+         url('/fonts/public/poppins/poppins-light-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'poppinsmedium';
+    src: url('/fonts/public/poppins/poppins-medium-webfont.woff2') format('woff2'),
+         url('/fonts/public/poppins/poppins-medium-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+body{
+    font-family: 'poppinslight';
+}
+.poppinsmedium{
+    font-family: 'poppinsmedium';
+}
+h1,h2,h3{
+    font-family: poppinsmedium;
+}
 .head_grobold{
     font-family: groboldregular;
     font-size: 4rem;

@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="my-auto text-3xl font-black text-center text-slate-50">
-                    PaskerID
+                    Pasker.ID
                 </div>
 
                 {{-- <div class="text-white">
