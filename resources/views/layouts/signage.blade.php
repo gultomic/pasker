@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="https://cdn.plyr.io/3.6.12/plyr.css" />
 
 
-    <link href="{{ asset('css/public-vendors/eocjs-newsticker.css') }}" rel="stylesheet">
+
     <link href="{{ asset('css/signage.css') }}" rel="stylesheet">
 
 </head>
@@ -42,7 +42,7 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="{{ asset('/js/public-vendors/eocjs-newsticker.js') }}"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/dynamic-marquee@2"></script>
     <script src="{{ asset('/js/app.js') }}"></script>
 
 

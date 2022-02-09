@@ -5,12 +5,11 @@
 {{--todo: connect running text to backend--}}
 {{--todo: connect video to backend--}}
 {{--todo: listen loket change from backend--}}
-{{--todo: Youtube paused when playing sound--}}
 
 <x-signage-layout>
     <div class="container-fluid signagearea">
         <div class="row">
-            <div class="col-8 left-area">
+            <div class="{{ count($loket)>5 ? 'col-6' : 'col-8' }} left-area">
                 <div class="row header-area">
                     <div class="col-4">
                         <div class="logo ">
@@ -20,7 +19,7 @@
                     <div class="pl-5 mt-4 col-8 mascot-area">
                         <div class="tagline">
                             <h1 class="mt-0 mb-0 pasker-tagline">
-                                Pasker.ID
+                                PASKER.ID
                             </h1>
                             <span class="tagline-child">
                             <span>#Get</span>
@@ -35,27 +34,20 @@
                 <div class="white-wrap">
                 <div class="row videoarea">
                     <div class="pt-3 col-12">
-                        <iframe
-                            src="https://www.youtube.com/embed/tmerNTqPosM?autoplay=1&mute=1"
-                             allow="autoplay" frameborder="0" allowfullscreen=""
-                            allowtransparency
-                            &origin=https://OurWebsiteDomain"
-                            allow="autoplay"
-                        ></iframe>
+                        <div id="player"></div>
+{{--                        <div id="player2"></div>--}}
                     </div>
                 </div>
                 <div class="row runningtext-area">
-                    <div class="py-3 mt-2 align-middle col-12 running-text-container position-relative d-inline-table">
+                    <div class="pt-3 pb-0 mt-3 align-middle col-12 running-text-container position-relative d-inline-table">
                         <span class="px-3 text-white align-middle title-running-text">INFO</span>
-                        <div id="text-running" class="align-middle text-running">
-                            <span>Selamat Datang di PASKER.ID Silahkan Melakukan Konsultasi.</span>
-                            <span>Waspada Bahaya Corona, Jaga Diri Anda dan Keluarga dengan Selalu Menerapkan Protokol 3T.</span>
+                        <div id="text-running" class="align-middle text-running" >
                         </div>
                     </div>
                 </div>
                 </div>
             </div>
-            <div class="col-4 right-area">
+            <div class="{{ count($loket)>5 ? 'col-6' : 'col-4' }} right-area">
                 <div class="mt-4 row">
                     <div class="text-right col-12">
                     <div id="mDate" class="" style=""></div>
@@ -63,7 +55,7 @@
                     </div>
                 </div>
 
-                <div class="pt-4 pl-5 pr-3 mt-2 row tokenarea d-block">
+                <div class="pt-4 {{ count($loket)>5 ? ' pl-4' : 'pr-3  pl-5 ' }} mt-2 row text-center tokenarea d-block">
                     <div class="line-orange-side">
                     </div>
                     <?php
@@ -75,7 +67,8 @@
                     }
                     ?>
                     @foreach($loket as $i => $v)
-                    <div id="{{ str_replace(' ', '', strtolower($v)) }}" class="pb-3 token-card-container" style="height: @php echo (100/count($loket))-$devide_num @endphp% !important;">
+                    <div id="{{ str_replace(' ', '', strtolower($v)) }}" class="pb-3 {{ count($loket)>5 ? 'two-row d-inline-block ' : '' }} token-card-container"
+                         style="height: {{ count($loket)>5 ? '20%' : (100/count($loket))-$devide_num.'%' }} !important;">
                         <div class="text-center token-card">
                             <div class="py-2 title-loket">
                                 {{ $v }}
@@ -100,13 +93,124 @@
     @push('scripts')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.core.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.spatial.min.js"></script>
+        <script src="http://www.youtube.com/player_api"></script>
+
+
         <script>
+
+
+            var marqueList = [
+                "Selamat Datang di PASKER.ID Silahkan Melakukan Konsultasi.",
+                "Waspada Bahaya Corona, Jaga Diri Anda dan Keluarga dengan Selalu Menerapkan Protokol 3T."
+            ];
+
+
+            var videoList = ["tmerNTqPosM","0Bmhjf0rKe8","6kUItwCsds7q7o","LheNDiNekzA"];
+            var videoNum = 0 ;
+            var player;
+
+            Echo.channel('QueuesEvent.signage')
+                .listen('QueuesService', (e) => {
+                    if (e.collection.type == "call") {
+
+                        appendToListCall(
+                            e.collection.token.replace(/\s/g, ''),
+                            e.collection.index,
+                            e.collection.name,
+                            e.collection.loket
+                        );
+                        //console.log(e.collection)
+                    }
+
+                    if(e.collection.type == "video"){
+                        videoList = e.collection.newData;
+                        videoNum = 0;
+                        player.loadVideoById(videoList[videoNum]);
+                    }
+
+                    if(e.collection.type == "marque"){
+                        updateTheMarque(e.collection.newData)
+                    }
+
+                })
+
+            // create youtube player
+
+            // var ecoJS = jQuery("#text-running").eocjsNewsticker({
+            //     'divider':    '',
+            // });
+
+
+            var $marquee = document.getElementById('text-running');
+            var marquee = new dynamicMarquee.Marquee($marquee, {
+                rate: -70
+            });
+            var controlmarque = dynamicMarquee.loop(
+                marquee,
+                marqueList.map(e=>{
+                    return function (){
+                        var $wrap = document.createElement('span');
+                        $wrap.innerHTML = e;
+                        return $wrap;
+                    }
+                })
+            );
+
+            function updateTheMarque(newArr){
+                controlmarque.update(
+                    newArr.map(e => {
+                        return function ()
+                        {
+                            var $wrap = document.createElement('span');
+                            $wrap.innerHTML = e;
+                            return $wrap;
+                        }
+                    })
+                )
+            }
+
+
+            function onYouTubePlayerAPIReady() {
+                player = new YT.Player('player', {
+                    // width: '640',
+                    // height: '390',
+                    videoId: videoList[videoNum],
+                    events: {
+                        onReady: onPlayerReady,
+                        onStateChange: onPlayerStateChange,
+                        onError:gotoNextVideo,
+                    }
+                });
+
+            }
+
+            // autoplay video
+            function onPlayerReady(event) {
+                event.target.playVideo();
+            }
+
+            function onPlayerStateChange(event) {
+                if (event.data === 0) {
+                    //console.log("bef"+videoNum)
+                    //console.log("le"+videolist.length)
+                    if(videoNum < (videoList.length)-1){
+                        videoNum++;
+                    }else{
+                        videoNum = 0;
+                    }
+                    player.loadVideoById(videoList[videoNum]);
+                }
+            }
+
+            function gotoNextVideo(event){
+                videoNum = videoNum+1
+                player.loadVideoById(videoList[videoNum]);
+            }
+
 
             $(function () {
                 jQuery("#logopasker").trigger("click");
-                jQuery("#text-running").eocjsNewsticker({
-                    'divider':    '',
-                });
+
             })
 
             var sound_test = new Howl({
@@ -116,19 +220,6 @@
                 }
             })
 
-
-            Echo.channel('QueuesEvent.signage')
-                .listen('QueuesService', (e) => {
-                    if (e.collection.call) {
-                        appendToListCall(
-                            e.collection.token.replace(/\s/g, ''),
-                            e.collection.index,
-                            e.collection.name,
-                            e.collection.loket
-                        );
-                        console.log(e.collection)
-                    }
-                })
 
             var listToCall = [];
 
@@ -164,7 +255,6 @@
 
 
             }
-
 
 
             var list_nomor = [];
@@ -324,7 +414,7 @@
             }
 
             function setLoketCardIdle(loket){
-                console.log('run')
+                //console.log('run')
                 jQuery(`#${loket} .token-content-area`).removeClass('blink-me')
                 jQuery(`#${loket} .title-loket`).removeClass('active')
             }
