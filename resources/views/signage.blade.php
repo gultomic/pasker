@@ -14,12 +14,12 @@
                 <div class="row header-area">
                     <div class="col-4">
                         <div class="logo ">
-                            <img class="img-fluid w-40" src="/assets/logo_light.png" alt="">
+                            <img class="w-40 img-fluid" src="/assets/logo_light.png" alt="">
                         </div>
                     </div>
-                    <div class="col-8 pl-5 mascot-area mt-4">
+                    <div class="pl-5 mt-4 col-8 mascot-area">
                         <div class="tagline">
-                            <h1 class="pasker-tagline mt-0 mb-0">
+                            <h1 class="mt-0 mb-0 pasker-tagline">
                                 Pasker.ID
                             </h1>
                             <span class="tagline-child">
@@ -34,7 +34,7 @@
                 </div>
                 <div class="white-wrap">
                 <div class="row videoarea">
-                    <div class="col-12 pt-3">
+                    <div class="pt-3 col-12">
                         <iframe
                             src="https://www.youtube.com/embed/tmerNTqPosM?autoplay=1&mute=1"
                              allow="autoplay" frameborder="0" allowfullscreen=""
@@ -45,22 +45,25 @@
                     </div>
                 </div>
                 <div class="row runningtext-area">
-                    <div class="col-12 running-text-container mt-2 py-3 position-relative d-inline-table align-middle">
-                        <span class="title-running-text text-white align-middle px-3">INFO</span>
-                        <div id="text-running" class="text-running align-middle">Selamat Datang di PASKER.ID Silahkan Melakukan Konsultasi ++++ Waspada Bahaya Corona, Jaga Diri Anda dan Keluarga dengan Selalu Menerapkan Protokol 3T ++++ </div>
+                    <div class="py-3 mt-2 align-middle col-12 running-text-container position-relative d-inline-table">
+                        <span class="px-3 text-white align-middle title-running-text">INFO</span>
+                        <div id="text-running" class="align-middle text-running">
+                            <span>Selamat Datang di PASKER.ID Silahkan Melakukan Konsultasi.</span>
+                            <span>Waspada Bahaya Corona, Jaga Diri Anda dan Keluarga dengan Selalu Menerapkan Protokol 3T.</span>
+                        </div>
                     </div>
                 </div>
                 </div>
             </div>
             <div class="col-4 right-area">
-                <div class="row mt-4">
-                    <div class="col-12 text-right">
+                <div class="mt-4 row">
+                    <div class="text-right col-12">
                     <div id="mDate" class="" style=""></div>
                     <div id="mTime" class="mt-n-1" style="">00</div>
                     </div>
                 </div>
 
-                <div class="row tokenarea mt-2 pt-4 pr-3 pl-5 d-block">
+                <div class="pt-4 pl-5 pr-3 mt-2 row tokenarea d-block">
                     <div class="line-orange-side">
                     </div>
                     <?php
@@ -72,12 +75,12 @@
                     }
                     ?>
                     @foreach($loket as $i => $v)
-                    <div id="{{ str_replace(' ', '', strtolower($v)) }}" class="token-card-container pb-3" style="height: @php echo (100/count($loket))-$devide_num @endphp% !important;">
-                        <div class="token-card text-center">
-                            <div class="title-loket py-2">
+                    <div id="{{ str_replace(' ', '', strtolower($v)) }}" class="pb-3 token-card-container" style="height: @php echo (100/count($loket))-$devide_num @endphp% !important;">
+                        <div class="text-center token-card">
+                            <div class="py-2 title-loket">
                                 {{ $v }}
                             </div>
-                            <div class="token-body text-center">
+                            <div class="text-center token-body">
                                 <div class="line-red"></div>
                                 <div class="token-content-area">
                                     <div>

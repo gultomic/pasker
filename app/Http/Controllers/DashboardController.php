@@ -23,7 +23,6 @@ class DashboardController extends Controller
                 $view = 'admin.dashboard';
                 $data = [
                     'pelayanan' => $this->adminPelayanan(),
-                    'loket' => $this->adminLoket(),
                     'staf' => $this->adminStaf(),
                     'status' => Pelayanan::latest()->where('refs->aktif', '=', true)->get(),
                     'chart' => $this->adminChart(),
@@ -63,31 +62,6 @@ class DashboardController extends Controller
         })->all();
 
         return $data;
-    }
-
-    public function adminLoket ()
-    {
-        $data = Config::where('title', 'loket_pelayanan')->first()->refs;
-        $aktifLoket = Config::where('title', 'loket_aktif')->first()->refs;
-        $result = new Collection();
-
-        foreach ($data as $loket) {
-            $aktif = $aktifLoket
-                ->where('nama', $loket)
-                ->where('tanggal', Carbon::now()->format('Y-m-d'))
-                ->first();
-
-            ($aktif == null)
-                ? $result->push([
-                    'nama' => $loket,
-                    'tangal' => '',
-                    'pelaksana' => '',
-                    'pelayanan' => ''
-                ])
-                : $result->push($aktif);
-        }
-
-        return $result;
     }
 
     public function adminStaf ()

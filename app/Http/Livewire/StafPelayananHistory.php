@@ -12,11 +12,15 @@ class StafPelayananHistory extends Component
     {
         $collection = Auth::user()
         ->historyPelayanan()
-        ->join('pelayanan', 'pelayanan_jadwal.pelayanan_id', '=', 'pelayanan.id')
-        ->select('pelayanan_jadwal.*', 'pelayanan.title')
-        ->latest()
         ->get()
-        // ->groupBy('title')
+        ->map(function($q) {
+            return [
+                'id' => $q->id,
+                'pelayanan' => $q->pelayanan->title,
+                'skor' => $q->survei->average('skor'),
+                'tanggal' => $q->tanggal,
+            ];
+        })
         ;
         // dd($collection);
         return view('livewire.staf-pelayanan-history', [
