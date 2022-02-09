@@ -21,6 +21,7 @@ class Akun extends Component
         'fullname' => 'required',
         'phone' => 'required',
         'role' => 'required|numeric|min:10',
+        'access' => 'required',
     ];
 
     public function render()

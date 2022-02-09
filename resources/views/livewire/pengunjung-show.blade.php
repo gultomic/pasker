@@ -58,7 +58,7 @@
                     {{ $item->pelayanan->title }}
                 </div>
                 <div class="text-gray-500">
-                    Dilayani oleh: {{ $item->pelaksana->refs['fullname']}}
+                    Dilayani oleh: {{ $item->pelaksana_id != null ? $item->pelaksana->refs['fullname'] : '' }}
                 </div>
             </div>
             @endforeach

@@ -117,3 +117,11 @@ Route::post('/kiosk/submit', [RegistrationController::class, 'kiosk_submit'])->n
 
 
 require __DIR__.'/auth.php';
+
+Route::get('/profile/{username}', function ($username) {
+    return view('dashboard', [
+        'title' => 'Profile',
+        'header' => 'Profile Member',
+        'username' => $username
+    ]);
+})->name('profile');

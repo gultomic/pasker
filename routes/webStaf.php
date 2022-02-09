@@ -13,10 +13,10 @@ Route::name('staf.')
             ]);
         })->name('pelayanan.history');
 
-        Route::get('/profile', function () {
-            return view('dashboard', [
-                'title' => 'Profil',
-                'header' => 'Profil Member',
-            ]);
-        })->name('profile');
+        // Route::get('/profile', function () {
+        //     return view('dashboard', [
+        //         'title' => 'Profil',
+        //         'header' => 'Profil Member',
+        //     ]);
+        // })->name('profile');
     });

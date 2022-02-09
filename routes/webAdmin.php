@@ -27,8 +27,7 @@ Route::name('admin.')
                 'header' => 'Riwayat Pengunjung',
                 'id' => $id,
             ]);
-        }
-        )->name('pelayanan.history');
+        })->name('pelayanan.history');
 
         Route::get('/akun', function () {
             return view('admin.akun', [
@@ -61,7 +60,7 @@ Route::name('admin.')
         })->name('klien.show');
 
         Route::get('/pengaturan', function () {
-            return view('dashboard', [
+            return view('admin.pengaturan', [
                 'title' => 'Pengaturan',
                 'header' => 'Pengaturan Aplikasi',
             ]);

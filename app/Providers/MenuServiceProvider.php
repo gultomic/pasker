@@ -85,12 +85,12 @@ class MenuServiceProvider extends ServiceProvider
                                 'title'=>'History Pelayanan',
                                 'icon'=>'fas fa-history'
                             ],
-                            [
-                                'route'=>'staf.profile',
-                                'path'=>'staf.profile*',
-                                'title'=>'Profil',
-                                'icon'=>'fas fa-address-card'
-                            ],
+                            // [
+                            //     'route'=>'staf.profile',
+                            //     'path'=>'staf.profile*',
+                            //     'title'=>'Profil',
+                            //     'icon'=>'fas fa-address-card'
+                            // ],
                         );
                         break;
                 }

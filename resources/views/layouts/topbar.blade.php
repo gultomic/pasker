@@ -22,18 +22,18 @@
                     {{-- <div class="text-xs text-theme-28 mt-0.5 dark:text-gray-600">STAF</div> --}}
                 </div>
                 <div class="p-2">
-                    <a href="" class="flex items-center p-2 transition duration-300 ease-in-out rounded-md hover:bg-theme-1 dark:hover:bg-dark-3">
+                    <a href="{{ route('profile', ['username' => Auth::user()->username])}}" class="flex items-center p-2 transition duration-300 ease-in-out rounded-md hover:bg-theme-1 dark:hover:bg-dark-3">
                         <i data-feather="user" class="w-4 h-4 mr-2"></i> Profile
                     </a>
-                    <a href="" class="flex items-center p-2 transition duration-300 ease-in-out rounded-md hover:bg-theme-1 dark:hover:bg-dark-3">
+                    {{-- <a href="" class="flex items-center p-2 transition duration-300 ease-in-out rounded-md hover:bg-theme-1 dark:hover:bg-dark-3">
                         <i data-feather="edit" class="w-4 h-4 mr-2"></i> Add Account
-                    </a>
-                    <a href="" class="flex items-center p-2 transition duration-300 ease-in-out rounded-md hover:bg-theme-1 dark:hover:bg-dark-3">
+                    </a> --}}
+                    {{-- <a href="" class="flex items-center p-2 transition duration-300 ease-in-out rounded-md hover:bg-theme-1 dark:hover:bg-dark-3">
                         <i data-feather="lock" class="w-4 h-4 mr-2"></i> Reset Password
-                    </a>
-                    <a href="" class="flex items-center p-2 transition duration-300 ease-in-out rounded-md hover:bg-theme-1 dark:hover:bg-dark-3">
+                    </a> --}}
+                    {{-- <a href="" class="flex items-center p-2 transition duration-300 ease-in-out rounded-md hover:bg-theme-1 dark:hover:bg-dark-3">
                         <i data-feather="help-circle" class="w-4 h-4 mr-2"></i> Help
-                    </a>
+                    </a> --}}
                 </div>
                 <div class="p-2 border-t border-theme-27 dark:border-dark-3">
                     <!-- Authentication -->
