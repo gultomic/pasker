@@ -1,5 +1,6 @@
 <?php
 //TODO: add function when not connected to WS
+//TODO: validate loket aktif before call
 namespace App\Http\Livewire;
 
 use Livewire\Component;

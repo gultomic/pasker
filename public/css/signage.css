@@ -128,9 +128,12 @@
 }
 .tokenarea{
     background: #fff;
-    height: 100vh;
-  border-top-left-radius: 25px;
+    border-top-left-radius: 25px;
     position: relative;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    height: 88vh;
 
 }
 .line-orange-side{
@@ -151,9 +154,9 @@
     /*border-bottom: 1px solid #000;*/
 }
 .token-card-container.two-row{
-    max-width: 47.5% !important;
-    height: 22% !important;
-    margin-right: 0.3rem;
+    max-width: 47% !important;
+    height: 22% ;
+    margin-right: 1rem;
 }
 .token-card{
     /*background-color: #478175;*/

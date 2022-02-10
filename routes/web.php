@@ -52,11 +52,11 @@ for ($i = 0; $i < 20; $i++) {
 })->name('midone.dashboard');
 
 Route::get('/signage', function () {
+    $loket =  App\Models\Config::where('title', 'loket_pelayanan')->first()->refs;
     return view('signage',[
         'title' => 'Signane',
-        'loket' => App\Models\Config::where('title', 'loket_pelayanan')
-            ->first()
-            ->refs
+        'loket' => $loket,
+        'loketJson'=>$loket->toJSON()
     ]);
 })->name('monitor');
 

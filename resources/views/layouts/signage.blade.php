@@ -21,6 +21,7 @@
 
 
     <link href="{{ asset('css/signage.css') }}" rel="stylesheet">
+    @stack('script-header')
 
 </head>
 
@@ -43,6 +44,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/dynamic-marquee@2"></script>
+
+
     <script src="{{ asset('/js/app.js') }}"></script>
 
 

@@ -7,9 +7,10 @@
 {{--todo: listen loket change from backend--}}
 
 <x-signage-layout>
-    <div class="container-fluid signagearea">
+    <div class="container-fluid signagearea" x-data="loketData" x-on:rebuild-loket.window="items = $event.detail.items">
         <div class="row">
-            <div class="{{ count($loket)>5 ? 'col-6' : 'col-8' }} left-area">
+            <div class="left-area"
+                 :class="items.length > 5 ? items.length == 6 ? 'col-7' :'col-6' : 'col-8'">
                 <div class="row header-area">
                     <div class="col-4">
                         <div class="logo ">
@@ -40,14 +41,16 @@
                 </div>
                 <div class="row runningtext-area">
                     <div class="pt-3 pb-0 mt-3 align-middle col-12 running-text-container position-relative d-inline-table">
-                        <span class="px-3 text-white align-middle title-running-text">INFO</span>
+                        <span class="px-3 text-white align-middle title-running-text" >INFO</span>
                         <div id="text-running" class="align-middle text-running" >
                         </div>
                     </div>
                 </div>
                 </div>
             </div>
-            <div class="{{ count($loket)>5 ? 'col-6' : 'col-4' }} right-area">
+            <div class="right-area"
+                 :class="items.length > 5 ? items.length == 6 ? 'col-5' :'col-6' : 'col-4'"
+            >
                 <div class="mt-4 row">
                     <div class="text-right col-12">
                     <div id="mDate" class="" style=""></div>
@@ -55,23 +58,21 @@
                     </div>
                 </div>
 
-                <div class="pt-4 {{ count($loket)>5 ? ' pl-4' : 'pr-3  pl-5 ' }} mt-2 row text-center tokenarea d-block">
+                <div class="pt-4 mt-2 row text-center tokenarea d-block"
+                     :class="items.length > 5 ? 'pl-4' : 'pr-3  pl-5'"
+                >
                     <div class="line-orange-side">
                     </div>
-                    <?php
-                    $devide_num = 2;
-                    if(count($loket) == 4){
-                        $devide_num = 4.5;
-                    }elseif (count($loket) == 5){
-                        $devide_num = 3.8;
-                    }
-                    ?>
-                    @foreach($loket as $i => $v)
-                    <div id="{{ str_replace(' ', '', strtolower($v)) }}" class="pb-3 {{ count($loket)>5 ? 'two-row d-inline-block ' : '' }} token-card-container"
-                         style="height: {{ count($loket)>5 ? '20%' : (100/count($loket))-$devide_num.'%' }} !important;">
+                    <template x-for="loket in items">
+                        <div
+                            :id="loket.replace(/\s/g, '').toLowerCase()"
+                         class="pb-3 token-card-container"
+                         :class="items.length > 5 ? 'two-row d-inline-block ' : ''"
+                        :style="`height:${items.length > 5 ? items.length == 6 ? '25':'20' : (100/items.length) - (items.length == 4 ? 4.5 : 3.8)}% !important` "
+                        >
                         <div class="text-center token-card">
-                            <div class="py-2 title-loket">
-                                {{ $v }}
+                            <div class="py-2 title-loket text-uppercase" x-text="loket">
+
                             </div>
                             <div class="text-center token-body">
                                 <div class="line-red"></div>
@@ -83,8 +84,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    @endforeach
+                        </div>
+                    </template>
+
                 </div>
             </div>
         </div>
@@ -130,6 +132,15 @@
 
                     if(e.collection.type == "marque"){
                         updateTheMarque(e.collection.newData)
+                    }
+
+                    if(e.collection.type == "loketList"){
+                        var event = new CustomEvent('rebuild-loket', {
+                            detail: {
+                                items: e.collection.newData
+                            }
+                        });
+                        window.dispatchEvent(event);
                     }
 
                 })
@@ -433,7 +444,17 @@
               alert(error); // do NOT do this for real!
             };
 
+        </script>
 
+
+    @endpush
+
+    @push('script-header')
+        <script>
+            document.addEventListener('alpine:init', () => {
+                Alpine.data('loketData', () => ({
+                    items: JSON.parse(@json($loketJson)),
+            });
         </script>
     @endpush
 </x-signage-layout>
