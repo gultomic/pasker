@@ -26,7 +26,7 @@
     </head>
 
     <body class="main">
-        <div class="flex">
+        <div class="flex" x-data="mainFrame()" x-cloak>
             @include('layouts.sidenav')
             <!-- BEGIN: Content -->
             <div class="content" style="min-height: auto;">

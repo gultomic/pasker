@@ -12,17 +12,19 @@
                 </div>
 
                 <div class="flex gap-x-4">
-                    <div class="w-2/5">
+                    <div class="w-1/5">
                         <label for="" class="text-xs form-label">Kode/Huruf</label>
                         <input name=""
                             type="text"
+                            maxlength="1"
                             class="uppercase form-control"
                             wire:model="kode">
                     </div>
-                    <div class="w-2/5">
+                    <div class="w-1/5">
                         <label for="" class="text-xs form-label">Limit/Batas</label>
                         <input name=""
                             type="text"
+                            maxlength="3"
                             class="form-control"
                             wire:model="antrian">
                     </div>
