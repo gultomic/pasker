@@ -1,5 +1,6 @@
 <?php
 //TODO: add function when not connected to WS
+//TODO: validate loket aktif before call
 namespace App\Http\Livewire;
 
 use Livewire\Component;
@@ -113,7 +114,7 @@ class StafPelayanan extends Component
 
 
         $item = PJ::find($id);
-        $call = false;
+        $type = "staff";
         $keys_call = 0;
         $token_call = "";
         $name_call = "";
@@ -153,7 +154,7 @@ class StafPelayanan extends Component
             $keys_call = str_replace('loket', '', $loket_call);
             $token_call =$item->refs['antrian'];
             $name_call = $name;
-            $call = true;
+            $type = "call";
 
             $this->emit('openModal', 'staff-pelayanan-modal-call',['pj'=>$item,'state'=>'call']);
 
@@ -168,7 +169,8 @@ class StafPelayanan extends Component
             'pid'=>$this->pid,
             'name' => $name_call,
             'loket' => $loket_call ?? "",
-            'call'=>$call,
+            'type'=>$type,
+            //'call'=>$call,
             'cID'=>$item->id
         ]));
 

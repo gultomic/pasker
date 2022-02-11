@@ -188,7 +188,11 @@ class RegistrationController extends Controller
         $newPJ->save();
 
 
-        event(new QueuesService(['call'=>false,'pid'=>$request->pelayanan_id]));
+        event(new QueuesService([
+            'call'=>false,
+            'pid'=>$request->pelayanan_id,
+            'type'=>'staff'
+        ]));
 
         return response()->json([
             'success' => 1,
