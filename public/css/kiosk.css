@@ -32,6 +32,7 @@
 }
 body{
     font-family: 'poppinslight';
+    overflow: hidden;
 }
 .poppinsmedium{
     font-family: 'poppinsmedium';
@@ -55,15 +56,7 @@ h1,h2,h3{
     -webkit-box-shadow: 8px 8px 0px -4px #FFFFFF;
     -moz-box-shadow: 8px 8px 0px -4px #FFFFFF;
 }
-.hero-home {
-    background-image: url(/assets/hero-bg-home.png);
-    background-size: cover;
-    color: #fff;
-    overflow: hidden;
-    position: relative;
-    padding-bottom: 6rem !important;
-    min-height: 700px;
-}
+
 
 
 .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
@@ -71,19 +64,19 @@ h1,h2,h3{
     border: none !important;
 }
 
-.hero-home:before {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    background-image: url(/assets/home-testimonial-spike-bg.svg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 50%;
-    content: "";
-    z-index: 1;
-}
+/*.hero-home:before {*/
+/*    position: absolute;*/
+/*    bottom: 0;*/
+/*    left: 0;*/
+/*    width: 100%;*/
+/*    height: 100px;*/
+/*    background-image: url(/assets/home-testimonial-spike-bg.svg);*/
+/*    background-repeat: no-repeat;*/
+/*    background-size: cover;*/
+/*    background-position: 50%;*/
+/*    content: "";*/
+/*    z-index: 1;*/
+/*}*/
 
 #about-pasar-kerja {
     padding: 2rem 5rem 5rem 5rem;
@@ -98,19 +91,19 @@ h1,h2,h3{
 }
 
 img.mascot-bottom {
-    position: fixed;
-    bottom: 0;
-    right: 0;
+    position: absolute;
+    bottom: -20px;
+    right: 10px;
     z-index: 5;
-    height: 50%;
+    height: 100%;
 }
 
 img.mascot-bottom-kiosk {
-    height: 40%;
+    height: 70%;
 }
 img.mascot-bottom-signage{
     z-index: 0 !important;
-    height: 40%;
+    height: 70%;
 }
 
 #mTime {
@@ -341,35 +334,40 @@ padding: 3rem;
 
 
 /*KIOSK CSS*/
-#kiosk-container.hero-home {
+.kiosk-container.hero-home-kiosk {
+    /*background-image: url(/assets/hero-bg-home.png);*/
+    /*background-size: cover;*/
+    color: #fff;
+    /*!*overflow: hidden;*!*/
+    /*position: relative;*/
     min-height: 830px;
     background-color: #469278;
     background-image: none;
 }
 
-#kiosk-container #mDateKiosk{
+.kiosk-container #mDateKiosk{
     font-size: 1rem;
 }
-#kiosk-container #mTimeKiosk{
+.kiosk-container #mTimeKiosk{
     font-size: 3rem;
     /*line-height: 0;*/
 }
-#kiosk-container .logo img{
-    width: 330px;
+.kiosk-container .logo img{
+    width: 290px;
 }
-#kiosk-container .tagline{
+.kiosk-container .tagline{
     /*position: relative;*/
     /*display: inline-block;*/
     /*margin-left: 2rem;*/
 }
-#kiosk-container .tagline h1{
+.kiosk-container .tagline h1{
     font-family: "poppinsbold";
     font-size: 5.7rem;
     padding-top: 1rem;
 
 
 }
-#kiosk-container .tagline span.tagline-child{
+.kiosk-container .tagline span.tagline-child{
     font-family: "poppinslight";
     font-size: 2.5rem;
     letter-spacing: -0.04em;
@@ -378,12 +376,144 @@ padding: 3rem;
     padding: 0 2rem ;
     line-height: 1rem;
 }
-#kiosk-container .text-red-pasker{
+.kiosk-container .text-red-pasker{
     color: #eb2e10;
 }
-#kiosk-container .text-orange-pasker{
+.kiosk-container .text-orange-pasker{
     color: #ffb44f;
 }
-#kiosk-container .text-running-container{
+.kiosk-container .text-running-container{
+    background-color: #074a43;
+    font-size: 1.3rem;
+    overflow: hidden;
+}
+#text-running span{
+    margin-right: 2.4rem;
+}
+.running-text-area{
+    margin-top: 4rem;
+}
+.button-area{
+    font-size: 1.2rem;
+}
+#areaone-kiosk-container{
+    position: relative;
+}
+
+
+/*.hero-home:before {*/
+/*    position: absolute;*/
+/*    bottom: 0;*/
+/*    left: 0;*/
+/*    width: 100%;*/
+/*    height: 100px;*/
+/*    background-image: url(/assets/home-testimonial-spike-bg.svg);*/
+/*    background-repeat: no-repeat;*/
+/*    background-size: cover;*/
+/*    background-position: 50%;*/
+/*    content: "";*/
+/*    z-index: 1;*/
+/*}*/
+
+#jobiarea-kiosk-container{
+    background-image: url(/assets/skyline.png);
+    background-size: auto;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    min-height: 570px;
+    position: relative;
+    /*padding-top: 7rem;*/
+    /*margin-top: -5rem;*/
+    background-color: #FFFFFF;
+    z-index: 0;
+}
+#areaone-kiosk-container:before{
+    position: absolute;
+    bottom: -12px;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    background-image: url(/assets/home-testimonial-spike-bg.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50%;
+    content: "";
+    /*z-index: 1;*/
+}
+
+.tagline-fadein{
+    max-width: 400px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    font-family: 'poppinsbold';
+    font-size: 2rem;
+    color: #FFFFFF;
+    background-color: #074a43;
+  word-wrap: break-word;
+    line-height: 2.5rem;
+    position: absolute;
 
 }
+.tagline-item-red{
+    background-color: #eb2e10;
+}
+.tagline-item-orange{
+    background-color: #ffb44f;
+}
+
+#tagline-1{
+    top:10%;
+    left: 5%;
+}
+
+#tagline-2{
+    top:40%;
+    left: 30%;
+    animation-delay: 0.5s;
+}
+#tagline-3{
+    top:70%;
+    left:7%;
+    animation-delay: 1s;
+}
+
+
+
+/*.vertical-alignment-helper {*/
+/*    display:table;*/
+/*    height: 100%;*/
+/*    width: 100%;*/
+/*    pointer-events:none;*/
+/*}*/
+/*.vertical-align-center {*/
+/*    !* To center vertically *!*/
+/*    display: table-cell;*/
+/*    vertical-align: top;*/
+/*    pointer-events:none;*/
+/*}*/
+/*.modal-content {*/
+/*    !* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it *!*/
+/*    width:inherit;*/
+/* max-width:inherit; !* For Bootstrap 4 - to avoid the modal window stretching full width *!*/
+/*    height:inherit;*/
+/*    !* To center horizontally *!*/
+/*    margin: 0 auto;*/
+
+/*    pointer-events:all;*/
+/*}*/
+.modal-dialog{
+    margin-top: 40%;
+}
+#KioskBoard-VirtualKeyboard{
+    height: 50%;
+    /*background: rgba(227, 227, 227, 0.34) !important;*/
+}
+#KioskBoard-VirtualKeyboard .kioskboard-row-numpad{
+    max-width: 50%;
+}
+.swal-modal{
+    margin-top: -50%;
+}
+

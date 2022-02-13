@@ -28,6 +28,13 @@
                 <p>Anda telah memiliki jadwal pada hari yang sama <br/>{{ session('exist_request_date') }}</p>
             </div>
             @endif
+
+            @if(session('flash_error'))
+            <div class="alert alert-warning" role="alert" style="font-size: 0.9rem">
+                <strong>Pendaftaran Tidak Berhasil</strong>
+                <p>{{ session('flash_error') }}</p>
+            </div>
+            @endif
             <form action="{{ route('registration.online.submit') }}" id="registration_form" class="text-left" method="POST" autocomplete="off">
                 @csrf
                 <div class="mb-3">
@@ -179,18 +186,14 @@
 </div>
 
 
-@endsection
 
-
-
-
-@section('script')
+@push('script')
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 <script>
 
     //TODO : disable on holiday
     // TODO : show only available quota
-    // TODO : send event to staffrom
+    // TODO : send event to staffrom only if accepted today booking
     // TODO: start date end date
 
 
@@ -353,5 +356,56 @@
 
 
 </script>
+@endpush
+
+
 
 @endsection
+
+
+@section('footer')
+    <footer>
+        <div class="container container-footer">
+            <div class="pt-4 mb-4 pt-md-5 border-top">
+                <div class="row mb-3">
+                    <div class="col-6 col-md">
+                        <img class="mb-2" src="/assets/logo_blue.png" alt="" width="200">
+                        <div class="link-site pl-3 mt-3">
+                            <a class="d-block mb-2" href="https://kemnaker.go.id/" target="_blank"><i class="bi bi-globe"></i>&nbsp;<u>Kemnaker.go.id</u></a>
+                            <a class="d-block" href="https://karirhub.kemnaker.go.id/" target="_blank"><i class="bi bi-globe"></i>&nbsp;<u>#KARIRhub</u></a>
+                        </div>
+
+                        <btn onclick="location.reload();" class="mt-4 btn btn-secondary">Reload Halaman</btn>
+                    </div>
+                    <div class="col-6 col-md text-secondary">
+                        <h5 class="text-pasker poppinsmedium">Pasker.ID</h5>
+                        <p class="text-orange-pasker-light" style="font-size: 1rem;font-weight: 500">#GetAJobLiveBetter</p>
+                        <p>
+                            Gatot Subroto Kav. 44, Kuningan Barat, Mampang Prapatan, Jakarta Selatan.
+                        </p>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <i class="bi bi-telephone text-pasker" style="font-size: 1.2rem"></i>&nbsp;&nbsp;1500630<br/>
+                                <i class="bi bi-envelope text-pasker" style="font-size: 1.2rem"></i>&nbsp;&nbsp;pasker@kemenaker.go.id
+                            </div>
+                            <div class="col-md-5 text-right">
+                                <div class="footer-social" style="font-size: 1.4rem">
+                                    <a class="ml-3 d-inline-block text-pasker" href="#!"><i class="bi bi-twitter"></i></a>
+                                    <a class="ml-3 d-inline-block text-pasker" href="#!"><i class="bi bi-facebook"></i></a>
+                                    <a target="_blank" class="ml-3 d-inline-block text-pasker" href="https://www.instagram.com/pusatpasarkerja/"><i class="bi bi-instagram"></i></a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </footer>
+@endsection
+
+
+

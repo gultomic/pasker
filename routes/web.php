@@ -88,13 +88,7 @@ Route::get('/register-success', function () {
 })->name('registration.online.success');
 
 
-Route::get('/pelayanan/list/json', function () {
-    //return response()->json('sdffds',500);
-    return response()->json(App\Models\Pelayanan::latest()
-        ->where('refs->aktif', '=', true)
-        ->select('id', 'title')
-        ->get());
-})->name('pelayanan.list.json');
+Route::get('/pelayanan/list/json', [RegistrationController::class, 'get_pelayanan'])->name('pelayanan.list.json');
 
 
 Route::get('/kiosk', function () {
@@ -114,6 +108,12 @@ Route::post('/kiosk/submit-phone', [RegistrationController::class, 'kiosk_submit
 
 Route::post('/kiosk/submit', [RegistrationController::class, 'kiosk_submit'])->name('kiosk.submit');
 
+Route::get('/testprint', function () {
+    return view('registration.offline.print', [
+        'title' => 'Print',
+        'header' => "test"
+    ]);
+});
 
 
 require __DIR__.'/auth.php';
