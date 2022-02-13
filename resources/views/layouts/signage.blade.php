@@ -44,6 +44,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/dynamic-marquee@2"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
     <script src="{{ asset('/js/app.js') }}"></script>

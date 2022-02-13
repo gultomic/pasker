@@ -1,7 +1,6 @@
 {{--TODO: add function when not connected to WS--}}
-{{--todo: multiple letter on pelayanan TTS--}}
 {{--todo: handle activating sound for the first time--}}
-{{--todo: handle on error break the script--}}
+{{--todo: handle on error break the script: should reload if auto play working on first reload--}}
 {{--todo: connect running text to backend--}}
 {{--todo: connect video to backend--}}
 {{--todo: listen loket change from backend--}}
@@ -24,9 +23,9 @@
                             </h1>
                             <span class="tagline-child">
                             <span>#Get</span>
-                            <span class="text-red-pasker">AJob</span>
+                            <span class="text-red-pasker poppinsmedium">AJob</span>
                             <span>Live</span>
-                            <span class="text-orange-pasker">Better</span>
+                            <span class="text-orange-pasker poppinsmedium">Better</span>
                         </span>
                             <img class="mascot" src="/assets/pose01_preview_small.png">
                         </div>
@@ -145,6 +144,61 @@
 
                 })
 
+            window.Echo.connector.pusher.connection.bind('unavailable', (payload) => {
+
+                /**
+                 *  The connection is temporarily unavailable. In most cases this means that there is no internet connection.
+                 *  It could also mean that Channels is down, or some intermediary is blocking the connection. In this state,
+                 *  pusher-js will automatically retry the connection every 15 seconds.
+                 */
+
+                showWSError()
+
+
+                console.log('unavailable');
+            });
+
+            window.Echo.connector.pusher.connection.bind('disconnected', (payload) => {
+
+                /**
+                 * The Channels connection was previously connected and has now intentionally been closed
+                 */
+                showWSError()
+
+                console.log('disconnected');
+
+            });
+            window.Echo.connector.pusher.connection.bind('failed', (payload) => {
+
+                /**
+                 * Channels is not supported by the browser.
+                 * This implies that WebSockets are not natively available and an HTTP-based transport could not be found.
+                 */
+                showWSError()
+
+                console.log('failed', payload);
+
+            });
+
+            window.Echo.connector.pusher.connection.bind('error', (payload) => {
+
+                /**
+                 * Channels is not supported by the browser.
+                 * This implies that WebSockets are not natively available and an HTTP-based transport could not be found.
+                 */
+                showWSError()
+
+
+                console.log('error', payload);
+
+            });
+
+            function showWSError(){
+                // swal("Ups!",'Tidak dapat terhubung ke server realtime. Halaman akan di reload otomatis','error')
+                // setTimeout(function (){
+                //     location.reload();
+                // },3000)
+            }
             // create youtube player
 
             // var ecoJS = jQuery("#text-running").eocjsNewsticker({
@@ -441,7 +495,8 @@
 
             window.onerror = function(error) {
               // do something clever here
-              alert(error); // do NOT do this for real!
+                showWSError()
+              //alert(error); // do NOT do this for real!
             };
 
         </script>
@@ -451,9 +506,12 @@
 
     @push('script-header')
         <script>
+
+
             document.addEventListener('alpine:init', () => {
                 Alpine.data('loketData', () => ({
                     items: JSON.parse(@json($loketJson)),
+            }));
             });
         </script>
     @endpush
