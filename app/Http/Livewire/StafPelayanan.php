@@ -1,6 +1,6 @@
 <?php
 //TODO: add function when not connected to WS
-//TODO: validate loket aktif before call
+
 namespace App\Http\Livewire;
 
 use Livewire\Component;
@@ -195,12 +195,34 @@ class StafPelayanan extends Component
             }
         }
 
+        $list->push('Lepas Loket');
+
+        //dd($list);
+
         $this->loketList = $list;
     }
 
     public function setAktifLoket($loket)
     {
+
+
         $row = Config::where('title', 'loket_aktif');
+
+        if($loket == "Lepas Loket"){
+            $aktif = $row->first()->refs->map(function($q) {
+                if($q['pelaksana'] == Auth::user()->profile->refs['fullname']) {
+                    $q['tanggal'] = '';
+                    $q['pelaksana'] = '';
+                    $q['pelayanan'] = '';
+                }
+                return $q;
+            });
+
+            $row->update(['refs'=>$aktif]);
+            $this->loketAktif  = null;
+            return;
+        }
+
         if ($this->loketAktif != null) {
             $aktif = $row->first()->refs->map(function($q) {
                 if($q['nama'] == $this->loketAktif) {

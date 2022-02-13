@@ -1,7 +1,5 @@
 <?php
 //TODO : should we update existing client with same phone number ? for now not update current data
-//TODO: Refactor code get no atrian from total to get last number
-//TODO: Seragamin crate antrian on model
 
 namespace App\Http\Controllers;
 
@@ -17,32 +15,31 @@ use Carbon\Carbon;
 class RegistrationController extends Controller
 {
 
-    public function online_home(Request $request){
+    public function online_home(Request $request)
+    {
 
         $pelayanan = Pelayanan::latest()
-        ->where('refs->aktif', '=', true)
-        ->get();
+            ->where('refs->aktif', '=', true)
+            ->get();
 
         //get list of jam loket avilable
-        $jam_loket = Config::where('title','loket_jam')->first();
+        $jam_loket = Config::where('title', 'loket_jam')->first();
 
 
 //        return $jam_loket->refs->toJSON();
         return view('registration.online.home', [
-            'pelayanan'=>$pelayanan,
-            'jam_loket'=>$jam_loket->refs->toJSON()
+            'body_id' => 'landing',
+            'pelayanan' => $pelayanan,
+            'jam_loket' => $jam_loket->refs->toJSON()
         ]);
-
-
 
 
     }
 
     public function online_submit(Request $request)
     {
-        //todo validate
 
-        //find by id
+
 
         //return response()->json($request);
         $sel_pelayanan = Pelayanan::find($request->pelayanan);
@@ -57,100 +54,110 @@ class RegistrationController extends Controller
 
         if (empty($ex_klien)) {
             $newKlien = new Klien();
-            $newKlien->name =  $request->nama;
-            $newKlien->phone =  $request->phone;
+            $newKlien->name = $request->nama;
+            $newKlien->phone = $request->phone;
 
             if (empty($request->email)) {
                 $request->email = "";
             }
 
-            $newKlien->email =  $request->email;
+            $newKlien->email = $request->email;
 
             $newKlien->save();
             $klienId = $newKlien->id;
-        }else{
+        } else {
             $klienId = $ex_klien->id;
             //check for booking on same date
             $exist_request = PJ::where([
-                'klien_id'=>$klienId,
-                'tanggal'=>$tanggal_booking
+                'klien_id' => $klienId,
+                'tanggal' => $tanggal_booking
             ])->first();
 
             if ($exist_request) {
-                $date_exist = Carbon::parse($exist_request->tanggal)->format('d M Y') . " - Pukul ".$exist_request->refs['jam_booking'];
+                $date_exist = Carbon::parse($exist_request->tanggal)->format('d M Y') . " - Pukul " . $exist_request->refs['jam_booking'];
                 return redirect(route('registration.online.home'))
-                ->with('exist_request_date', $date_exist);
-               // Do stuff if it doesn't exist.
+                    ->with('exist_request_date', $date_exist);
+                // Do stuff if it doesn't exist.
             }
         }
 
+        $createPJ = (new PJ)->createPJ(
+            $request->pelayanan,
+            $klienId,
+            'online',
+            "create",
+            0,
+            false,
+            ['jam_booking' => $request->jam],
+            $tanggal_booking
+        );
 
-        $newPJ = new PJ();
-        $newPJ->klien_id = $klienId;
-        $newPJ->pelayanan_id = $sel_pelayanan->id;
 
-        $newPJ->tanggal = $tanggal_booking;
-        $newPJ->refs = ['antrian' => '','daftar'=>'online','jam_booking'=>$request->jam];
-        $newPJ->save();
-
-
+        if ($createPJ['error'] == 1) {
+            return redirect(route('registration.online.home'))
+                    ->with('flash_error', $createPJ['message']);
+        }
 
         //return redirect(route('registration.online.success'))->with('name', $request->nama);
         return redirect(route('registration.online.success'))
             ->with('nama', $request->nama)
-            ->with('booking_time', Carbon::parse($request->tanggal)->format('d M Y') . " - Pukul ".$request->jam);
+            ->with('booking_time', Carbon::parse($request->tanggal)->format('d M Y') . " - Pukul " . $request->jam);
 
     }
 
     public function kiosk_submit_phone(Request $request)
     {
         //found klien first
-        $klien = Klien::where('phone',$request->phone)->first();
+        $klien = Klien::where('phone', $request->phone)->first();
         $date = Carbon::now()->format('Y-m-d');
 
-        if(empty($klien)){
+        if (empty($klien)) {
             return response()->json([
                 'success' => 0,
+                'code'=>'booking_not_found',
+                'check'=>"kleint"
             ]);
         }
 
         // then check booking date is today
-        $booking_data = PJ::where('klien_id',$klien->id)
-        ->where('tanggal', '=', $date)
-        ->where('refs->antrian', '=', "")
-        ->first();
+        $booking_data = PJ::where('klien_id', $klien->id)
+            ->where('tanggal', '=', $date)
+            ->where('refs->antrian', '=', "")
+            ->first();
 
 
-        if(empty($booking_data)){
+        if (empty($booking_data)) {
             return response()->json([
                 'success' => 0,
+                'code'=>'booking_not_found',
+                'check'=>"jadwal"
             ]);
         }
 
-        //find bookingdata and create antrian
-        //todo : check if pelayanan exist
-        $pelayanan = Pelayanan::find($booking_data->pelayanan_id);
 
-        //gettotal pelayananid today, and crate incr number
+        $createPJ = (new PJ)->createPJ($booking_data->pelayanan_id,$klien->id,$booking_data->refs['daftar'],"update",$booking_data->id);
 
-        $cont_serve_pelayanan= PJ::where('pelayanan_id',$pelayanan->id)
-        ->where('tanggal', '=', $date)
-        ->where('refs->antrian', '!=', "")
-        ->count();
 
-        $no_antrian  = $pelayanan->refs['kode'].''.($cont_serve_pelayanan+1);
+        if ($createPJ['error'] == 1) {
+//            return $createPJ;
+            return response()->json([
+                'success' => 0,
+                'code' => $createPJ['code'] ?? "",
+                'message' => $createPJ['message']??""
+            ]);
+        }
 
-        //update booking data
-        $booking_data->refs['antrian'] = $no_antrian;
-        $booking_data->refs['status'] = "menunggu";
-        $booking_data->save();
-
+        event(new QueuesService([
+            'call' => false,
+            'pid' => $createPJ["data"]->pelayanan_id,
+            'type' => 'staff'
+        ]));
 
 
         return response()->json([
             'success' => 1,
-            'data' => $booking_data,
-            'noAntrian'=>$no_antrian
+            'data' => $createPJ,
+            'noAntrian' => $createPJ["data"]->refs['antrian']
             // 'data'=>$data
         ]);
 
@@ -160,47 +167,58 @@ class RegistrationController extends Controller
     {
 
 
-        $date = Carbon::now()->format('Y-m-d');
-
         //find bookingdata and create antrian
-        //todo : check if pelayanan exist
-        $pelayanan = Pelayanan::find($request->pelayanan_id);
 
-        //gettotal pelayananid today, and crate incr number
-
-        $cont_serve_pelayanan= PJ::where('pelayanan_id',$pelayanan->id)
-        ->where('tanggal', '=', $date)
-        ->where('refs->antrian', '!=', "")
-        ->count();
-
-        $trailing_no  = str_pad($cont_serve_pelayanan+1, 3, '0', STR_PAD_LEFT);
-        $no_antrian  = $pelayanan->refs['kode'].''.$trailing_no;
-
-        //create new PJ
-
-        $newPJ = new PJ();
-        $newPJ->klien_id = 0;
-        $newPJ->pelayanan_id = $request->pelayanan_id;
+        //send to PJ
+        $createPJ = (new PJ)->createPJ($request->pelayanan_id,0,"goshow");
 
 
-        $newPJ->tanggal = Carbon::now()->format('Y-m-d');
-        $newPJ->refs = ['antrian' => $no_antrian,'daftar'=>'goshow','status'=>'menunggu'];
-        $newPJ->save();
+        if ($createPJ['error'] == 1) {
+//            return $createPJ;
+            return response()->json([
+                'success' => 0,
+                'code' => $createPJ['code'] ?? "",
+                'message' => $createPJ['message']??""
+            ]);
+        }
 
 
         event(new QueuesService([
-            'call'=>false,
-            'pid'=>$request->pelayanan_id,
-            'type'=>'staff'
+            'call' => false,
+            'pid' => $request->pelayanan_id,
+            'type' => 'staff'
         ]));
 
         return response()->json([
             'success' => 1,
-            'data' => $newPJ,
-            'noAntrian'=>$no_antrian
+            'data' => $createPJ["data"],
+            'noAntrian' => $createPJ["data"]->refs['antrian']
             // 'data'=>$data
         ]);
 
+    }
+
+    public function get_pelayanan(Request $request)
+    {
+
+        $pelayanan = Pelayanan::latest()
+            ->where('refs->aktif', '=', true)
+            ->get();
+
+        $available_pel = new Pelayanan();
+
+        if ($request->type == "all") {
+            $available_pel = $pelayanan;
+        } else {
+            $available_pel = $pelayanan->filter(function ($value, $key) {
+                if (!$value->isLimit()) {
+                    return true;
+                }
+            })->values();
+        }
+
+
+        return response()->json($available_pel);
     }
 
 }

@@ -38,4 +38,19 @@ class Pelayanan extends Model
         return $this->jadwal()
             ->where('tanggal', '=', Carbon::now()->format('Y-m-d'));
     }
+
+//    public function antrianHariIniActive ()
+//    {
+//        return $this->jadwal()
+//            ->where('refs->antrian','!=',"")
+//            ->where('tanggal', '=', Carbon::now()->format('Y-m-d'));
+//    }
+
+    public function isLimit()
+    {
+        return $this->antrianHariIni()
+//                ->where('refs->status', '!=', "selesai")
+//                ->where('refs->status', '!=', "tidak_hadir")
+                ->count() >= $this->refs['antrian'];
+    }
 }

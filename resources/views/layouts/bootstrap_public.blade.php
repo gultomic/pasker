@@ -20,6 +20,7 @@
 
 
     <link href="/css/homepage.css" rel="stylesheet">
+    @stack('styles')
 
 </head>
 
@@ -27,47 +28,8 @@
     <main>
         @yield('content')
     </main>
-    <footer>
-        <div class="container container-footer">
-            <div class="pt-4 mb-4 pt-md-5 border-top">
-                <div class="row mb-3">
-                    <div class="col-6 col-md">
-                        <img class="mb-2" src="/assets/logo_blue.png" alt="" width="200">
-                        <div class="link-site pl-3 mt-3">
-                            <a class="d-block mb-2" href="https://kemnaker.go.id/" target="_blank"><i class="bi bi-globe"></i>&nbsp;<u>Kemnaker.go.id</u></a>
-                            <a class="d-block" href="https://karirhub.kemnaker.go.id/" target="_blank"><i class="bi bi-globe"></i>&nbsp;<u>#KARIRhub</u></a>
-                        </div>
-                    </div>
-                    <div class="col-6 col-md text-secondary">
-                        <h5 class="text-pasker poppinsmedium">Pasker.ID</h5>
-                        <p class="text-orange-pasker-light" style="font-size: 1rem;font-weight: 500">#GetAJobLiveBetter</p>
-                        <p>
-                            Gatot Subroto Kav. 44, Kuningan Barat, Mampang Prapatan, Jakarta Selatan.
-                        </p>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <i class="bi bi-telephone text-pasker" style="font-size: 1.2rem"></i>&nbsp;&nbsp;1500630<br/>
-                                <i class="bi bi-envelope text-pasker" style="font-size: 1.2rem"></i>&nbsp;&nbsp;pasker@kemenaker.go.id
-                            </div>
-                            <div class="col-md-6 text-right">
-                                <div class="footer-social" style="font-size: 1.4rem">
-                                    <a class="ml-3 d-inline-block text-pasker" href="#!"><i class="bi bi-twitter"></i></a>
-                                    <a class="ml-3 d-inline-block text-pasker" href="#!"><i class="bi bi-facebook"></i></a>
-                                    <a target="_blank" class="ml-3 d-inline-block text-pasker" href="https://www.instagram.com/pusatpasarkerja/"><i class="bi bi-instagram"></i></a>
-                                </div>
-                            </div>
+    @yield('footer')
 
-                        </div>
-                    </div>
-
-                </div>
-                <div class="row mt-5 text-secondary" style="font-size: 0.8rem">
-                    Kementerian Ketenagakerjaan Republik Indonesia © 2020 • Hak Cipta Dilindungi Undang-Undang.
-                </div>
-            </div>
-
-        </div>
-    </footer>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
     </script>
@@ -79,11 +41,15 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/js/public-vendors/jquery.datetimepicker.full.min.js"></script>
     <script src="/js/public-vendors/kioskboard-2.0.0.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+
 
     <script>
         moment.locale('id');
     </script>
-    @yield('script')
+    @stack('script')
 
 </body>
 
