@@ -194,10 +194,10 @@
             });
 
             function showWSError(){
-                // swal("Ups!",'Tidak dapat terhubung ke server realtime. Halaman akan di reload otomatis','error')
-                // setTimeout(function (){
-                //     location.reload();
-                // },3000)
+                swal("Ups!",'Tidak dapat terhubung ke server realtime. Halaman akan di reload otomatis','error')
+                setTimeout(function (){
+                    location.reload();
+                },3000)
             }
             // create youtube player
 

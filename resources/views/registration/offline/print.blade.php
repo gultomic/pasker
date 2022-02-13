@@ -8,10 +8,7 @@
         <title>Receipt example</title>
 
         <style>
-            body
-            {
-              margin: 0 0 25mm 0;
-            }
+
             * {
                 font-size: 12px;
                 font-family: 'Times New Roman';
