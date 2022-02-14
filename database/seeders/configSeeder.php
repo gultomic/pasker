@@ -21,13 +21,6 @@ class configSeeder extends Seeder
         Config::create([
             'title' => 'loket_pelayanan',
             'refs' => $loket,
-            // [
-            //     'Loket 1', 'Loket 2', 'Loket 3', 'Loket 4',
-            //     // ['id'=>1, 'name'=>'Loket 1', 'queue'=>''],
-            //     // ['id'=>2, 'name'=>'Loket 2', 'queue'=>''],
-            //     // ['id'=>3, 'name'=>'Loket 3', 'queue'=>''],
-            //     // ['id'=>4, 'name'=>'Loket 4', 'queue'=>'']
-            // ],
         ]);
 
         // AKTIF LOKET
@@ -51,47 +44,53 @@ class configSeeder extends Seeder
 
         // LOKET JAM PELAJAYANAN
         //MINGGU is 0 OF DAY OF WEEK NUMBER
-
         Config::create([
             'title' => 'loket_jam',
             'refs' => [
                 [
+                    'hari' => 'Minggu',
                     'jam_buka' => '09:00',
                     'jam_tutup' => '15:00',
                     'kuota_per_jam' => '5',
                     'libur'=>1
                 ],
                 [
+                    'hari' => 'Senin',
                     'jam_buka' => '09:00',
                     'jam_tutup' => '15:00',
                     'kuota_per_jam' => '5',
                     'libur'=>0
                 ],
                 [
+                    'hari' => 'Selasa',
                     'jam_buka' => '09:00',
                     'jam_tutup' => '15:00',
                     'kuota_per_jam' => '5',
                     'libur'=>0
                 ],
                 [
+                    'hari' => 'Rabu',
                     'jam_buka' => '09:00',
                     'jam_tutup' => '15:00',
                     'kuota_per_jam' => '5',
                     'libur'=>0
                 ],
                 [
+                    'hari' => 'Kamis',
                     'jam_buka' => '09:00',
                     'jam_tutup' => '15:00',
                     'kuota_per_jam' => '5',
                     'libur'=>0
                 ],
                 [
+                    'hari' => 'Jumat',
                     'jam_buka' => '09:00',
                     'jam_tutup' => '11:00',
                     'kuota_per_jam' => '5',
                     'libur'=>0
                 ],
                 [
+                    'hari' => 'Sabtu',
                     'jam_buka' => '09:00',
                     'jam_tutup' => '15:00',
                     'kuota_per_jam' => '5',
@@ -99,6 +98,20 @@ class configSeeder extends Seeder
                 ],
 
             ]
+        ]);
+
+        // MARQUEE
+        Config::create([
+            'title' => 'list_marquee',
+            'refs' => [
+                "Selamat Datang di PASKER.ID Silahkan Melakukan Konsultasi.",
+                "Waspada Bahaya Corona, Jaga Diri Anda dan Keluarga dengan Selalu Menerapkan Protokol 3T."
+            ]
+        ]);
+        // YOUTUBE ID'S
+        Config::create([
+            'title' => 'list_video',
+            'refs' => [ "tmerNTqPosM","0Bmhjf0rKe8","6kUItwCsds7q7o","LheNDiNekzA","0Bmhjf0rKe8","6kUItwCsds7q7o","LheNDiNekzA" ]
         ]);
     }
 }
