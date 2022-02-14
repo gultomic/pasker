@@ -3,6 +3,7 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Carbon\Carbon;
 use App\Models\PelayananJadwal as PJ;
@@ -107,6 +108,10 @@ class StafPelayanan extends Component
     public function setAction($id, $act,$openmodal=false,$closeModal=false)
     {
 
+         try{
+
+             DB::connection('mysql')->beginTransaction();
+
         //dd($closeModal);
         if(empty($this->loketAktif)){
             return $this->dispatchBrowserEvent('loketIsEmpty');
@@ -138,6 +143,11 @@ class StafPelayanan extends Component
             $item->pelaksana_id = Auth::user()->id;
 
         $item->refs['status'] = $act;
+
+        if($act == "selesai"){
+            return $this->dispatchBrowserEvent('taskCompleted');
+        }
+
         $item->save();
 
 
@@ -173,7 +183,12 @@ class StafPelayanan extends Component
             //'call'=>$call,
             'cID'=>$item->id
         ]));
+            DB::connection('mysql')->commit();
+         }catch (Exception $e){
 
+              DB::connection('mysql')->rollBack();
+
+        }
 
     }
 

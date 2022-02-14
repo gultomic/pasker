@@ -1,5 +1,3 @@
-{{--TODO : sweetlaert livewire--}}
-
 <x-staf-pelayanan-modal>
     <x-slot name="title">
 

@@ -157,7 +157,8 @@ class RegistrationController extends Controller
         return response()->json([
             'success' => 1,
             'data' => $createPJ,
-            'noAntrian' => $createPJ["data"]->refs['antrian']
+            'noAntrian' => $createPJ["data"]->refs['antrian'],
+            'pelayanan' => $createPJ["data"]->pelayanan->title,
             // 'data'=>$data
         ]);
 
@@ -192,7 +193,8 @@ class RegistrationController extends Controller
         return response()->json([
             'success' => 1,
             'data' => $createPJ["data"],
-            'noAntrian' => $createPJ["data"]->refs['antrian']
+            'noAntrian' => $createPJ["data"]->refs['antrian'],
+            'pelayanan' => $createPJ["data"]->pelayanan->title,
             // 'data'=>$data
         ]);
 
