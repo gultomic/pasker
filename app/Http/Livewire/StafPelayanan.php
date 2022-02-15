@@ -1,5 +1,6 @@
 <?php
 //TODO: add function when not connected to WS
+//TODO: SVING LAST STATE ON CALL TO DB in case Signage Reload
 
 namespace App\Http\Livewire;
 
@@ -145,7 +146,8 @@ class StafPelayanan extends Component
         $item->refs['status'] = $act;
 
         if($act == "selesai"){
-            return $this->dispatchBrowserEvent('taskCompleted');
+
+            $this->dispatchBrowserEvent('taskCompleted');
         }
 
         $item->save();

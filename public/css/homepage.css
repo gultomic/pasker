@@ -393,8 +393,13 @@ padding: 3rem;
 .survey-item-pelayanan.active{
     background-color: #074a43;
 }
+.survey-item-jawaban{
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
 .survey-item-jawaban:hover{
-    background-color: #074a43;
+    background-color: rgba(250,131,52,0.95) !important;
 }
 .cursor-pointer{
     cursor: pointer !important;

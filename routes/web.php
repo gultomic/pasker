@@ -131,6 +131,3 @@ Route::get('/profile/{username}', function ($username) {
 Route::get('/survey', [SurveyController::class,'landing'])->name('survey.landing');
 Route::post('/take-survey', [SurveyController::class,'takeSurvey'])->name('survey.takeSurvey');
 Route::post('/submit-survey', [SurveyController::class,'submitSurvey'])->name('survey.submitSurvey');
-Route::get('/alpine-axios', function (){
-    return view('alpine-axios');
-});

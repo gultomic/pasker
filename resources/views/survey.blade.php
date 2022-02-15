@@ -50,19 +50,20 @@
         <div class="col-lg-4 pb-4 text-right">
             <!-- <img class="position-absolute" style="bottom:0;right:0;" src="/assets/young-man.png" alt=""> -->
             <img class="img-fluid text-right" src="/assets/pose01_preview_small.png" alt="">
-            <small class="text-left d-block" style="color: #eef9f6" x-text="nama">JOBI - Maskot Pasker.ID</small>
+            <small class="text-left d-block" style="color: #eef9f6" >JOBI - Maskot Pasker.ID</small>
         </div>
 
     </div>
 
 
     <!-- Modal -->
-    <div class="modal fade modal-kiosk" id="survey-modal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade modal-kiosk" id="survey-modal" tabindex="-1" aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg">
             <div class="modal-content px-5">
                 <div class="modal-header">
 
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" aria-label="Close"
+                            @click="if(confirm('Yakin ingin menutup? data tidak akan tersimpan'))jQuery('#survey-modal').modal('hide')">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -109,7 +110,7 @@
                                                 <template x-for="(answer,i) in question.pertanyaan.refs.opsi_jawaban"
                                                           :key="question.id+'_'+i">
                                                     <div
-                                                        class="survey-item-jawaban col  ml-3 mb-3 background-orange py-3 cursor-pointer"
+                                                        class="survey-item-jawaban col  ml-3 mb-3 py-3 cursor-pointer"
                                                         @click="gotoNextQuestion(dataResp.id,question.id,answer.skor)"
                                                         x-transition
                                                         x-transition.duration.500ms
@@ -141,6 +142,7 @@
 
                     </template>
 {{--                    <p x-text="surveyState"></p>--}}
+{{--                    <p x-text="statQindex"></p>--}}
 
                 </div>
             </div>
@@ -175,21 +177,32 @@
                 dataResp: null,
                 setdataSubmit(data) {
                     this.dataSubmit = data
-                    // console.log(this.dataSubmit)
 
+                },
+                setSurveyStat(action){
+                    this.surveyState = action
+                },
+                resetData(){
+                    this.surveyState=""
+                    this.statQindex = 0
+                    this.arrSurResult = []
+                    this.dataSubmit.pelayanan = 0
+                    this.dataSubmit.pelayananKode = ''
+                    jQuery('.survey-item-pelayanan').removeClass('active')
+                    this.noAntrianModel=""
                 },
                 startSurvey() {
                     if (this.dataSubmit.pelayanan == 0 || this.noAntrianModel == "") {
-                        //return swal('Ups', 'Mohon pilih pelayanan dan isi no antrian terlebih dahulu', 'warning')
+                        return swal('Ups', 'Mohon pilih pelayanan dan isi no antrian terlebih dahulu', 'warning')
                     }
                     this.isLoading = true
                     this.dataSubmit.noAntrian = this.noAntrianModel;
                     console.log(this.dataSubmit)
-                    this.dataSubmit = {
-                        pelayanan: 1,
-                        pelayananKode: "A",
-                        noAntrian: '008'
-                    };
+                    // this.dataSubmit = {
+                    //     pelayanan: 1,
+                    //     pelayananKode: "A",
+                    //     noAntrian: '008'
+                    // };
                     axios.post('{{ route('survey.takeSurvey') }}', this.dataSubmit)
                     .then( (r)=>{
                             console.log(r.data.data);
@@ -198,15 +211,16 @@
                                 this.dataResp = r.data.data
                                 this.pjID = r.data.data.id
                                 jQuery('#survey-modal').modal('show')
-                                this.surveyState = "identitas"
+                                this.resetData()
+                                this.surveyState="identitas"
                                 console.log(this.pjID)
                             }else{
-
                                 swal("Ups!", r.data.message, 'warning');
+                                this.resetData()
                             }
-
                         }).catch( (e)=>{
                             swal("Ups!", "Terjadi kesalahan silahkan ulangi", 'warning');
+                            this.resetData()
                             console.log(e);
                         }).then((e)=>{
                             this.isLoading = false;
@@ -221,87 +235,91 @@
 
                   this.statQindex ++
                     if(this.statQindex>= this.dataResp.kuesioner.length){
-                        this.submitSurvey()
+                        this.submitSurvey(this.arrSurResult)
                     }
-                    console.log(this.arrSurResult)
+                    // console.log(this.arrSurResult)
                 },
-                submitSurvey(){
-                    //todo: swall retry
+                submitSurvey(surveyAnswer){
+
                     this.surveyState = 'loadingSubmit'
-                  axios.post('{{ route('survey.submitSurvey') }}', this.arrSurResult)
+                    // console.log('arr')
+                    // console.log(this.arrSurResult)
+                  axios.post('{{ route('survey.submitSurvey') }}', JSON.stringify(surveyAnswer))
                     .then( (r)=>{
                             console.log(r.data.data);
                             // this.ok = true;
                             if (r.data.success == 1) {
                                 //hide modal
                                 jQuery('#survey-modal').modal('hide')
+                                survey().resetData()
                                 swal("Sukses","Berhasil menyimpan data survey. Terimakasih",'success')
-                                this.surveyState=""
-                                this.statQindex = 0
+
                             }else{
-                                swal(r.data.message, {
-                                    icon:"warning",
-                                    title:"Ups!",
-                                    buttons: {
-                                        cancel: "Batal Simpan!",
-                                        retry: {
-                                            text: "Coba kembali",
-                                            value: "retry",
-                                        },
-                                    },
-                                })
-                                    .then((value) => {
-                                        switch (value) {
-                                            case "retry":
-                                                this.submitSurvey()
-                                                break;
-
-                                            default:
-                                                alert('sfd')
-                                                // jQuery('#survey-modal').modal('hide')
-                                                //
-                                                // this.surveyState=""
-                                                // this.statQindex = 0
-
-                                        }
-                                    });
-
+                                swal("Ups!", r.data.message, 'warning');
+                                jQuery('#survey-modal').modal('hide')
+                                survey().resetData()
+                                //this.resetData()
                             }
-
                         }).catch( (e)=>{
-                            swal("Terjadi kesalahan silahkan ulangi", {
-                                    icon:"warning",
-                                    title:"Ups!",
-                                    buttons: {
-                                        cancel: "Batal Simpan!",
-                                        retry: {
-                                            text: "Coba kembali",
-                                            value: "retry",
-                                        },
-                                    },
-                                })
-                                    .then((value) => {
-                                        switch (value) {
-                                            case "retry":
-                                                this.submitSurvey()
-
-                                            default:
-                                                alert('sfd')
-                                                // jQuery('#survey-modal').modal('hide')
-                                                //
-                                                // this.surveyState=""
-                                                // this.statQindex = 0
-
-                                        }
-                                    });
-
+                            // console.log('arr2')
+                            // console.log(this.arrSurResult)
+                            this.swalRetry(surveyAnswer)
                             console.log(e);
                         }).then((e)=>{
 
                         })
                 },
-                setSurveyStat(action){
-                    this.surveyState = action
+                swalRetry:(surveyAnswer)=>{
+                    swal("Terjadi kesalahan dalam proses menyimpan silahkan ulangi", {
+                        icon: "warning",
+                        closeOnClickOutside: false,
+                        closeOnEsc: false,
+                        title: "Ups!",
+                        buttons: {
+                            cancelSave: {
+                                text: "Batal Simpan!",
+                                value: "cancelSave",
+                                className: "btn-secondary"
+                            },
+                            retry: {
+                                text: "Coba kembali",
+                                value: "retry",
+                            },
+                        },
+                    })
+                        .then((value) => {
+
+                            switch (value) {
+                                case "retry":
+                                    survey().submitSurvey(surveyAnswer)
+                                    break
+                                case "cancelSave":
+                                    survey().swalConfirm(surveyAnswer)
+                                    break
+                                default:
+                            }
+                        });
+                },
+                swalConfirm:(surveyAnswer)=>{
+                    swal({
+                        title: "Anda Yakin?",
+                        text: "Data survey tidak akan tersimpan",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                        .then((willDelete) => {
+                            if (willDelete) {
+                                jQuery('#survey-modal').modal('hide')
+                                survey().resetData()
+                                console.log("will")
+
+                            } else {
+                                console.log("ds")
+                                survey().submitSurvey(surveyAnswer)
+
+                            }
+                        })
                 }
             }
         }
@@ -318,6 +336,13 @@
             $('.survey-item-pelayanan').removeClass('active')
             $(this).addClass('active');
 
+    })
+
+    $('#survey-modal').on('hidden.bs.modal', function (e) {
+      // do something...
+        survey().statQindex = 0;
+        survey().surveyState=""
+        survey().resetData()
     })
 
 

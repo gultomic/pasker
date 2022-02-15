@@ -1,15 +1,18 @@
 <?php
 
+//todo: validate if client already taken survey
 
 namespace App\Http\Controllers;
 
 use App\Models\Kuesioner;
 use App\Models\Klien;
+use App\Models\Survei;
 use Illuminate\Http\Request;
 use App\Models\Pelayanan;
 use App\Models\PelayananJadwal as PJ;
 use Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class SurveyController extends Controller
 {
@@ -65,6 +68,19 @@ class SurveyController extends Controller
             ]);
         }
 
+        //find taken survei
+        $survei_taken = Survei::where([
+            'jadwal_id'=>$isPJTaken->id,
+            'kuesioner_id'=>$kuesioner[0]->id
+        ])->first();
+
+        if($survei_taken){
+            return response()->json([
+                'success'=>0,
+                'message'=>"Data survey sudah pernah ada, tidak dapat ditambahkan kembali"
+            ]);
+        }
+
         $data = $isPJTaken;
         $data['kuesioner'] = $kuesioner;
 //        $data['pengunjung'] = $isPJTaken->pengunjung;
@@ -76,11 +92,24 @@ class SurveyController extends Controller
 
     }
 
-    public function submitSurvey(){
-        return response()->json([
-            'success'=>0,
+    public function submitSurvey(Request $request){
+        $data = $request->json()->all();
 
-        ],500);
+        $taken = Survei::where('jadwal_id',$data[0]['jadwal_id'])->first();
+        if($taken){
+            return response()->json([
+                'success'=>0,
+                'message'=>"Data survey sudah pernah ada, tidak dapat ditambahkan kembali"
+            ]);
+        }
+        DB::table('survei')->insert($request->json()->all());
+
+
+        return response()->json([
+            'success'=>1,
+
+
+        ]);
     }
 
 
