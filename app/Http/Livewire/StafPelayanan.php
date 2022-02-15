@@ -1,9 +1,10 @@
 <?php
-//TODO: add function when not connected to WS done temp solution try catch before save on setactions
+//TODO *temp: add function when not connected to WS done temp solution try catch before save on setactions
 //TODO: SVING LAST STATE ON CALL TO DB in case Signage Reload
 
 namespace App\Http\Livewire;
 
+use App\Models\ConfigAsArray;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Carbon\Carbon;
@@ -153,6 +154,11 @@ class StafPelayanan extends Component
         $item->save();
 
 
+
+        //save call value
+
+
+
         if ($act == 'panggil') {
             ($item->klien_id != null)
                 ? $name = $item->pengunjung->name
@@ -167,6 +173,20 @@ class StafPelayanan extends Component
             $token_call =$item->refs['antrian'];
             $name_call = $name;
             $type = "call";
+
+
+//            $lokAktif = $loketDB->first()->refs->map(function($q) use($token_call,$name_call){
+//                if($q['nama'] == $this->loketAktif) {
+//                    $q['tanggal']  = Carbon::now()->format('Y-m-d');
+//                    $q['pelaksana'] = Auth::user()->profile->refs['fullname'];
+//                    $q['pelayanan'] = $this->pelayanan->title;
+//                    $q['noAntrianCall'] = $token_call;
+//                    $q['namaAntrianCall'] = $name_call;
+//                }
+//                return $q;
+//            });
+//
+//            $loketDB->update(['refs'=>$lokAktif]);
 
             $this->emit('openModal', 'staff-pelayanan-modal-call',['pj'=>$item,'state'=>'call']);
 
@@ -231,6 +251,8 @@ class StafPelayanan extends Component
                     $q['tanggal'] = '';
                     $q['pelaksana'] = '';
                     $q['pelayanan'] = '';
+                    $q['noAntrianCall'] = '';
+                    $q['namaAntrianCall'] = '';
                 }
                 return $q;
             });
@@ -246,6 +268,8 @@ class StafPelayanan extends Component
                     $q['tanggal'] = '';
                     $q['pelaksana'] = '';
                     $q['pelayanan'] = '';
+                    $q['noAntrianCall'] = '';
+                    $q['namaAntrianCall'] = '';
                 }
                 return $q;
             });
@@ -259,6 +283,8 @@ class StafPelayanan extends Component
                     $q['tanggal'] = Carbon::now()->format('Y-m-d');
                     $q['pelaksana'] = Auth::user()->profile->refs['fullname'];
                     $q['pelayanan'] = $this->pelayanan->title;
+                    $q['noAntrianCall'] = '';
+                    $q['namaAntrianCall'] = '';
                 }
                 return $q;
             });
@@ -268,6 +294,9 @@ class StafPelayanan extends Component
                 'tanggal' => Carbon::now()->format('Y-m-d'),
                 'pelaksana' => Auth::user()->profile->refs['fullname'],
                 'pelayanan' => $this->pelayanan->title,
+                'noAntrianCall' => '',
+                'namaAntrianCall' => '',
+
             ]);
         }
 

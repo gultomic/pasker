@@ -740,15 +740,15 @@
                         <btn onclick="location.reload();" class="mt-4 btn btn-secondary">Reload Halaman</btn>
                     </div>
                     <div class="col-6 col-md text-secondary">
-                        <h5 class="text-pasker poppinsmedium">Pasker.ID</h5>
+                        <h5 class="text-pasker poppinsmedium">PASKER.ID</h5>
                         <p class="text-orange-pasker-light" style="font-size: 1rem;font-weight: 500">#GetAJobLiveBetter</p>
                         <p>
                             Gatot Subroto Kav. 44, Kuningan Barat, Mampang Prapatan, Jakarta Selatan.
                         </p>
                         <div class="row">
                             <div class="col-md-7">
-                                <i class="bi bi-telephone text-pasker" style="font-size: 1.2rem"></i>&nbsp;&nbsp;1500630<br/>
-                                <i class="bi bi-envelope text-pasker" style="font-size: 1.2rem"></i>&nbsp;&nbsp;pasker@kemenaker.go.id
+                                <i class="bi bi-telephone text-pasker" style="font-size: 1.2rem"></i>&nbsp;&nbsp;0812 8108 9843<br/>
+                                <i class="bi bi-envelope text-pasker" style="font-size: 1.2rem"></i>&nbsp;&nbsp;layananpuspaker@kemnaker.go.id
                             </div>
                             <div class="col-md-5 text-right">
                                 <div class="footer-social" style="font-size: 1.4rem">
