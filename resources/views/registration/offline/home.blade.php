@@ -258,10 +258,7 @@
 
         <script>
 
-            var marqueList = [
-                "Selamat Datang di PASKER.ID Silahkan Melakukan Konsultasi.",
-                "Waspada Bahaya Corona, Jaga Diri Anda dan Keluarga dengan Selalu Menerapkan Protokol 3T."
-            ];
+            var marqueList = JSON.parse(@json($marqueJson));
 
             var isStartRepeat = false;
 

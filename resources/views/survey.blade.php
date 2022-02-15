@@ -1,3 +1,4 @@
+{{--todo: add pasker.id logo --}}
 @extends('layouts.bootstrap_public')
 @section('content')
 

@@ -1,6 +1,6 @@
 <?php
 
-//todo: validate if client already taken survey
+
 
 namespace App\Http\Controllers;
 
@@ -58,8 +58,7 @@ class SurveyController extends Controller
             ->orderBy('nomor')
             ->get();
 
-        //todo: validate if already taken
-        //todo: validate pertanyaan exist
+
 
         if(count($kuesioner)<=0 ){
             return response()->json([

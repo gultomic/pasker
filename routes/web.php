@@ -54,10 +54,14 @@ for ($i = 0; $i < 20; $i++) {
 
 Route::get('/signage', function () {
     $loket =  App\Models\Config::where('title', 'loket_pelayanan')->first()->refs;
+    $marque =  App\Models\Config::where('title', 'list_marquee')->first()->refs;
+    $video =  App\Models\Config::where('title', 'list_video')->first()->refs;
     return view('signage',[
         'title' => 'Signane',
         'loket' => $loket,
-        'loketJson'=>$loket->toJSON()
+        'loketJson'=>$loket->toJSON(),
+        'marqueJson'=>$marque->toJSON(),
+        'videoJson'=>$video->toJSON()
     ]);
 })->name('monitor');
 
@@ -93,11 +97,12 @@ Route::get('/pelayanan/list/json', [RegistrationController::class, 'get_pelayana
 
 
 Route::get('/kiosk', function () {
-
+    $marque =  App\Models\Config::where('title', 'list_marquee')->first()->refs;
     return view('registration.offline.home',[
         'pelayanan' => App\Models\Pelayanan::latest()
         ->where('refs->aktif', '=', true)
-        ->get()
+        ->get(),
+        'marqueJson'=>$marque->toJSON()
     ]);
 })->name('kiosk.homepage');
 

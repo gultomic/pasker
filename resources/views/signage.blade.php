@@ -1,8 +1,5 @@
 {{--todo: handle activating sound for the first time done it works on openbrowser for smart tv--}}
-{{--todo: handle on error break the script: should reload if auto play working on first reload--}}
-{{--todo: connect running text to backend--}}
-{{--todo: connect video to backend--}}
-{{--todo: listen loket change from backend--}}
+{{--todo: handle on error break the script: should reload if auto play working on first reload: done for now TVBRowser permit to play sound for the first time--}}
 
 <x-signage-layout>
     <div class="container-fluid signagearea" x-data="loketData" x-on:rebuild-loket.window="items = $event.detail.items">
@@ -99,13 +96,10 @@
         <script>
 
 
-            var marqueList = [
-                "Selamat Datang di PASKER.ID Silahkan Melakukan Konsultasi.",
-                "Waspada Bahaya Corona, Jaga Diri Anda dan Keluarga dengan Selalu Menerapkan Protokol 3T."
-            ];
+            var marqueList = JSON.parse(@json($marqueJson));
 
 
-            var videoList = ["tmerNTqPosM"];
+            var videoList = JSON.parse(@json($videoJson));
             var videoNum = 0 ;
             var player;
 

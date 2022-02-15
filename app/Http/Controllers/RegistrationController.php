@@ -44,7 +44,7 @@ class RegistrationController extends Controller
         //return response()->json($request);
         $sel_pelayanan = Pelayanan::find($request->pelayanan);
 
-        //todo: validate pelayanan exist and active
+        //todo: validate pelayanan exist and active by now we assume all pelayanan are active
 
 
         //check klien if exist
