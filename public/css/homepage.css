@@ -268,7 +268,7 @@ border: 1px solid rgba(255, 255, 255, 0.3);
 #signage .videoarea{
 padding: 3rem;
 }
-#signage .background-orange{
+.background-orange{
     /*border: 1px solid rgba(255, 255, 255, 0.3);*/
     background: rgba(250,131,52,0.95);
     color: #FFFFFF;
@@ -291,7 +291,7 @@ padding: 3rem;
     font-size: 0.85rem;
 }
 
-#signage .background-red-pasker{
+.background-red-pasker{
     background-color: #FFE882;
     padding-top: 8px;
     padding-bottom: 8px;
@@ -386,4 +386,16 @@ padding: 3rem;
 }
 #kiosk-container .text-running-container{
 
+}
+
+
+/*Survey item pelayanan*/
+.survey-item-pelayanan.active{
+    background-color: #074a43;
+}
+.survey-item-jawaban:hover{
+    background-color: #074a43;
+}
+.cursor-pointer{
+    cursor: pointer !important;
 }
