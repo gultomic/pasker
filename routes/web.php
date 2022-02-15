@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SurveyController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RegistrationController;
@@ -125,3 +126,10 @@ Route::get('/profile/{username}', function ($username) {
         'username' => $username
     ]);
 })->name('profile');
+
+
+Route::get('/survey', [SurveyController::class,'landing'])->name('survey.landing');
+Route::post('/take-survey', [SurveyController::class,'takeSurvey'])->name('survey.takeSurvey');
+Route::get('/alpine-axios', function (){
+    return view('alpine-axios');
+});

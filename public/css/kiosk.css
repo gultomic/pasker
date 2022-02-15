@@ -387,6 +387,9 @@ padding: 3rem;
     font-size: 1.3rem;
     overflow: hidden;
 }
+#text-running{
+    padding-top: 10px;
+}
 #text-running span{
     margin-right: 2.4rem;
 }
@@ -462,21 +465,29 @@ padding: 3rem;
 .tagline-item-orange{
     background-color: #ffb44f;
 }
-
+.tagline-item-greenlight{
+    background-color: #04776c;
+}
 #tagline-1{
     top:10%;
     left: 5%;
 }
 
 #tagline-2{
-    top:40%;
+    top: 30%;
     left: 30%;
+
     animation-delay: 0.5s;
 }
 #tagline-3{
-    top:70%;
+    top:50%;
     left:7%;
     animation-delay: 1s;
+}
+#tagline-4{
+    top:70%;
+    left: 30%;
+    animation-delay: 1.5s;
 }
 
 
@@ -516,4 +527,42 @@ padding: 3rem;
 .swal-modal{
     margin-top: -50%;
 }
+
+
+@media print {
+     * {
+        font-size: 12px;
+        font-family: 'Times New Roman';
+    }
+
+    .hidden-print,
+    .hidden-print * {
+        display: none !important;
+    }
+    .to-print{
+        display: block !important;
+        width: 100mm;
+        margin-top: 5mm;
+
+    }
+    .centered{
+        text-align: center;
+                align-content: center;
+    }
+        /* stop page from printing footer */
+    header, footer, aside, form, … {
+        display: none;
+    }
+
+    @page {
+        size: auto;   /* auto is the initial value */
+        margin: 0mm;  /* this affects the margin in the printer settings */
+    }
+    #print-el{
+        /*display: block;*/
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+.to-print{display: none;}
 

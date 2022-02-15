@@ -1,5 +1,4 @@
-{{--TODO: add function when not connected to WS--}}
-{{--todo: handle activating sound for the first time--}}
+{{--todo: handle activating sound for the first time done it works on openbrowser for smart tv--}}
 {{--todo: handle on error break the script: should reload if auto play working on first reload--}}
 {{--todo: connect running text to backend--}}
 {{--todo: connect video to backend--}}
@@ -250,8 +249,14 @@
             }
 
             // autoplay video
+
+            //set volume &
+            //player.setVolume(30)
+
             function onPlayerReady(event) {
+
                 event.target.playVideo();
+                event.target.setVolume(30)
             }
 
             function onPlayerStateChange(event) {
@@ -269,7 +274,9 @@
 
             function gotoNextVideo(event){
                 videoNum = videoNum+1
+
                 player.loadVideoById(videoList[videoNum]);
+
             }
 
 

@@ -375,7 +375,6 @@
                             <a class="d-block" href="https://karirhub.kemnaker.go.id/" target="_blank"><i class="bi bi-globe"></i>&nbsp;<u>#KARIRhub</u></a>
                         </div>
 
-                        <btn onclick="location.reload();" class="mt-4 btn btn-secondary">Reload Halaman</btn>
                     </div>
                     <div class="col-6 col-md text-secondary">
                         <h5 class="text-pasker poppinsmedium">Pasker.ID</h5>
