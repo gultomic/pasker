@@ -105,7 +105,7 @@
             ];
 
 
-            var videoList = ["tmerNTqPosM","0Bmhjf0rKe8","6kUItwCsds7q7o","LheNDiNekzA"];
+            var videoList = ["tmerNTqPosM"];
             var videoNum = 0 ;
             var player;
 

@@ -140,7 +140,7 @@
                         </div>
 
                     </template>
-                    <p x-text="surveyState"></p>
+{{--                    <p x-text="surveyState"></p>--}}
 
                 </div>
             </div>
@@ -201,6 +201,7 @@
                                 this.surveyState = "identitas"
                                 console.log(this.pjID)
                             }else{
+
                                 swal("Ups!", r.data.message, 'warning');
                             }
 
@@ -217,11 +218,16 @@
                         'kuesioner_id':kuesionerId,
                         'skor':parseFloat(skor),
                     })
+
                   this.statQindex ++
+                    if(this.statQindex>= this.dataResp.kuesioner.length){
+                        this.submitSurvey()
+                    }
                     console.log(this.arrSurResult)
                 },
                 submitSurvey(){
                     //todo: swall retry
+                    this.surveyState = 'loadingSubmit'
                   axios.post('{{ route('survey.submitSurvey') }}', this.arrSurResult)
                     .then( (r)=>{
                             console.log(r.data.data);
@@ -233,11 +239,62 @@
                                 this.surveyState=""
                                 this.statQindex = 0
                             }else{
-                                swal("Ups!", r.data.message, 'warning');
+                                swal(r.data.message, {
+                                    icon:"warning",
+                                    title:"Ups!",
+                                    buttons: {
+                                        cancel: "Batal Simpan!",
+                                        retry: {
+                                            text: "Coba kembali",
+                                            value: "retry",
+                                        },
+                                    },
+                                })
+                                    .then((value) => {
+                                        switch (value) {
+                                            case "retry":
+                                                this.submitSurvey()
+                                                break;
+
+                                            default:
+                                                alert('sfd')
+                                                // jQuery('#survey-modal').modal('hide')
+                                                //
+                                                // this.surveyState=""
+                                                // this.statQindex = 0
+
+                                        }
+                                    });
+
                             }
 
                         }).catch( (e)=>{
-                            swal("Ups!", "Terjadi kesalahan silahkan ulangi", 'warning');
+                            swal("Terjadi kesalahan silahkan ulangi", {
+                                    icon:"warning",
+                                    title:"Ups!",
+                                    buttons: {
+                                        cancel: "Batal Simpan!",
+                                        retry: {
+                                            text: "Coba kembali",
+                                            value: "retry",
+                                        },
+                                    },
+                                })
+                                    .then((value) => {
+                                        switch (value) {
+                                            case "retry":
+                                                this.submitSurvey()
+
+                                            default:
+                                                alert('sfd')
+                                                // jQuery('#survey-modal').modal('hide')
+                                                //
+                                                // this.surveyState=""
+                                                // this.statQindex = 0
+
+                                        }
+                                    });
+
                             console.log(e);
                         }).then((e)=>{
 

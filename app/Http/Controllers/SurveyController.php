@@ -76,5 +76,12 @@ class SurveyController extends Controller
 
     }
 
+    public function submitSurvey(){
+        return response()->json([
+            'success'=>0,
+
+        ],500);
+    }
+
 
 }
