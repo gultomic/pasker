@@ -531,7 +531,7 @@ padding: 3rem;
 
 @media print {
      * {
-        font-size: 120pt;
+        font-size: 40pt;
         font-family: 'Times New Roman';
     }
 
@@ -541,8 +541,8 @@ padding: 3rem;
     }
     .to-print{
         display: block !important;
-        width: 100mm;
-        margin-top: 5mm;
+        width: 84mm;
+        /*margin-top: 2mm;*/
 
     }
     .centered{
