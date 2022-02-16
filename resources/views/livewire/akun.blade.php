@@ -47,7 +47,7 @@
                             <label class="form-label" for="">Role:</label>
                             <select class="form-select-sm sm:mr-2" wire:model="role" aria-label="select role">
                                 <option value="staf">Staf</option>
-                                <option value="admin">Admin</option>
+                                <option value="master">Master</option>
                             </select>
                         </div>
                         </div>

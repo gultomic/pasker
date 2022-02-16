@@ -31,13 +31,13 @@ class configSeeder extends Seeder
                     'tanggal' => '2022-01-25',
                     'nama' => 'Loket 1',
                     'pelayanan' => 'Konsultasi A',
-                    'pelaksana' => 'ada namanya'
+                    'pelaksana' => '...'
                 ],
                 [
                     'tanggal' => '2022-01-24',
                     'nama' => 'Loket 2',
                     'pelayanan' => 'Konsultasi B',
-                    'pelaksana' => 'ada namanya'
+                    'pelaksana' => '...'
                 ],
             ]
         ]);
@@ -112,6 +112,33 @@ class configSeeder extends Seeder
         Config::create([
             'title' => 'list_video',
             'refs' => [ "tmerNTqPosM","0Bmhjf0rKe8","6kUItwCsds7q7o","LheNDiNekzA","0Bmhjf0rKe8","6kUItwCsds7q7o","LheNDiNekzA" ]
+        ]);
+
+        // JAWABAN SURVEY
+        Config::create([
+            'title' => 'metode_jawaban',
+            'refs' => [
+                [
+                    'judul' => '3 poin',
+                    'opsi' => [
+                        [
+                            'skor' => 1,
+                            'nama' => 'tidak puas',
+                            'button' => '<i class="far fa-frown"></i>'
+                        ],
+                        [
+                            'skor' => 2,
+                            'nama' => 'puas',
+                            'button' => '<i class="far fa-smile"></i>'
+                        ],
+                        [
+                            'skor' => 3,
+                            'nama' => 'sangat puas',
+                            'button' => '<i class="far fa-laugh"></i>'
+                        ]
+                    ],
+                ]
+            ]
         ]);
     }
 }

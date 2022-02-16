@@ -119,9 +119,9 @@ Route::get('/testprint', function () {
 require __DIR__.'/auth.php';
 
 Route::get('/profile/{username}', function ($username) {
-    return view('dashboard', [
+    return view('profile', [
         'title' => 'Profile',
         'header' => 'Profile Member',
         'username' => $username
     ]);
-})->name('profile');
+})->middleware('auth')->name('profile');
