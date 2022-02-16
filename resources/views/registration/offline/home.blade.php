@@ -16,7 +16,7 @@
         <div id="areaone-kiosk-container" class="kiosk-container container-fluid hero-home-kiosk pb-3">
             <div class="row pt-5">
                 <div class="col mt-4">
-                    <btn onclick="location.reload();" class="mt-4 btn btn-outline text-white">
+                    <btn onclick="location.reload();" class="mt-4 btn btn-lg ml-3 btn-outline text-white">
                         <i class="bi bi-arrow-clockwise"></i>
                         Reload Halaman
                     </btn>
