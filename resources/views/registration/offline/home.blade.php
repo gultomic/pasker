@@ -5,7 +5,7 @@
     <div class="to-print">
 
             <p class="text-center" style="margin:0; font-size: 25pt;line-height: 5px;margin-bottom: 30px">PASKER.ID</p>
-            <p id="print-date" class="text-center" style="margin:0;font-size: 16pt;line-height: 5px;margin-bottom: 30px">Senin, 20 Desember 2022 - 10:30:22</p>
+            <p id="print-date" class="text-center" style="margin:0;font-size: 10pt;line-height: 5px;margin-bottom: 30px">Senin, 20 Desember 2022 - 10:30:22</p>
             <p class="text-center" style="margin:0;font-size: 16pt;line-height: 5px;margin-bottom: 40px">Nomor Antrian</p>
             <p id="print-token" class="text-center" style="margin:0;font-size: 30pt;line-height: 5px;margin-bottom: 40px">A030</p>
             <p id="print-layanan" class="text-center" style="margin:0;font-size: 20pt;line-height: 5px"><strong>Pelayanan Komuk</strong></p>
