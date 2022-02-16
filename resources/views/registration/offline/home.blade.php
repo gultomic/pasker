@@ -4,17 +4,23 @@
 
     <div class="to-print">
 
-            <h5 class="text-center" style="margin:0; ">PASKER.ID</h5>
-            <p id="print-date" class="text-center">Senin, 20 Desember 2022 - 10:30:22</p>
-            <p class="text-center">Nomor Antrian</p>
-            <h2 id="print-token" class="text-center">A030</h2>
-            <p id="print-layanan" class="text-center"><strong>Pelayanan Komuk</strong></p>
+            <p class="text-center" style="margin:0; font-size: 15pt;line-height: 5px;margin-bottom: 15px;margin-top:10px">PASKER.ID</p>
+            <p id="print-date" class="text-center" style="margin:0;font-size: 10pt;line-height: 5px;margin-bottom: 30px">Senin, 20 Desember 2022 - 10:30:22</p>
+            <p class="text-center" style="margin:0;font-size: 16pt;line-height: 5px;margin-bottom: 40px">Nomor Antrian</p>
+            <p id="print-token" class="text-center" style="margin:0;font-size: 30pt;line-height: 5px;margin-bottom: 40px">A030</p>
+            <p id="print-layanan" class="text-center" style="margin:0;font-size: 15pt;line-height: 5px"><strong>Pelayanan Komuk</strong></p>
 
     </div>
 
     <div id="body-kiosk" class="hidden-print">
         <div id="areaone-kiosk-container" class="kiosk-container container-fluid hero-home-kiosk pb-3">
             <div class="row pt-5">
+                <div class="col pl-5">
+                    <a href="{{route('kiosk.homepage')}}" class="mt-4 btn btn-lg ml-3 btn-outline text-white">
+                        <i class="bi bi-arrow-clockwise"></i>
+                        Reload Halaman
+                    </a>
+                </div>
                 <div class="col text-right clock-area pr-4">
                     <div id="mDateKiosk" class="text-uppercase "></div>
                     <div id="mTimeKiosk" class="">::</div>
@@ -510,14 +516,18 @@
                 }
 
                 function printNoAntrian(token,pelayanan) {
-                    moment().locale()
 
-                    $('#print-date').text(`${moment().format('dddd, Do MMMM YYYY')} - ${moment().format('H:mm:ss')}`)
-                    $('#print-token').text(token)
-                    $('#print-layanan').text(pelayanan)
+                    setTimeout(function (){
+                        moment().locale()
 
-                    window.print();
-                    return false;
+                        $('#print-date').text(`${moment().format('dddd, Do MMMM YYYY')} - ${moment().format('H:mm:ss')}`)
+                        $('#print-token').text(token)
+                        $('#print-layanan').text(pelayanan)
+
+                        window.print();
+                        return;
+                    },1000)
+
                 }
 
                 function onLoadingKioskButton(status, location) {
@@ -737,7 +747,7 @@
                             <a class="d-block" href="https://karirhub.kemnaker.go.id/" target="_blank"><i class="bi bi-globe"></i>&nbsp;<u>#KARIRhub</u></a>
                         </div>
 
-                        <btn onclick="location.reload();" class="mt-4 btn btn-secondary">Reload Halaman</btn>
+
                     </div>
                     <div class="col-6 col-md text-secondary">
                         <h5 class="text-pasker poppinsmedium">PASKER.ID</h5>
