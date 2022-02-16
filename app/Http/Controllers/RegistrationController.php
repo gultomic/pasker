@@ -135,15 +135,15 @@ class RegistrationController extends Controller
         }
 
 
-        //$createPJ = (new PJ)->createPJ($booking_data->pelayanan_id,$klien->id,$booking_data->refs['daftar'],"update",$booking_data->id);
+        $createPJ = (new PJ)->createPJ($booking_data->pelayanan_id,$klien->id,$booking_data->refs['daftar'],"update",$booking_data->id);
 
-        return response()->json([
-            'success' => 1,
-            //'data' => $createPJ,
-            'noAntrian' => "A001",
-            'pelayanan' => "Pelayan Test",
-            // 'data'=>$data
-        ]);
+//        return response()->json([
+//            'success' => 1,
+//            //'data' => $createPJ,
+//            'noAntrian' => "A001",
+//            'pelayanan' => "Pelayan Test",
+//            // 'data'=>$data
+//        ]);
 
         if ($createPJ['error'] == 1) {
 //            return $createPJ;
