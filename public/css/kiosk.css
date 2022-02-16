@@ -531,7 +531,7 @@ padding: 3rem;
 
 @media print {
      * {
-        font-size: 150pt;
+        font-size: 120pt;
         font-family: 'Times New Roman';
     }
 
