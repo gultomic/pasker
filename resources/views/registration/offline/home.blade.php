@@ -1,7 +1,18 @@
 @extends('layouts.bootstrap_public')
 
 @section('content')
-    <div id="body-kiosk">
+
+    <div class="to-print">
+
+            <h5 class="text-center" style="margin:0; ">PASKER.ID</h5>
+            <p id="print-date" class="text-center">Senin, 20 Desember 2022 - 10:30:22</p>
+            <p class="text-center">Nomor Antrian</p>
+            <h2 id="print-token" class="text-center">A030</h2>
+            <p id="print-layanan" class="text-center"><strong>Pelayanan Komuk</strong></p>
+
+    </div>
+
+    <div id="body-kiosk" class="hidden-print">
         <div id="areaone-kiosk-container" class="kiosk-container container-fluid hero-home-kiosk pb-3">
             <div class="row pt-5">
                 <div class="col text-right clock-area pr-4">
@@ -68,22 +79,30 @@
         </div>
 
         <div id="jobiarea-kiosk-container" class="kiosk-container container-fluid px-5 py-5 mb-5">
-            <div id="tagline-1" class="tagline-fadein tagline-item-red ">
-                #GetAJobLive<br/>Better
+
+            <div id="toFadeIn" class="tagline-set">
+                <div id="tagline-1" class="animate__animated tagline-item tagline-fadein ">
+                    #SIAPKerja
+                </div>
+
+                <div id="tagline-2" class="animate__animated tagline-item tagline-fadein tagline-item-orange">
+                    #KarierHub
+                </div>
+                <div id="tagline-3" class="animate__animated tagline-item tagline-fadein tagline-item-red">
+                    #TalentHub
+                </div>
+
+                <div id="tagline-4" class="animate__animated tagline-fadein tagline-item tagline-item-greenlight ">
+                    #GetAJobLive<br/>Better
+                </div>
             </div>
-            <div id="tagline-2" class="tagline-fadein tagline-item-orange">
-                #MasakAer<br/>BiarMateng
-            </div>
-            <div id="tagline-3" class="tagline-fadein">
-                #PalingGanteng<br/>DompetTebel
-            </div>
+
             <img class="mascot-bottom-kiosk mascot-bottom" src="/assets/pose01_preview_small.png">
         </div>
     </div>
 
-
     <!-- Modal -->
-    <div class="modal fade modal-kiosk" id="onlineModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    <div class="modal fade modal-kiosk hidden-print" id="onlineModal" tabindex="-1" aria-labelledby="exampleModalLabel"
          aria-hidden="true"
          data-backdrop="static" data-keyboard="false"
     >
@@ -156,9 +175,8 @@
     </div>
 
 
-
     <!-- Modal -->
-    <div class="modal fade modal-kiosk" id="offlineModal" tabindex="-1" aria-hidden="true"
+    <div class="modal fade modal-kiosk hidden-print" id="offlineModal" tabindex="-1" aria-hidden="true"
          data-backdrop="static" data-keyboard="false"
     >
         <div class="modal-dialog modal-lg">
@@ -240,10 +258,9 @@
 
         <script>
 
-            var marqueList = [
-                "Selamat Datang di PASKER.ID Silahkan Melakukan Konsultasi.",
-                "Waspada Bahaya Corona, Jaga Diri Anda dan Keluarga dengan Selalu Menerapkan Protokol 3T."
-            ];
+            var marqueList = JSON.parse(@json($marqueJson));
+
+            var isStartRepeat = false;
 
             var $marquee = document.getElementById('text-running');
             var marquee = new dynamicMarquee.Marquee($marquee, {
@@ -261,48 +278,93 @@
             );
 
 
-            var tagline = [
-                document.querySelector('#tagline-1'),
-                document.querySelector('#tagline-2'),
-                document.querySelector('#tagline-3')
-            ]
+            var tagline = []
 
             var numberTaglineIn = 0;
+            var numberTaglineOut = 0;
 
             function taglineIn() {
-                for (let i = 0; i < tagline.length; i++) {
-                    tagline[i].classList.add('animate__animated', 'animate__bounceInLeft');
-                }
+
+                setTimeout(function () {
+                console.log("tagin")
                 numberTaglineIn = 0;
+
+                if(isStartRepeat) {
+
+                    jQuery(".tagline-set").clone().appendTo("#jobiarea-kiosk-container").attr('id', 'toFadeIn');
+                    jQuery('#toFadeOut').remove();
+                }
+
+                tagline = [
+                document.querySelector('#tagline-1'),
+                document.querySelector('#tagline-2'),
+                document.querySelector('#tagline-3'),
+                document.querySelector('#tagline-4')
+                ]
+                jQuery('.tagline-item').removeClass('animate__bounceOutRight').addClass('animate__bounceInLeft');
+
+                for (let i = 0; i < tagline.length; i++) {
+                    // tagline[i].classList.add('', 'animate__bounceInLeft');
+
+                    tagline[i].addEventListener('animationend', (e) => {
+                        numberTaglineIn++
+                        console.log(numberTaglineIn)
+                        checkNumberCompleted('startOut');
+                    });
+
+                }
+                }, 500)
+
+
             }
 
             function taglineOut() {
+                    console.log("tagout")
 
-                    for (let i = 0; i < tagline.length; i++) {
-                        tagline[i].classList.remove('animate__bounceInLeft');
-                        setTimeout(function () {
-                            tagline[i].classList.add('fadeOutDown');
 
-                        }, 30)
+                    setTimeout(function () {
+                        numberTaglineIn = 0;
+                        jQuery( ".tagline-set" ).clone().appendTo( "#jobiarea-kiosk-container" ).attr('id','toFadeOut');
+                        jQuery('#toFadeIn').remove();
+                        tagline = [
+                            document.querySelector('#tagline-1'),
+                            document.querySelector('#tagline-2'),
+                            document.querySelector('#tagline-3'),
+                            document.querySelector('#tagline-4')
+                        ]
+                        jQuery('.tagline-item').removeClass('animate__bounceInLeft').addClass('animate__bounceOutRight');
+                        for (let i = 0; i < tagline.length; i++) {
+
+
+                            tagline[i].addEventListener('animationend', (e) => {
+                                numberTaglineIn++
+                                console.log(numberTaglineIn)
+                                checkNumberCompleted('startIn');
+                            });
+
+                        }
+
+                    }, 1500)
+
+            }
+
+
+            function checkNumberCompleted(toNext){
+                if(numberTaglineIn >= tagline.length){
+                    console.log(toNext)
+                    if(toNext == "startOut"){
+                        taglineOut()
+                    }else{
+                        isStartRepeat =true;
+                        taglineIn()
                     }
 
-
+                }
             }
 
             taglineIn()
 
 
-            for (let i = 0; i < tagline.length; i++) {
-                tagline[i].addEventListener('animationend', (e) => {
-                    if (e.animationName == "bounceInLeft") {
-                        numberTaglineIn++
-                        if (numberTaglineIn >= (tagline.length) - 1) {
-                            taglineOut();
-                        }
-                        console.log(numberTaglineIn)
-                    }
-                });
-            }
 
         </script>
         <script>
@@ -424,11 +486,14 @@
                     $('.modal-kiosk .step-state#error-state').show();
                 }
 
-                function statePrint(noAntrian) {
+                function statePrint(noAntrian,pelayanan) {
                     $('.modal-kiosk .step-state').hide();
                     $('.modal-kiosk .step-state.print-state').show();
                     $('.modal-kiosk .step-state.print-state .print-no-out').text('-')
                     $('.modal-kiosk .step-state.print-state .print-no-out').text(noAntrian)
+
+                    printNoAntrian(noAntrian,pelayanan);
+
 
                     var timeleft = 5;
                     var downloadTimer = setInterval(function () {
@@ -442,6 +507,17 @@
                         }
                         timeleft -= 1;
                     }, 1000)
+                }
+
+                function printNoAntrian(token,pelayanan) {
+                    moment().locale()
+
+                    $('#print-date').text(`${moment().format('dddd, Do MMMM YYYY')} - ${moment().format('H:mm:ss')}`)
+                    $('#print-token').text(token)
+                    $('#print-layanan').text(pelayanan)
+
+                    window.print();
+                    return false;
                 }
 
                 function onLoadingKioskButton(status, location) {
@@ -520,7 +596,7 @@
                             if (response.data.success == 1) {
                                 //this is not found data
                                 onLoadingKioskButton('off', 'online');
-                                statePrint(response.data.noAntrian);
+                                statePrint(response.data.noAntrian,response.data.pelayanan);
                                 return
                             } else {
                                 if(response.data.code=="booking_not_found") {
@@ -558,7 +634,7 @@
                             // return
                             if (response.data.success == 1) {
                                 //this is not found data
-                                statePrint(response.data.noAntrian);
+                                statePrint(response.data.noAntrian,response.data.pelayanan);
                             }else{
                                 console.log(response)
                                 swal("Ups!",response.data.message,'warning')
@@ -643,12 +719,14 @@
             });
 
 
+
+
         </script>
     @endpush
 @endsection
 
 @section('footer')
-    <footer>
+    <footer class="hidden-print mt-n5">
         <div class="container container-footer">
             <div class="pt-4 mb-4 pt-md-5 border-top">
                 <div class="row mb-3">
@@ -662,15 +740,15 @@
                         <btn onclick="location.reload();" class="mt-4 btn btn-secondary">Reload Halaman</btn>
                     </div>
                     <div class="col-6 col-md text-secondary">
-                        <h5 class="text-pasker poppinsmedium">Pasker.ID</h5>
+                        <h5 class="text-pasker poppinsmedium">PASKER.ID</h5>
                         <p class="text-orange-pasker-light" style="font-size: 1rem;font-weight: 500">#GetAJobLiveBetter</p>
                         <p>
                             Gatot Subroto Kav. 44, Kuningan Barat, Mampang Prapatan, Jakarta Selatan.
                         </p>
                         <div class="row">
                             <div class="col-md-7">
-                                <i class="bi bi-telephone text-pasker" style="font-size: 1.2rem"></i>&nbsp;&nbsp;1500630<br/>
-                                <i class="bi bi-envelope text-pasker" style="font-size: 1.2rem"></i>&nbsp;&nbsp;pasker@kemenaker.go.id
+                                <i class="bi bi-telephone text-pasker" style="font-size: 1.2rem"></i>&nbsp;&nbsp;0812 8108 9843<br/>
+                                <i class="bi bi-envelope text-pasker" style="font-size: 1.2rem"></i>&nbsp;&nbsp;layananpuspaker@kemnaker.go.id
                             </div>
                             <div class="col-md-5 text-right">
                                 <div class="footer-social" style="font-size: 1.4rem">

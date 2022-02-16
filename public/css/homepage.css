@@ -39,13 +39,20 @@ body{
 h1,h2,h3{
     font-family: poppinsmedium;
 }
+.grobold{
+    font-family: groboldregular;
+}
 .head_grobold{
     font-family: groboldregular;
     font-size: 4rem;
-    text-shadow: 4px 5px 1px #FA8334;
+    text-shadow: 2px 2px 1px #EB2E10;
+}
+
+.bg-yellow-pasker{
+    background-color: #FFB44F !important;
 }
 .subhead_page{
-    background-color: #FA8334;
+    background-color: #CC4220;
     color: #fff;
     padding: 10px 30px;
     display: inline-block;
@@ -86,15 +93,19 @@ h1,h2,h3{
 }
 
 #about-pasar-kerja {
-    padding: 2rem 5rem 5rem 5rem;
+    /*padding: 2rem 5rem 5rem 5rem;*/
+
 }
 
 .text-pasker {
     color: #0A8178;
 }
 
-.container-footer, .container-content-kiosk {
+.container-content-kiosk {
     max-width: 960px;
+}
+.container-footer{
+    max-width: 1075px;
 }
 
 img.mascot-bottom {
@@ -112,6 +123,49 @@ img.mascot-bottom-signage{
     z-index: 0 !important;
     height: 40%;
 }
+.tagline-pasker-home{
+    position: absolute;
+    right: 20px;
+    top:70%
+}
+.pasker-logo-home{
+    font-size: 3rem;
+    text-shadow: 1px 1px 1px #EB2E10;
+    font-weight: 600;
+}
+.tagline-pasker-home span{
+    font-weight: 600;
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+}
+.tagline-pasker-home-two span{
+    font-weight: 600;
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+}
+.tagline-home-three span{
+    font-weight: 600;
+    font-size: 1rem;
+    background-color: #04776C;
+    padding: 10px 20px;
+    border-radius: 0.50rem!important;
+
+}
+.jobi-mascot-home{
+    position: relative;
+}
+.namajobilg{
+    position: absolute;
+    left: -92px;
+    bottom: 11px;
+    text-align: center;
+}
+.namajobismall{
+    position: absolute;
+    right: 60px;
+    bottom: 11px;
+    text-align: left !important;
+}
 
 #mTime {
     color: #FFFFFF;
@@ -124,6 +178,31 @@ img.mascot-bottom-signage{
     font-size: 0.85rem;
     color: #FFFFFF;
 }
+
+#hometagline{
+    position: relative;
+    display: inline-block;
+    margin-left: 2rem;
+}
+#hometagline h1{
+    font-family: "poppinsbold";
+    font-size: 3rem;
+    padding-top: 1rem;
+
+
+}
+#hometagline span.tagline-child{
+    font-family: "poppinsmedium";
+    font-size: 2rem;
+    letter-spacing: -0.04em;
+    background-color: #074a43;
+    padding-right: 10rem;
+    line-height: 0;
+}
+
+
+
+
 
 .kiosk-btn-home {
     min-height: 400px;
@@ -268,7 +347,7 @@ border: 1px solid rgba(255, 255, 255, 0.3);
 #signage .videoarea{
 padding: 3rem;
 }
-#signage .background-orange{
+.background-orange{
     /*border: 1px solid rgba(255, 255, 255, 0.3);*/
     background: rgba(250,131,52,0.95);
     color: #FFFFFF;
@@ -291,7 +370,7 @@ padding: 3rem;
     font-size: 0.85rem;
 }
 
-#signage .background-red-pasker{
+.background-red-pasker{
     background-color: #FFE882;
     padding-top: 8px;
     padding-bottom: 8px;
@@ -386,4 +465,21 @@ padding: 3rem;
 }
 #kiosk-container .text-running-container{
 
+}
+
+
+/*Survey item pelayanan*/
+.survey-item-pelayanan.active{
+    background-color: #074a43;
+}
+.survey-item-jawaban{
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+.survey-item-jawaban:hover{
+    background-color: rgba(250,131,52,0.95) !important;
+}
+.cursor-pointer{
+    cursor: pointer !important;
 }

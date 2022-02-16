@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Events\QueuesService;
 use Livewire\Component;
 use App\Models\Config;
 
@@ -26,6 +27,8 @@ class ConfigLoket extends Component
 
         $row = Config::where('title', 'loket_pelayanan');
         $row->update(['refs'=>$this->row]);
+
+        $this->sendEventTosignage();
     }
 
     public function remove ()
@@ -33,5 +36,14 @@ class ConfigLoket extends Component
         $this->row->pop();
         $row = Config::where('title', 'loket_pelayanan');
         $row->update(['refs'=>$this->row]);
+        $this->sendEventTosignage();
+    }
+
+    private function sendEventTosignage(){
+        event(new QueuesService([
+            'type' => 'loketList',
+            'pid'=>1,
+            'newData'=>Config::where('title', 'loket_pelayanan')->first()->refs
+        ]));
     }
 }

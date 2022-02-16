@@ -1,4 +1,3 @@
-{{--TODO: when selesai reload window--}}
 <div class="flex flex-col gap-4">
 
     <x-card-content-midone class="intro-x">
@@ -154,10 +153,16 @@
         alert("Silahkan Pilih Loket Terlebih Dahulu");
     })
 
-    // Show modal
-    // const el = document.querySelector("#static-backdrop-modal-preview");
-    // const modal = tailwind.Modal.getOrCreateInstance(el);
-    // modal.show();
+    window.addEventListener('taskCompleted', event => {
+        swal("Berhasil!", 'Berhasil menyelesaikan tugas', 'success')
+        setTimeout(function (){
+            location.reload();
+        },1500)
+    })
+
+
+
+
     </script>
 
 
