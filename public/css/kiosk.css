@@ -541,7 +541,7 @@ padding: 3rem;
     }
     .to-print{
         display: block !important;
-        width: 100mm;
+        width: 95mm;
         /*margin-top: 2mm;*/
 
     }
