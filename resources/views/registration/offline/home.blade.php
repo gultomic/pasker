@@ -516,14 +516,18 @@
                 }
 
                 function printNoAntrian(token,pelayanan) {
-                    moment().locale()
 
-                    $('#print-date').text(`${moment().format('dddd, Do MMMM YYYY')} - ${moment().format('H:mm:ss')}`)
-                    $('#print-token').text(token)
-                    $('#print-layanan').text(pelayanan)
+                    setTimeout(function (){
+                        moment().locale()
 
-                    window.print();
-                    return false;
+                        $('#print-date').text(`${moment().format('dddd, Do MMMM YYYY')} - ${moment().format('H:mm:ss')}`)
+                        $('#print-token').text(token)
+                        $('#print-layanan').text(pelayanan)
+
+                        window.print();
+                        return;
+                    },1000)
+
                 }
 
                 function onLoadingKioskButton(status, location) {
