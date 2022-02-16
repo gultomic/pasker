@@ -13,13 +13,13 @@ require('laravel-mix-blade-reload');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/scss/styles.scss', 'public/css')
-    .options({
-        postCss: [
-            require('postcss-import'),
-            require('tailwindcss'),
-            require('autoprefixer'),
-        ],
-    })
+    // .sass('resources/scss/styles.scss', 'public/css')
+    // .options({
+    //     postCss: [
+    //         require('postcss-import'),
+    //         require('tailwindcss'),
+    //         require('autoprefixer'),
+    //     ],
+    // })
     .browserSync('pasker.test')
     .bladeReload();
