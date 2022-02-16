@@ -4,11 +4,11 @@
 
     <div class="to-print">
 
-            <h5 class="text-center" style="margin:0; ">PASKER.ID</h5>
-            <p id="print-date" class="text-center">Senin, 20 Desember 2022 - 10:30:22</p>
-            <p class="text-center">Nomor Antrian</p>
-            <h2 id="print-token" class="text-center">A030</h2>
-            <p id="print-layanan" class="text-center"><strong>Pelayanan Komuk</strong></p>
+            <p class="text-center" style="margin:0; font-size: 25pt">PASKER.ID</p>
+            <p id="print-date" class="text-center" style="font-size: 16pt">Senin, 20 Desember 2022 - 10:30:22</p>
+            <p class="text-center" style="font-size: 16pt">Nomor Antrian</p>
+            <p id="print-token" class="text-center" style="font-size: 30pt">A030</p>
+            <p id="print-layanan" class="text-center" style="font-size: 20pt"><strong>Pelayanan Komuk</strong></p>
 
     </div>
 
