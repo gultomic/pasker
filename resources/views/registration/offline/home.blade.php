@@ -15,11 +15,11 @@
     <div id="body-kiosk" class="hidden-print">
         <div id="areaone-kiosk-container" class="kiosk-container container-fluid hero-home-kiosk pb-3">
             <div class="row pt-5">
-                <div class="col mt-4">
-                    <btn onclick="location.reload();" class="mt-4 btn btn-lg ml-3 btn-outline text-white">
+                <div class="col pl-5">
+                    <a href="{{route('kiosk.homepage')}}" class="mt-4 btn btn-lg ml-3 btn-outline text-white">
                         <i class="bi bi-arrow-clockwise"></i>
                         Reload Halaman
-                    </btn>
+                    </a>
                 </div>
                 <div class="col text-right clock-area pr-4">
                     <div id="mDateKiosk" class="text-uppercase "></div>
