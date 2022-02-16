@@ -15,7 +15,7 @@
     <div id="body-kiosk" class="hidden-print">
         <div id="areaone-kiosk-container" class="kiosk-container container-fluid hero-home-kiosk pb-3">
             <div class="row pt-5">
-                <div class="col mt-n4">
+                <div class="col mt-4">
                     <btn onclick="location.reload();" class="mt-4 btn btn-outline text-white">
                         <i class="bi bi-arrow-clockwise"></i>
                         Reload Halaman
