@@ -23,10 +23,23 @@ window.Pusher = require('pusher-js');
 window.Echo = new Echo({
     broadcaster: 'pusher',
     key: process.env.MIX_PUSHER_APP_KEY,
-    wsHost: window.location.hostname,
-    wsPort: 6001,
+    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+    wsHost: window.location.hostname, // Your domain
+    encrypted: false,
+    wsPort: 80, // Yor http port
+    disableStats: true, // Change this to your liking this disables statistics
     forceTLS: false,
-    disableStats: true,
-    // cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-    // forceTLS: true
+    enabledTransports: ['ws', 'wss'],
+    disabledTransports: ['sockjs', 'xhr_polling', 'xhr_streaming'] // Can be removed
 });
+//
+// window.Echo = new Echo({
+//     broadcaster: 'pusher',
+//     key: process.env.MIX_PUSHER_APP_KEY,
+//     wsHost: window.location.hostname,
+//     wsPort: 6001,
+//     forceTLS: false,
+//     disableStats: true,
+//     // cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+//     // forceTLS: true
+// });
