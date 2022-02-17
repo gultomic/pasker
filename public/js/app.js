@@ -5457,7 +5457,6 @@ module.exports = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var laravel_echo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! laravel-echo */ "./node_modules/laravel-echo/dist/echo.js");
-/* provided dependency */ var process = __webpack_require__(/*! process/browser.js */ "./node_modules/process/browser.js");
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -5478,15 +5477,10 @@ window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/d
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
   key: "scvbmzkmvc",
-  cluster: "ap1",
-  wsHost: process.env.APP_HOST,
-  wsPort: 80,
-  // forceTLS: false,
-  disableStats: true,
+  wsHost: window.location.hostname,
+  wsPort: 6001,
   forceTLS: false,
-  enabledTransports: ['ws', 'wss'],
-  disabledTransports: ['sockjs', 'xhr_polling', 'xhr_streaming'] // Can be removed
-  // cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+  disableStats: true // cluster: process.env.MIX_PUSHER_APP_CLUSTER,
   // forceTLS: true
 
 });
