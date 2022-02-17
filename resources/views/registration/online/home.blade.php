@@ -269,7 +269,7 @@
 
 
     // TODO : show only available quota
-    // TODO : send event to staffrom only if accepted today booking
+
 
 
 
