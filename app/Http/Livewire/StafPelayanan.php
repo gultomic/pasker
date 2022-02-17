@@ -1,6 +1,5 @@
 <?php
 //TODO *temp: add function when not connected to WS done temp solution try catch before save on setactions
-//TODO: SVING LAST STATE ON CALL TO DB in case Signage Reload
 
 namespace App\Http\Livewire;
 

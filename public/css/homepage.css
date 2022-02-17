@@ -483,3 +483,9 @@ padding: 3rem;
 .cursor-pointer{
     cursor: pointer !important;
 }
+
+.xdsoft_calendar table thead tr th.ThisDayLibur,.xdsoft_calendar .tdIsDayLibur{
+    background-color: #9a041c !important;
+    color: #FFFFFF;
+    opacity: 1 !important;
+}
