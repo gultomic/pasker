@@ -155,38 +155,40 @@ class StafPelayanan extends Component
 
 
 
-        //save call value
-
-
-
         if ($act == 'panggil') {
             ($item->klien_id != null)
                 ? $name = $item->pengunjung->name
                 : $name = '';
 
-//            $loket = Config::where('title', 'loket_pelayanan')->first()->refs;
-//            $keys = array_keys($loket->toArray(), $this->loketAktif);
 
-//            $keys_call = $keys[0];
             $loket_call = str_replace(' ', '', strtolower($this->loketAktif));
             $keys_call = str_replace('loket', '', $loket_call);
             $token_call =$item->refs['antrian'];
             $name_call = $name;
             $type = "call";
 
+            //save call value on DB
+            $dbCall = Config::where('title', $loket_call.'_call')->first();
 
-//            $lokAktif = $loketDB->first()->refs->map(function($q) use($token_call,$name_call){
-//                if($q['nama'] == $this->loketAktif) {
-//                    $q['tanggal']  = Carbon::now()->format('Y-m-d');
-//                    $q['pelaksana'] = Auth::user()->profile->refs['fullname'];
-//                    $q['pelayanan'] = $this->pelayanan->title;
-//                    $q['noAntrianCall'] = $token_call;
-//                    $q['namaAntrianCall'] = $name_call;
-//                }
-//                return $q;
-//            });
-//
-//            $loketDB->update(['refs'=>$lokAktif]);
+            if(empty($dbCall)){
+                Config::create([
+                   'title'=> $loket_call.'_call',
+                    'refs' => [
+                        'token' => $token_call,
+                        'pengunjung' => $name_call
+                    ]
+                ]);
+            }else{
+                if ($dbCall->refs['token'] != $token_call && $dbCall->refs['pengunjung'] != $name_call) {
+                    Config::where('title', $loket_call . '_call')->update([
+                        'refs' => [
+                            'token' => $token_call,
+                            'pengunjung' => $name_call
+                        ]
+                    ]);
+                }
+            }
+
 
             $this->emit('openModal', 'staff-pelayanan-modal-call',['pj'=>$item,'state'=>'call']);
 

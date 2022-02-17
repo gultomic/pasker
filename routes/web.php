@@ -56,10 +56,20 @@ Route::get('/signage', function () {
     $loket =  App\Models\Config::where('title', 'loket_pelayanan')->first()->refs;
     $marque =  App\Models\Config::where('title', 'list_marquee')->first()->refs;
     $video =  App\Models\Config::where('title', 'list_video')->first()->refs;
+    $loketJson = [];
+    foreach ($loket as $k => $v){
+        $loketJson[$k]['name'] = $v;
+
+        $col = \App\Models\Config::where('title',str_replace(' ', '', strtolower($v)).'_call')->first();
+        if(!empty($col)){
+            $loketJson[$k]['call'] = $col->refs;
+        }
+
+    }
     return view('signage',[
         'title' => 'Signane',
         'loket' => $loket,
-        'loketJson'=>$loket->toJSON(),
+        'loketJson'=>json_encode($loketJson),
         'marqueJson'=>$marque->toJSON(),
         'videoJson'=>$video->toJSON()
     ]);
