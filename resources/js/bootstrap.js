@@ -26,7 +26,7 @@ window.Echo = new Echo({
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
     wsHost: window.location.hostname, // Your domain
     encrypted: false,
-    wsPort: 80, // Yor http port
+    wsPort: process.env.MIX_PUSHER_WS_PORT, // Yor http port
     disableStats: true, // Change this to your liking this disables statistics
     forceTLS: false,
     enabledTransports: ['ws', 'wss'],
