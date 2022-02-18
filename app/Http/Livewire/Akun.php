@@ -19,8 +19,8 @@ class Akun extends Component
         'email' => 'required|email:rfc,dns|unique:users|max:100',
         'username' => 'required|unique:users|min:5|max:20',
         'fullname' => 'required',
-        'phone' => 'required',
-        'role' => 'required|numeric|min:10',
+        'phone' => 'required|numeric|min:10|max:15',
+        'role' => 'required',
         'access' => 'required',
     ];
 
