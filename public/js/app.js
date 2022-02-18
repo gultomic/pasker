@@ -5481,7 +5481,7 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   wsHost: window.location.hostname,
   // Your domain
   encrypted: false,
-  wsPort: 6001,
+  wsPort: "9000",
   // Yor http port
   disableStats: true,
   // Change this to your liking this disables statistics
