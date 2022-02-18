@@ -2,5 +2,5 @@
 @section('header', $header)
 
 <x-midone-layout>
-    <livewire:profile key='profile' uname="{{ $username }}">
+    <livewire:profile key='profile'>
 </x-midone-layout>
