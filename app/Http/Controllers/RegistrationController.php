@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Events\QueuesService;
 use App\Models\Config;
 use App\Models\Klien;
+use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use App\Models\Pelayanan;
 use App\Models\PelayananJadwal as PJ;
@@ -25,12 +26,18 @@ class RegistrationController extends Controller
         //get list of jam loket avilable
         $jam_loket = Config::where('title', 'loket_jam')->first();
 
+        //return $jam_loket->refs;
+        $tgl_merah = file_get_contents("https://raw.githubusercontent.com/guangrei/Json-Indonesia-holidays/master/calendar.json");
+//        $loc = public_path('/assets/test_tgl_merah.json');
+//        $tgl_merah = file_get_contents($loc);
 
+//        return $tgl_merah;
 //        return $jam_loket->refs->toJSON();
         return view('registration.online.home', [
             'body_id' => 'landing',
             'pelayanan' => $pelayanan,
-            'jam_loket' => $jam_loket->refs->toJSON()
+            'jam_loket' => $jam_loket->refs->toJSON(),
+            'tglMerah'=>$tgl_merah
         ]);
 
 

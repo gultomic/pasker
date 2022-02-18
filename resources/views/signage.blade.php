@@ -60,21 +60,21 @@
                     </div>
                     <template x-for="loket in items">
                         <div
-                            :id="loket.replace(/\s/g, '').toLowerCase()"
+                            :id="loket.name.replace(/\s/g, '').toLowerCase()"
                          class="pb-3 token-card-container"
                          :class="items.length > 5 ? 'two-row d-inline-block ' : ''"
                         :style="`height:${items.length > 5 ? items.length == 6 ? '25':'20' : (100/items.length) - (items.length == 4 ? 4.5 : 3.8)}% !important` "
                         >
                         <div class="text-center token-card">
-                            <div class="py-2 title-loket text-uppercase" x-text="loket">
+                            <div class="py-2 title-loket text-uppercase" x-text="loket.name">
 
                             </div>
                             <div class="text-center token-body">
                                 <div class="line-red"></div>
-                                <div class="token-content-area">
+                                <div class="token-content-area" :class="loket.call.pengunjung!='' ? 'with-name':''">
                                     <div>
-                                        <div class="token-number d-block w-100"></div>
-                                        <div class="visitor-name d-block"></div>
+                                        <div class="token-number d-block w-100"  x-text="loket.call.token"></div>
+                                        <div class="visitor-name d-block"  x-text="loket.call.pengunjung"></div>
                                     </div>
                                 </div>
                             </div>

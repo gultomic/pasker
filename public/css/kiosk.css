@@ -34,6 +34,8 @@ body{
     font-family: 'poppinslight';
     overflow: hidden;
 }
+
+
 .poppinsmedium{
     font-family: 'poppinsmedium';
 }
@@ -566,3 +568,43 @@ padding: 3rem;
 }
 .to-print{display: none;}
 
+
+
+
+.main-loader .loader {
+  top: 40%;
+  left: 50%;
+  width: 400px;
+  height: 400px;
+  position: absolute;
+  margin: -200px 0 0 -200px;
+  background-color: transparent;
+}
+.main-loader .loader p {
+  color: #999;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0;
+  text-align: center;
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+    font-size: 3rem;
+}
+
+.main-loader .loader p img {
+  width: auto;
+  height: 400px;
+  display: inline-block;
+    margin-left: 50px;
+}
+.main-loader.pageonload {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 10000;
+  position: fixed;
+  background: #fff;
+}

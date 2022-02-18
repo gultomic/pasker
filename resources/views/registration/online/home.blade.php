@@ -267,10 +267,10 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 <script>
 
-    //TODO : disable on holiday
+
     // TODO : show only available quota
-    // TODO : send event to staffrom only if accepted today booking
-    // TODO: start date end date
+
+
 
 
 
@@ -281,62 +281,82 @@
 
     var holidays =[];
     var jamloket = JSON.parse(@json($jam_loket));
+    var tglmerahDB = JSON.parse(@json($tglMerah));
+
+    var tanggalmerah = [];
+    var convert = Object.keys(tglmerahDB).map((key) => [Number(key), tglmerahDB[key]]);
+    tanggalmerah = convert.map(function(e){
+     return {
+         tanggal:moment(e[0],'YYYYMMDD').format('YYYY-MM-DD'),
+         deskripsi:e[1].deskripsi,
+         status:e[1].status
+     }
+    }).filter(e=>e.status=="CONFIRMED")
+    console.log(tanggalmerah)
 
 
-        // function setHolidays(date) {
-        //     for (i = 0; i < holidays.length; i++) {
-        //         if (date.getFullYear() == holidays[i][0]
-        //             && date.getMonth() == holidays[i][1] - 1
-        //             && date.getDate() == holidays[i][2]) {
-        //             return [false, 'holiday', holidays[i][3]];
-        //         }
-        //     }
-        //
-        //     var noWeekend = jQuery('#date-picker').noWeekends(date);
-        //     return !noWeekend[0] ? noWeekend : [true];
-        // }
+    var harilibur = jamloket.reduce(function(acc,el,index){
+        if(el.libur == 1) {
+            acc.push({
+                ThLibur:':nth-child('+(index + 1) + ')',
+                TdLibur:'.xdsoft_day_of_week'+(index)
+            })
+        }
+        return acc;
+    },[])
 
-    var minTime = '';
-    var maxTime = '';
+    var thlibur = harilibur.map(e=>e.ThLibur).join(', ')
+
+    window.minTimeObj = '';
+    window.maxTimeObj = '';
+
 
     jQuery('#date-picker').datetimepicker({
         timepicker: false,
         onSelectDate: function (ct,$input) {
+            console.log('onchangedatetim');
+            console.log('bef')
+            console.log($('#date-picker').val())
+
+            console.log('aff')
+            console.log(ct)
             //alert(moment(ct).format('d'))
             //console.log(jamloket[moment(ct).format('d')])
-            minTime = jamloket[moment(ct).format('d')].jam_buka
+            window.minTimeObj = jamloket[moment(ct).format('d')].jam_buka
             var maxTimeBef = jamloket[moment(ct).format('d')].jam_tutup
-            maxTime = maxTimeBef.replace(maxTimeBef.substr(maxTimeBef.length-1),'1')
-            console.log(maxTime)
-            console.log(maxTimeBef.length);
-            console.log(minTime)
+            window.maxTimeObj = maxTimeBef.replace(maxTimeBef.substr(maxTimeBef.length - 1), '1')
+
             jQuery('#time-picker').val('')
+
             // setTimeout(function () {
             //     $(".xdsoft_time_variant").css({"margin-top": 0});
             // }, 10)
             //jQuery('#time-picker').setOptions({allowTimes: ['09:00']})
         },
         onGenerate: function(ct,$input) {
-            $(this).find('.xdsoft_date.xdsoft_weekend').remove();
-            $('.xdsoft_calendar table thead tr th').filter(':nth-child(1), :nth-child(7)').remove();
+            var test = moment().add(2,'days').format('YYYYMMDD');
+            console.log(test)
+            //$(this).find('.xdsoft_date.xdsoft_weekend').remove();
+            $('.xdsoft_calendar table thead tr th').filter(thlibur).remove();
             $input.prop('readonly', true);
             var $this = $(this);
-            $this.find('.xdsoft_date').removeClass('xdsoft_disabled');
-            $this.find('.xdsoft_time').removeClass('xdsoft_disabled');
-        },
-        format: 'd M Y',
+            harilibur.forEach(function (day) {
+                // $('.xdsoft_calendar table thead tr th'+day.ThLibur).addClass('ThisDayLibur');
+                $this.find(day.TdLibur).remove();
 
+            });
+
+        },
+        // inline:true,
+        format: 'd M Y',
+        formatDate:'Y-m-d',
         scrollInput: false,
-        //minDate: '-1970/01/01',//yesterday is minimum date(for today use 0 or -1970/01/01)
-        //maxDate: '+1970/01/03'//tomorrow is maximum date calendar
-        // dayOfWeek: [
-        //     "Sen", "Sel", "Rab", "Kam",
-        //     "Jum"
-        // ]
-        // onShow: function (current_time, $input) {
-        //     console.log(current_time)
-        //     console.log($input)
-        // }
+        //minDate:moment().add(2,'days').format('DD MMM YYYY'),
+        minDate:moment().add(1,'days').format('YYYY-MM-DD'),
+        maxDate:moment().add(3,'days').format('YYYY-MM-DD'),
+        disabledDates:tanggalmerah.map((e)=>e.tanggal)
+        //startDate:moment().add(1,'days').format('YYYYMMDD'),
+
     });
 
     jQuery('#time-picker').datetimepicker({
@@ -345,21 +365,29 @@
         //  '09:00', '10:00', '11:00','12:00','13:00','14:00','15:00','16:00'
         // ],
         onShow: function (ct) {
-            this.setOptions({
-                minTime: minTime,
-                maxTime: maxTime,
-            })
-        },
-        minTime: minTime,
-        maxTime:maxTime,
-        format: 'H:i',
-        scrollInput: false,
-        onGenerate: function(ct,$input) {
+            console.log(minTimeObj)
+            console.log(maxTimeObj)
 
+
+            this.setOptions({
+            minTime: window.minTimeObj,
+            maxTime: window.maxTimeObj,
+            })
+
+            setTimeout(function(){
+                   $(".xdsoft_time_variant").css({"margin-top": 0});
+            }, 10)
+
+        },
+        // minTime: minTime,
+        // maxTime:maxTime,
+        format: 'H:i',
+
+        onGenerate: function(ct,$input) {
             $input.prop('readonly', true);
             var $this = $(this);
-            $this.find('.xdsoft_date').removeClass('xdsoft_disabled');
-            $this.find('.xdsoft_time').removeClass('xdsoft_disabled');
+            // $this.find('.xdsoft_date').removeClass('xdsoft_disabled');
+            // $this.find('.xdsoft_time').removeClass('xdsoft_disabled');
         },
         // dayOfWeek: [
         //     "Sen", "Sel", "Rab", "Kam",
