@@ -174,15 +174,17 @@ class StafPelayanan extends Component
                    'title'=> $loket_call.'_call',
                     'refs' => [
                         'token' => $token_call,
-                        'pengunjung' => $name_call
+                        'pengunjung' => $name_call,
+                        'tanggal'=>Carbon::now()->format('Y-m-d')
                     ]
                 ]);
             }else{
-                if ($dbCall->refs['token'] != $token_call && $dbCall->refs['pengunjung'] != $name_call) {
+                if ($dbCall->refs['token'] != $token_call) {
                     Config::where('title', $loket_call . '_call')->update([
                         'refs' => [
                             'token' => $token_call,
-                            'pengunjung' => $name_call
+                            'pengunjung' => $name_call,
+                            'tanggal'=>Carbon::now()->format('Y-m-d')
                         ]
                     ]);
                 }
