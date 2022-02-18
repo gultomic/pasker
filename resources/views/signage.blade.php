@@ -90,7 +90,7 @@
     @push('scripts')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.core.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.spatial.min.js"></script>
-        <script src="http://www.youtube.com/player_api"></script>
+        <script src="https://www.youtube.com/iframe_api"></script>
 
 
         <script>

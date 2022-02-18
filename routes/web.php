@@ -21,7 +21,7 @@ Route::get('/monitor', function () {
             ->first()
             ->refs
     ]);
-})->name('monitor');
+});
 
 Route::get('/midone/dashboard1', function () {
 
@@ -134,11 +134,11 @@ Route::get('/testprint', function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/profile/{username}', function ($username) {
+Route::get('/profile', function () {
     return view('profile', [
         'title' => 'Profile',
         'header' => 'Profile Member',
-        'username' => $username
+        // 'username' => $username
     ]);
 })->middleware('auth')->name('profile');
 
