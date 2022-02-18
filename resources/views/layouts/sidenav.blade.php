@@ -3,7 +3,7 @@
 <nav class="side-nav">
     <a href="/" class="flex items-center lg:p-8 -intro-y">
         <img alt="{{ Auth::user()->profile->refs['fullname'] }} image"
-            class="object-cover bg-gray-500 rounded-full"
+            class="object-cover rounded-full lg:h-36 lg:w-36"
             src="{{ Auth::user()->profile->refs['photo'] }}">
     </a>
 
