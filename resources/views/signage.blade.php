@@ -71,10 +71,10 @@
                             </div>
                             <div class="text-center token-body">
                                 <div class="line-red"></div>
-                                <div class="token-content-area" :class="loket.call.pengunjung!='' ? 'with-name':''">
+                                <div class="token-content-area" :class=" loket.call !=null ? (loket.call.pengunjung!='' ? 'with-name':'') : ''">
                                     <div>
-                                        <div class="token-number d-block w-100"  x-text="loket.call.token"></div>
-                                        <div class="visitor-name d-block"  x-text="loket.call.pengunjung"></div>
+                                        <div class="token-number d-block w-100"  x-text="loket.call !=null?loket.call.token:''"></div>
+                                        <div class="visitor-name d-block"  x-text="loket.call !=null?loket.call.pengunjung:''"></div>
                                     </div>
                                 </div>
                             </div>

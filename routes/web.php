@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\SurveyController;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RegistrationController;
@@ -60,7 +61,10 @@ Route::get('/signage', function () {
     foreach ($loket as $k => $v){
         $loketJson[$k]['name'] = $v;
 
-        $col = \App\Models\Config::where('title',str_replace(' ', '', strtolower($v)).'_call')->first();
+        $col = \App\Models\Config::
+        where('title',str_replace(' ', '', strtolower($v)).'_call')
+            ->where('refs->tanggal', '=', Carbon::now()->format('Y-m-d'))
+            ->first();
         if(!empty($col)){
             $loketJson[$k]['call'] = $col->refs;
         }
