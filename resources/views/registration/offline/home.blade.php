@@ -1,6 +1,11 @@
 @extends('layouts.bootstrap_public')
 
 @section('content')
+    <div class="pageonload main-loader">
+        <div class="loader">
+            <p><img src="/assets/pose01_preview_small.png"/><br/>Loading..</p>
+        </div>
+    </div>
 
     <div class="to-print">
 
@@ -263,6 +268,27 @@
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/dynamic-marquee@2"></script>
 
         <script>
+
+            function fade(element) {
+                console.log(element.style);
+                var op = 1;  // initial opacity
+                var timer = setInterval(function () {
+                    if (op <= 0.1){
+                        clearInterval(timer);
+                        element.style.display = 'none';
+                    }
+                    element.style.opacity = op;
+                    element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+                    op -= op * 0.1;
+                }, 50);
+            }
+
+            window.addEventListener("load", function(event) {
+                // Animate loader off screen
+                var element = document.getElementsByClassName('main-loader');
+                //
+                fade(element[0])
+            });
 
             var marqueList = JSON.parse(@json($marqueJson));
 
@@ -691,11 +717,11 @@
 
                     axios.get('{{ route('pelayanan.list.json') }}')
                         .then(function (response) {
-                            //return console.log(response.data);
+                            console.log(response.data);
 
                             onLoadingKioskButton('off', 'offline');
                             if (response.data.length <= 0) {
-                                $('.list-layanan-active').append('<span class="text-red-pasker-light">Pelayanan tidak ditemukan</span>')
+                                $('.list-layanan-active').append('<span class="text-red-pasker-light">Pelayanan tidak ditemukan, atau telah mecapai limit. <br/>silahkan hubungi staff</span>')
                             }
                             for (var i = 0; i < response.data.length; i++) {
                                 $('.list-layanan-active').append(templatelayanan(response.data[i].id, response.data[i].title))
