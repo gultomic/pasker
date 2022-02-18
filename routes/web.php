@@ -21,7 +21,7 @@ Route::get('/monitor', function () {
             ->first()
             ->refs
     ]);
-})->name('monitor');
+});
 
 Route::get('/midone/dashboard1', function () {
 
