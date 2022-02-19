@@ -6,7 +6,7 @@
             {{ __('Whoops! Something went wrong.') }}
         </div>
 
-        <ul class="mt-3 list-disc list-inside text-sm text-red-600">
+        <ul class="italic list-disc list-inside text-theme-6">
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
