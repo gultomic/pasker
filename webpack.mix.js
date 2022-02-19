@@ -13,13 +13,14 @@ require('laravel-mix-blade-reload');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    // .sass('resources/scss/styles.scss', 'public/css')
-    // .options({
-    //     postCss: [
-    //         require('postcss-import'),
-    //         require('tailwindcss'),
-    //         require('autoprefixer'),
-    //     ],
-    // })
+    .js('resources/midone/js/midone.js', 'public/js')
+    .sass('resources/midone/sass/app.scss', 'public/css')
+    .options({
+        postCss: [
+            require('postcss-import'),
+            require('tailwindcss'),
+            require('autoprefixer'),
+        ],
+    })
     .browserSync('pasker.test')
     .bladeReload();
