@@ -15,12 +15,14 @@ Alpine.data('mainFrame', () => ({
     displayTable: {},
     alpTable (payload) {
         this.total = payload.length
-        this.pageCount = Math.ceil(this.total / this.paginate) - 1
+        this.pageCount = Math.ceil(this.total / this.paginate)
+        this.pageNumber = 1
         this.collection = payload
         this.rowTable()
     },
     rowTable() {
-        const start = this.pageNumber * this.paginate, end = start + this.paginate
+        let page = this.pageNumber - 1
+        const start = page * this.paginate, end = start + this.paginate
         this.displayTable = this.collection.slice(start, end)
     },
     async nextPage() {
@@ -36,8 +38,10 @@ Alpine.data('mainFrame', () => ({
         this.rowTable()
     },
     alpPaginate(value){
-        this.paginate = value
-        this.pageCount = Math.ceil(this.total / this.paginate) - 1
+        this.paginate = parseInt(value)
+        this.displayTable = {}
+        this.pageCount = Math.ceil(this.total / this.paginate)
+        this.pageNumber = 1
         this.rowTable()
     }
 }))

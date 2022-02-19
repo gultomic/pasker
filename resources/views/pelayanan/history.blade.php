@@ -2,5 +2,8 @@
 @section('header', $header)
 
 <x-midone-layout>
-    <livewire:pelayanan-history :id="$id">
+    <div class="grid grid-cols-12 gap-6">
+        <livewire:pelayanan-rekap :id="$id" key="rekap" />
+        <livewire:pelayanan-history :id="$id" key="history" />
+    </div>
 </x-midone-layout>
