@@ -3,7 +3,7 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use Livewire\WithfileUploads;
+use Livewire\WithFileUploads;
 use App\Models\User;
 use Auth;
 use Hash;
