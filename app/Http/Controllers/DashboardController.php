@@ -85,7 +85,6 @@ class DashboardController extends Controller
                     $indeks = ($skor / 3) / $total * 100;
                 }
 
-
                 return [
                     'nama' => $q->profile->refs['fullname'],
                     'email' => $q->email,
@@ -96,7 +95,7 @@ class DashboardController extends Controller
                     'indeks_kepuasan' => $indeks,
                 ];
             });
-            // dd($data);
+
             return $data;
     }
 
@@ -105,15 +104,11 @@ class DashboardController extends Controller
         $data = [
             'bar' => PE::all()
                 ->groupBy('tanggal')
-                // ->groupBy(function($d) {
-                //     return Carbon::parse($d->tanggal)->format('Y-m');
-                // })
                 ->mapWithKeys(function($q, $k) {
                     return [$k => $q->count()];
                 }),
             'pie' => $this->adminPelayanan(),
         ];
-        // dd($pie);
         return $data;
     }
 

@@ -26,7 +26,13 @@ class userSeeder extends Seeder
         $stafs = [
             ['nama'=>'staf','photo'=>'young-man.png'],
             ['nama'=>'user','photo'=>'beauty.png'],
-            ['nama'=>'demo','photo'=>'beard.png']
+            ['nama'=>'demo','photo'=>'beard.png'],
+            ['nama'=>'karyawan','photo'=>'young-man.png'],
+            ['nama'=>'pegawai','photo'=>'beauty.png'],
+            ['nama'=>'pns','photo'=>'beard.png'],
+            ['nama'=>'tes','photo'=>'young-man.png'],
+            ['nama'=>'uji','photo'=>'beauty.png'],
+            ['nama'=>'coba','photo'=>'beard.png'],
         ];
 
         foreach ($stafs as $key => $value) {
