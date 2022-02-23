@@ -27,7 +27,7 @@ Alpine.data("mainFrame", () => ({
             end = start + this.paginate;
         this.displayTable = this.collection.slice(start, end);
     },
-    async nextPage() {
+    nextPage() {
         this.pageNumber++;
         this.rowTable();
     },

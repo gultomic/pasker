@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        <button class="w-full btn btn-primary btm-sm" wire:click='resetDate'>Bersihkan</button>
+        <button class="w-full btn btn-secondary btm-sm" wire:click='resetDate'>Bersihkan</button>
     </div>
 
     <div class="relative p-3 mt-3 overflow-hidden box">
@@ -28,12 +28,29 @@
                 <span x-text="total"></span>
                 <span> records</span>
             </div>
-            <select class="w-20 mt-3 form-select box sm:mt-0"
-                x-on:change="alpPaginate($event.target.value)" x-model="paginate">
-                <option value="10">10</option>
-                <option value="15">15</option>
-                <option value="20">20</option>
-            </select>
+
+            <div class="flex items-center">
+                <button class="mr-2 text-gray-400 cursor-not-allowed tooltip -intro-y"
+                    data-theme="light"
+                    title="Unduh pdf"
+                    disabled>
+                    <i class="text-xl fas fa-file-pdf"></i>
+                </button>
+                <button class="mr-2 tooltip -intro-y"
+                    data-theme="light"
+                    title="Unduh excel"
+                    wire:click="export()"
+                    style="color: #018701;">
+                    <i class="text-xl fas fa-file-excel"></i>
+                </button>
+
+                <select class="w-20 mt-3 form-select box sm:mt-0"
+                    x-on:change="alpPaginate($event.target.value)" x-model="paginate">
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select>
+            </div>
         </div>
 
         @if ($table->count() > 0)

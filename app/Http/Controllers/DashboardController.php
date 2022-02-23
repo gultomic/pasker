@@ -8,6 +8,8 @@ use App\Models\Pelayanan;
 use App\Models\PelayananJadwal as PE;
 use App\Models\Config;
 use App\Models\User;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\PelaksanaExport;
 use Carbon\Carbon;
 use Auth;
 use DB;
@@ -97,6 +99,12 @@ class DashboardController extends Controller
             });
 
             return $data;
+    }
+
+    public function adminStafExport ()
+    {
+        $time = Carbon::now()->format('Ymd-His');
+        return Excel::download(new PelaksanaExport($this->adminStaf()), "leaderboard_pelaksana_$time.xlsx");
     }
 
     public function adminChart ()

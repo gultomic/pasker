@@ -61,8 +61,22 @@
         <div class="col-span-12 mt-8">
             <div class="flex items-center h-10 intro-y">
                 <h2 class="mr-5 text-lg font-medium truncate">Tabel Pelaksana</h2>
-                <div class="flex items-center ml-auto text-theme-1 dark:text-theme-10">
-                    <i data-feather="users" class="w-5 h-5 mr-3"></i>
+                <div class="flex items-center ml-auto">
+                    <a href="#!"
+                        class="mr-2 text-gray-400 cursor-not-allowed tooltip"
+                        data-theme="light"
+                        title="Unduh excel"
+                        disabled>
+                        <i class="text-xl fas fa-file-pdf"></i>
+                    </a>
+                    <a href="{{ route('admin.pelaksana.export') }}"
+                        class="mr-4 tooltip"
+                        data-theme="light"
+                        title="Unduh excel"
+                        style="color: #018701;">
+                        <i class="text-xl fas fa-file-excel"></i>
+                    </a>
+                    <i data-feather="users" class="w-5 h-5 mr-3 text-theme-1"></i>
                 </div>
             </div>
 

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 
 Route::name('admin.')
     ->prefix('admin')
@@ -72,4 +73,6 @@ Route::name('admin.')
                 'header' => 'Daftar Pertanyaan',
             ]);
         })->name('pertanyaan');
+
+        Route::get('export-leaderboard-pelaksana', [DashboardController::class, 'adminStafExport'])->name('pelaksana.export');
     });

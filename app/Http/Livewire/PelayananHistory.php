@@ -3,26 +3,30 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+use App\Models\Pelayanan;
 use App\Models\PelayananJadwal as PJ;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\RiwayatPelayanan;
 
 class PelayananHistory extends Component
 {
     public $pid, $startDate, $endDate;
-    public $collection;
+    public $collection, $pelayanan;
 
     public function mount ($id)
     {
         $this->pid = $id;
+        $this->pelayanan = Pelayanan::find($id);
     }
 
     public function render ()
     {
         $this->startDate == null
-            ? $startDate = '1900-01-01'
+            ? $startDate = '2020-01-01'
             : $startDate = $this->startDate;
 
-        $table = PJ::has('survei')->where('pelayanan_id', $this->pid)
+        $this->collection = PJ::has('survei')->where('pelayanan_id', $this->pid)
             ->whereBetween('tanggal', [
                 Carbon::parse($startDate)->format('Y-m-d'),
                 Carbon::parse($this->endDate)->format('Y-m-d')
@@ -33,7 +37,6 @@ class PelayananHistory extends Component
             ->values()
             ->map(function($q) {
                 return [
-                    'plid' => $q->first(),
                     'tanggal' => $q->first()['tanggal'],
                     'total' => $q->count(),
                     'skor' => $q->map(function ($r) {
@@ -44,7 +47,7 @@ class PelayananHistory extends Component
             });
 
         return view('livewire.pelayanan-history', [
-            'table' => $table,
+            'table' => $this->collection,
         ]);
     }
 
@@ -52,5 +55,16 @@ class PelayananHistory extends Component
     {
         $this->startDate = null;
         $this->endDate = null;
+    }
+
+    public function export ()
+    {
+        $title = str_replace(" ","_",strtolower($this->pelayanan->title));
+        $time = Carbon::now()->format('Ymd-His');
+
+        return Excel::download(
+            new RiwayatPelayanan($this->collection, $this->pelayanan->title),
+            $title."_".$time.".xlsx"
+        );
     }
 }
