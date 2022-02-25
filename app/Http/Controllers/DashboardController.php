@@ -13,6 +13,7 @@ use App\Exports\PelaksanaExport;
 use Carbon\Carbon;
 use Auth;
 use DB;
+use PDF;
 
 class DashboardController extends Controller
 {
@@ -105,6 +106,16 @@ class DashboardController extends Controller
     {
         $time = Carbon::now()->format('Ymd-His');
         return Excel::download(new PelaksanaExport($this->adminStaf()), "leaderboard_pelaksana_$time.xlsx");
+    }
+
+    public function adminStafPdf ()
+    {
+        $tim = \Carbon\Carbon::now()->format('Ymd-His');
+        $pdf = PDF::loadview('dompdf.tabel_pelaksana', [
+            'collection' => $this->adminStaf(),
+            'title' => 'Tabel Pelaksana'
+        ]);
+        return $pdf->stream("tabel_pelaksana_$tim.xlsx");
     }
 
     public function adminChart ()

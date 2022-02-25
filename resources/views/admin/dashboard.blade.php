@@ -62,15 +62,14 @@
             <div class="flex items-center h-10 intro-y">
                 <h2 class="mr-5 text-lg font-medium truncate">Tabel Pelaksana</h2>
                 <div class="flex items-center ml-auto">
-                    <a href="#!"
-                        class="mr-2 text-gray-400 cursor-not-allowed tooltip"
+                    <a href="{{ route('admin.pelaksana.pdf') }}"
+                        class="mr-2 text-theme-6 tooltip -intro-y"
                         data-theme="light"
-                        title="Unduh excel"
-                        disabled>
+                        title="Unduh excel">
                         <i class="text-xl fas fa-file-pdf"></i>
                     </a>
                     <a href="{{ route('admin.pelaksana.export') }}"
-                        class="mr-4 tooltip"
+                        class="mr-4 tooltip -intro-y"
                         data-theme="light"
                         title="Unduh excel"
                         style="color: #018701;">

@@ -5,9 +5,13 @@ namespace App\Exports;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
+use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class RiwayatPelayanan implements Fromcollection, WithHeadings, WithStrictNullComparison
+class RiwayatPelayanan implements Fromcollection, ShouldAutoSize, WithHeadings, WithStrictNullComparison
 {
+    use Exportable;
+
     public $rows, $title;
 
      public function __construct($payload, $title)

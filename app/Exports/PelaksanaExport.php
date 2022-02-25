@@ -5,8 +5,9 @@ namespace App\Exports;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class PelaksanaExport implements FromCollection, WithHeadings, WithStrictNullComparison
+class PelaksanaExport implements FromCollection, ShouldAutoSize, WithHeadings, WithStrictNullComparison
 {
     protected $pelaksana;
 

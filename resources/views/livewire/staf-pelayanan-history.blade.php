@@ -30,10 +30,10 @@
             </div>
 
             <div class="flex items-center">
-                <button class="mr-2 text-gray-400 cursor-not-allowed tooltip -intro-y"
+                <button class="mr-2 text-theme-6 tooltip -intro-y"
                     data-theme="light"
-                    title="Unduh pdf"
-                    disabled>
+                    wire:click='exportPdf'
+                    title="Unduh pdf">
                     <i class="text-xl fas fa-file-pdf"></i>
                 </button>
                 <button class="mr-2 tooltip -intro-y"

@@ -71,5 +71,14 @@ class StafPelayananHistory extends Component
             new RiwayatPelayanan($this->collection, Auth::user()->profile->refs['fullname']),
             $title."_".$time.".xlsx"
         );
+
+    }
+
+    public function exportPdf ()
+    {
+        redirect()->with([
+            'collection' => $this->collection,
+            'title' => Auth::user()->profile->refs['fullname'],
+        ])->route('staf.pelayanan.history.pdf');
     }
 }

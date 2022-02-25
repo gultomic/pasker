@@ -6,8 +6,8 @@ use Livewire\Component;
 use App\Models\Pelayanan;
 use App\Models\PelayananJadwal as PJ;
 use Carbon\Carbon;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\RiwayatPelayanan;
+// use App\Exports\RiwayatPelayananPdf;
 
 class PelayananHistory extends Component
 {
@@ -62,9 +62,15 @@ class PelayananHistory extends Component
         $title = str_replace(" ","_",strtolower($this->pelayanan->title));
         $time = Carbon::now()->format('Ymd-His');
 
-        return Excel::download(
-            new RiwayatPelayanan($this->collection, $this->pelayanan->title),
-            $title."_".$time.".xlsx"
-        );
+        return (new RiwayatPelayanan($this->collection, $this->pelayanan->title))
+            ->download($title."_".$time.".xlsx");
+    }
+
+    public function exportPdf ()
+    {
+        redirect()->with([
+            'collection' => $this->collection,
+            'title' => $this->pelayanan->title,
+        ])->route('admin.pelayanan.history.pdf');
     }
 }
