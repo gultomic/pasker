@@ -180,14 +180,9 @@
         </div>
         <div class="col-lg-6 text-left">
             <h3 class="text-pasker mb-3 "> Selamat Datang di <strong class="poppinsmedium">PASKER.ID</strong></h3>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                industry's standard dummy text ever since the 1500s</p>
-            <p>when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into electronic typesetting, remaining
-                essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets
-                containing Lorem Ipsum
-            <p>passages, and more recently with desktop publishing software like Aldus PageMaker including versions
-                of Lorem Ipsum.</p>
+            <p>Pasker ID adalah tempat buat teman-teman Jobers mendapatkan informasi lowongan dari seluruh Indonesia sesuai dengan keahlian atau skill yang dimiliki, ataupun buat teman-teman employer menemukan calon employee yang berkualitas dan kapabel.</p>
+            <p>Lewat Karirhub, Pasker ID menawarkan berbagai informasi pasar kerja yang dapat teman-teman akses dengan mudah dan gratis! </p>
+            <p>Selain layanan informasi pasar kerja, Pasker ID juga melayani teman-teman Jobers untuk menemukan potensi diri, jadi teman-teman Jobers lebih mudah menemukan pekerjaan yang cocok. Dengan informasi lowongan yang terverifikasi (no hoax) dan terse
             <p class="text-orange-pasker-light" style="text-transform:uppercase;font-size:0.8em;margin-bottom:0 !important;">Dr.
                 Dra. Hj. Ida Fauziyah, M.Si</p>
             <p class="text-secondary" style="font-size:0.8em;">Menteri Ketenagakerjaan Republik Indonesia</p>
@@ -239,7 +234,7 @@
                         has
                         survived not only five centuries, but also the leap into electronic typesetting, remaining
                         essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets
-                        containing Lorem Ipsum
+                        containing Lorem Ipsum</p>
                     <p>passages, and more recently with desktop publishing software like Aldus PageMaker including
                         versions
                         of Lorem Ipsum.</p>
