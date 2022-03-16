@@ -31,6 +31,7 @@ class LoginRequest extends FormRequest
         return [
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
+            'access' => 'boolean',
         ];
     }
 
@@ -50,6 +51,7 @@ class LoginRequest extends FormRequest
 
             throw ValidationException::withMessages([
                 'email' => __('auth.failed'),
+                // 'access' => __('auth.access'),
             ]);
         }
 

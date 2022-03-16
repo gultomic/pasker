@@ -1,5 +1,6 @@
-const mix = require('laravel-mix');
-require('laravel-mix-blade-reload');
+const mix = require("laravel-mix");
+
+require("laravel-mix-blade-reload");
 
 /*
  |--------------------------------------------------------------------------
@@ -12,15 +13,15 @@ require('laravel-mix-blade-reload');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .js('resources/midone/js/midone.js', 'public/js')
-    .sass('resources/midone/sass/app.scss', 'public/css')
+mix.js("resources/js/app.js", "public/js")
+    .js("resources/midone/js/midone.js", "public/js")
+    .sass("resources/midone/sass/app.scss", "public/css")
     .options({
         postCss: [
-            require('postcss-import'),
-            require('tailwindcss'),
-            require('autoprefixer'),
+            require("postcss-import"),
+            require("tailwindcss"),
+            require("autoprefixer"),
         ],
     })
-    .browserSync('pasker.test')
+    .browserSync("pasker.test")
     .bladeReload();

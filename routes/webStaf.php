@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 
 Route::name('staf.')
     ->prefix('staf')
-    ->middleware(['auth'])
+    ->middleware(['auth', 'access'])
     ->group(function() {
         Route::get('/history-pelayanan', function () {
             return view('staf.pelayanan-history', [

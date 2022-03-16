@@ -3,11 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\DashboardController;
-use PDF;
 
 Route::name('admin.')
     ->prefix('admin')
-    ->middleware(['auth'])
+    ->middleware(['auth', 'admin', 'access'])
     ->group(function() {
         Route::get('/pelayanan', function () {
             return view('admin.pelayanan', [
