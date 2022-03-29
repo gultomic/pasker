@@ -7,8 +7,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RegistrationController;
 use Illuminate\Support\Facades\Session;
 use App\Faker;
-
-
 // Route::get('/', function () {
 //     return view('welcome', [
 //         'collection' => App\Models\Pelayanan::latest()->get()
@@ -96,6 +94,7 @@ Route::get('/', [RegistrationController::class,'online_home'])->name('registrati
 
 
 Route::post('/regist', [RegistrationController::class, 'online_submit'])->name('registration.online.submit');
+Route::post('/get_available_quota', [RegistrationController::class, 'get_quota_per_day'])->name('registration.getQuotaPerDay');
 
 
 

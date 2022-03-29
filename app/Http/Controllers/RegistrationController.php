@@ -6,12 +6,14 @@ namespace App\Http\Controllers;
 use App\Events\QueuesService;
 use App\Models\Config;
 use App\Models\Klien;
+use App\Models\PelayananJadwal;
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use App\Models\Pelayanan;
 use App\Models\PelayananJadwal as PJ;
 use Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Crypt;
 
 class RegistrationController extends Controller
 {
@@ -51,13 +53,45 @@ class RegistrationController extends Controller
         //return response()->json($request);
         $sel_pelayanan = Pelayanan::find($request->pelayanan);
 
-        //todo: validate pelayanan exist and active by now we assume all pelayanan are active
+
 
 
         //check klien if exist
         $ex_klien = Klien::where('phone', $request->phone)->first();
+
         //$klienId = $ex_klien->id;
         $tanggal_booking = Carbon::parse($request->tanggal)->format('Y-m-d');
+
+        //do check client using wrong email
+        //return $ex_klien->email;
+
+
+        if(!empty($request->email)){
+            $ex_klienbyEmail = Klien::where('email', $request->email)->first();
+            if(!empty($ex_klien) && ( $request->email != $ex_klien->email) ){
+                $realMail = explode('@',$ex_klien->email);
+                $preMailMask = substr($realMail[0], 0, 3);
+                $preMailMask2 = substr($realMail[1], 0, 3);
+                $dotMask = explode('.',$realMail[1]);
+                $mailMask = $preMailMask."***@".$preMailMask2."***.".$dotMask[1];
+
+                return redirect(route('registration.online.home'))
+                        ->with('client_error', "Email yang digunakan tidak sesuai dengan database, silahkan gunakan email berikut: ".$mailMask."<br/>Atau gunakan No Handphone lain")
+                ->withInput();
+            }
+
+            if(!empty($ex_klienbyEmail) && ( $request->phone != $ex_klienbyEmail->phone) ){
+                $prePhoneMask = substr($ex_klienbyEmail->phone, 0, 3);
+                $prePhoneMask2 = substr($ex_klienbyEmail->phone, -3);
+                $phoneMask = $prePhoneMask."****".$prePhoneMask2;
+
+                return redirect(route('registration.online.home'))
+                        ->with('client_error', "Email sudah pernah terdaftar, silahkan gunakan email lain. Atau gunakan no Handphone ".$phoneMask)
+                    ->withInput();
+            }
+
+        }
+
 
         if (empty($ex_klien)) {
             $newKlien = new Klien();
@@ -74,18 +108,31 @@ class RegistrationController extends Controller
             $klienId = $newKlien->id;
         } else {
             $klienId = $ex_klien->id;
-            //check for booking on same date
+
+
+
+            //check for booking on next date
             $exist_request = PJ::where([
-                'klien_id' => $klienId,
-                'tanggal' => $tanggal_booking
-            ])->first();
+                'klien_id' => $klienId
+            ])
+                ->where('refs->antrian','=',"")
+                ->whereDate('tanggal','>=',Carbon::now()->format('Y-m-d'))
+                ->first();
+
+
 
             if ($exist_request) {
                 $date_exist = Carbon::parse($exist_request->tanggal)->format('d M Y') . " - Pukul " . $exist_request->refs['jam_booking'];
                 return redirect(route('registration.online.home'))
-                    ->with('exist_request_date', $date_exist);
+                    ->with('exist_request_date', $date_exist)
+                    ->withInput();
                 // Do stuff if it doesn't exist.
             }
+
+            //update klien data
+            $ex_klien->name = $request->nama;
+            $ex_klien->email = $request->email ?? "";
+            $ex_klien->save();
         }
 
         $createPJ = (new PJ)->createPJ(
@@ -106,9 +153,11 @@ class RegistrationController extends Controller
         }
 
         //return redirect(route('registration.online.success'))->with('name', $request->nama);
+
         return redirect(route('registration.online.success'))
             ->with('nama', $request->nama)
-            ->with('booking_time', Carbon::parse($request->tanggal)->format('d M Y') . " - Pukul " . $request->jam);
+            ->with('booking_time', Carbon::parse($request->tanggal)->format('d M Y') . " - Pukul " . $request->jam)
+            ->with('booking_id', "puspakerAnOL-".Crypt::encryptString($createPJ['data']['id']));
 
     }
 
@@ -235,6 +284,56 @@ class RegistrationController extends Controller
 
 
         return response()->json($available_pel);
+    }
+
+    public function get_quota_per_day(Request $request){
+        $configs= Config::where('title', 'loket_jam')->first()->refs->toArray();
+
+        if(empty($request->day)){
+            return response()->json("Hari tidak ditemukan",400);
+        }
+
+        if(empty($request->pelayanan)){
+            return response()->json("Pelayanan tidak ditemukan",400);
+        }
+
+        $dayOfWeek = Carbon::createFromFormat('Ymd', $request->day)->dayOfWeek;
+        $sel_day = $configs[$dayOfWeek];
+        $jambuka  = explode(':',$sel_day['jam_buka']);
+        $jamtutup  = explode(':',$sel_day['jam_tutup']);
+        //return $jambuka[0];
+        $count =  $jamtutup[0]-$jambuka[0];
+//        return $count;
+        $arr_jam = [];
+        for($i=0;$i<= $count;$i++){
+
+            if($jambuka[0] + $i != 12) {
+                $arr = [];
+                $timestr = str_pad($jambuka[0] + $i, 2, '0', STR_PAD_LEFT) . ":00";
+                $arr['jam'] = $jambuka[0] + $i;
+                $arr['jam_str'] = $timestr;
+//                if($jambuka[0] + $i == 11){
+//                    $arr['quota'] = 0;
+//                }else {
+
+                    $arr['quota'] = $this->getPelayananJadwalQuota($request->day, $timestr, $request->pelayanan, $sel_day['kuota_per_jam']);
+//                }
+                array_push($arr_jam,$arr);
+            }
+
+        }
+
+        return $arr_jam;
+    }
+
+    private function getPelayananJadwalQuota($date,$time,$pelayanan,$limit){
+        $date_call = Carbon::createFromFormat('Ymd', $date)->format('Y-m-d');
+        $entry  = PelayananJadwal::where('pelayanan_id',$pelayanan)
+            ->where('tanggal', '=', $date_call)
+            ->where('refs->jam_booking', '=', $time)
+            ->where('refs->daftar','=','online')
+            ->count();
+        return $limit-$entry;
     }
 
 }
