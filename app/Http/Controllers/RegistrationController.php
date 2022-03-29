@@ -14,6 +14,9 @@ use App\Models\PelayananJadwal as PJ;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
 
 class RegistrationController extends Controller
 {
@@ -152,12 +155,14 @@ class RegistrationController extends Controller
                     ->with('flash_error', $createPJ['message']);
         }
 
-        //return redirect(route('registration.online.success'))->with('name', $request->nama);
+        $encrypt = "puspakeranol-".Crypt::encryptString($createPJ['data']['id']);
+        $qrcode = QrCode::size(170)->generate($encrypt);
 
         return redirect(route('registration.online.success'))
             ->with('nama', $request->nama)
             ->with('booking_time', Carbon::parse($request->tanggal)->format('d M Y') . " - Pukul " . $request->jam)
-            ->with('booking_id', "puspakerAnOL-".Crypt::encryptString($createPJ['data']['id']));
+            ->with('booking_qrcode', $qrcode)
+            ->with('booking_enc', $encrypt);
 
     }
 
@@ -225,6 +230,35 @@ class RegistrationController extends Controller
             // 'data'=>$data
         ]);
 
+    }
+
+    public function kiosk_submit_barcode(Request $request){
+        if(empty($request->barcode)){
+            return response()->json([
+                'success' => 0,
+                'code'=>'barcode_not_found',
+                'message'=>"Kode Barcode tidak ditemukan"
+            ]);
+        }
+
+        //replace first
+        $clean = str_replace("puspakeranol-","",$request->barcode);
+
+        try {
+            $decrypted = Crypt::decryptString($clean);
+            return response()->json([
+                'success' => 1,
+                'code'=>'barcode_found',
+                'message'=>"Nemu nih : ".$decrypted
+            ]);
+        } catch (DecryptException $e) {
+            //
+             return response()->json([
+                'success' => 0,
+                'code'=>'barcode_not_found',
+                'message'=>$e->getMessage()
+            ]);
+        }
     }
 
     public function kiosk_submit(Request $request)

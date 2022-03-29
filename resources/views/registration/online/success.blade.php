@@ -24,9 +24,11 @@
                     </h4>
                     @endif
                     <br>
-                    @if (session('booking_time'))
-                        <img src="data:image/svg+xml;base64, {!! base64_encode(QrCode::format('svg')->size(135)->generate(session('booking_id'))) !!} ">
+                    @if (session('booking_qrcode'))
+                        {{ session('booking_qrcode') }}
                     @endif
+
+
                     <br>
                     <div class="row justify-content-center mt-3">
 

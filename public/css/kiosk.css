@@ -181,7 +181,7 @@ img.mascot-bottom-signage{
     border: none !important;
 }
 
-#offlineModal .item-pelayanan {
+#offlineModal .item-pelayanan,.method_list_online {
     background-color: #FA8334;
     /* border-top: 2px solid #0A8178;
     border-bottom: 2px solid #0A8178; */

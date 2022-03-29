@@ -129,6 +129,18 @@
                     </div>
 
                     <div class="py-5 step-state" id="init-state">
+                        <h2>Pilih Metode</h2>
+                        <div class="row text-center justify-content-center mt-4">
+                            <div id="online-barcode-input" class="col-5 method_list_online py-5 mr-2">
+                                Scan Barcode
+                            </div>
+                            <div id="online-input-phone" class="col-5 method_list_online py-5 mr-2">
+                                Input No Handphone
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="py-5 step-state" id="inputphone-state">
                         <h2 class="text-center text-pasker ">Masukkan No. Handphone</h2>
                         <p class="text-center">Masukkan No. Handphone yang anda daftarkan pada saat registrasi
                             online</p>
@@ -150,6 +162,16 @@
                         <button id="submit-phone" disabled data-href="{{route('kiosk.submit_phone')}}"
                                 class="btn btn-pasker-main btn-lg text-white mt-4">SUBMIT
                         </button>
+                    </div>
+
+                    <div class="step-state py-5" id="barcodeinput-state">
+                        <h2>Scan Barcode</h2>
+                        <p>Silahkan arahkan QRCode pada barcode scanner</p>
+                        <img src="{{ asset('assets/barcodescan.png') }}" class="img-fluid my-3" alt="">
+                        <form  id="barcodeSubmitCode">
+                            <input type="text" id="barcode-input-form" style="display:none;">
+                        </form>
+
                     </div>
 
 
@@ -394,7 +416,7 @@
                 }
             }
 
-            taglineIn()
+            // taglineIn()
 
 
 
@@ -414,9 +436,7 @@
             $(function () {
 
 // Initialize KioskBoard (default/all options)
-
                 KioskBoard.init({
-
                     /*!
                     * Required
                     * An Array of Objects has to be defined for the custom keys. Hint: Each object creates a row element (HTML) on the keyboard.
@@ -504,14 +524,98 @@
 
 
                 $('#onlineModal').on('shown.bs.modal', function (e) {
-                    $("#submit-phone").prop("disabled", true);
+
                     $('.modal-kiosk .step-state').hide();
                     $('.modal-kiosk .step-state#init-state').show();
-                    $('#phone').removeClass('active').addClass('active');
-                    $('#phone').val('').focus();
+
 
 
                 })
+
+                $('#online-input-phone').on('click', function () {
+                    activateInputPhoneMode();
+                })
+
+                $('#online-barcode-input').on('click', function () {
+                    activateBarcodeScan();
+                })
+
+
+                function activateInputPhoneMode(){
+                    $('.modal-kiosk .step-state').hide();
+                    $('#onlineModal #init-state').hide();
+                    $('#onlineModal #inputphone-state').show();
+                    $("#submit-phone").prop("disabled", true);
+                    $('#phone').removeClass('active').addClass('active');
+                    setTimeout(function () {
+                        $('#phone').val('').focus();
+                    },300);
+                }
+
+                function activateBarcodeScan(){
+
+                    $('.modal-kiosk .step-state').hide();
+                    $('#onlineModal #init-state').hide();
+
+                    $('#onlineModal #barcodeinput-state').show();
+
+                    setTimeout(function () {
+                        $('#barcode-input-form').val('').focus();
+                        $('#barcode-input-form').val('puspakeranol-eyJpdiI6ImdHa05XRHFtRlk2RkdJZ0lQYm01YWc9PSIsInZhbHVlIjoiTW1LNnVTZHFkbWwvQkVBbWo2VGE3UT09IiwibWFjIjoiZWJmMWM1MjM4ZTk4MzI4OGE1MTUyYTQzNzAxN2Q5MzIxMTQyNDZlMTk5ZGQ4NGI5NTVmODdiZTc0YWNjZDk3YSIsInRhZyI6IiJ9');
+                    },300);
+
+
+                    setTimeout(function () {
+                        $( "#barcodeSubmitCode" ).submit();
+                    },3000);
+
+                    //process
+
+                }
+                $( "#barcodeSubmitCode" ).on( "submit", function(e) {
+                    var action = '{{ route('kiosk.submit_barcode') }}';
+                    console.log(action)
+
+                    axios.post(action, {
+                        barcode: $('#barcode-input-form').val()
+                    })
+                        .then(function (response) {
+                            console.log(response.data)
+
+                            //return console.log(response.data)
+
+                            // return
+                            if (response.data.success == 1) {
+                                alert(response.data.message)
+                                //this is not found data
+                                // onLoadingKioskButton('off', 'online');
+                                // statePrint(response.data.noAntrian,response.data.pelayanan);
+                                return
+                            } else {
+                                // if(response.data.code=="booking_not_found") {
+                                //     onLoadingKioskButton('off', 'online');
+                                //     stateNotFoundData();
+                                //     return
+                                // }else{
+                                //     swal("Ups!",response.data.message,'warning')
+                                // }
+                            }
+                        })
+                        .catch(function (error) {
+                            swal("Ups!","Terjadi kesalahan silahkan ulangi",'error');
+                            // alert('Terjadi kesalahan silahkan ulangi')
+
+
+                        }).then(function () {
+
+                        });
+
+                    e.preventDefault();
+
+                  // do something
+                });
+
+
 
                 function stateNotFoundData() {
                     $('.modal-kiosk .step-state').hide();
@@ -691,15 +795,7 @@
                 })
 
                 $('#retry-input-phone').on('click', function () {
-                    $("#submit-phone").prop("disabled", true);
-                    $('.modal-kiosk .step-state').hide();
-                    $('.modal-kiosk .step-state#init-state').show();
-                    $('#phone').val('');
-                    $('#phone').removeClass('active').addClass('active');
-                    setTimeout(function () {
-                        $('#phone').focus();
-                    }, 500);
-
+                    activateInputPhoneMode()
                     // $('#phone').focus();
 
                 })
