@@ -132,15 +132,17 @@
                         <h2>Pilih Metode</h2>
                         <div class="row text-center justify-content-center mt-4">
                             <div id="online-barcode-input" class="col-5 method_list_online py-5 mr-2">
-                                Scan Barcode
+                                <i class="bi bi-upc-scan"></i>
+                                <span class="d-block">Scan Barcode</span>
                             </div>
                             <div id="online-input-phone" class="col-5 method_list_online py-5 mr-2">
-                                Input No Handphone
+                                <i class="bi bi-phone"></i>
+                                <span class="d-block">Input No Handphone</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="py-5 step-state" id="inputphone-state">
+                    <div class="py-5 step-state" id="inputphone-state" style="display:none;">
                         <h2 class="text-center text-pasker ">Masukkan No. Handphone</h2>
                         <p class="text-center">Masukkan No. Handphone yang anda daftarkan pada saat registrasi
                             online</p>
@@ -164,7 +166,7 @@
                         </button>
                     </div>
 
-                    <div class="step-state py-5" id="barcodeinput-state">
+                    <div class="step-state py-5" id="barcodeinput-state" style="display:none;">
                         <h2>Scan Barcode</h2>
                         <p>Silahkan arahkan QRCode pada barcode scanner</p>
                         <img src="{{ asset('assets/barcodescan.png') }}" class="img-fluid my-3" alt="">
@@ -176,14 +178,12 @@
 
 
                     <div class="py-5 step-state" id="error-state" style="display: none">
-                        <h2 class="text-center text-danger ">Tidak Ditemukan</h2>
-                        <p>No Handphone Anda tidak ditemukan pada jadwal hari ini.</p>
+                        <h2 class="text-center text-danger " id="error_title"></h2>
+
                         <i class="bi bi-emoji-frown text-muted"></i>
 
-                        <p class="text-muted">Pastikan No. Handphone yang Anda masukkan benar dan telah terjadwal hari
-                            ini.<br>
-                            Atau silahkan ambil Antrian Offline</p>
-                        <button id="retry-input-phone" class="btn btn-pasker-main text-white mt-4">COBA KEMBALI</button>
+                        <p class="text-muted" id="error_desc"></p>
+                        <button id="retry-input-online" data-backto="" class="btn btn-pasker-main text-white mt-4">COBA KEMBALI</button>
                     </div>
 
 
@@ -340,7 +340,7 @@
             function taglineIn() {
 
                 setTimeout(function () {
-                console.log("tagin")
+                //console.log("tagin")
                 numberTaglineIn = 0;
 
                 if(isStartRepeat) {
@@ -362,7 +362,7 @@
 
                     tagline[i].addEventListener('animationend', (e) => {
                         numberTaglineIn++
-                        console.log(numberTaglineIn)
+                        //console.log(numberTaglineIn)
                         checkNumberCompleted('startOut');
                     });
 
@@ -373,7 +373,7 @@
             }
 
             function taglineOut() {
-                    console.log("tagout")
+                    //console.log("tagout")
 
 
                     setTimeout(function () {
@@ -405,7 +405,7 @@
 
             function checkNumberCompleted(toNext){
                 if(numberTaglineIn >= tagline.length){
-                    console.log(toNext)
+                    //console.log(toNext)
                     if(toNext == "startOut"){
                         taglineOut()
                     }else{
@@ -416,7 +416,7 @@
                 }
             }
 
-            // taglineIn()
+            taglineIn()
 
 
 
@@ -561,7 +561,7 @@
 
                     setTimeout(function () {
                         $('#barcode-input-form').val('').focus();
-                        $('#barcode-input-form').val('puspakeranol-eyJpdiI6ImdHa05XRHFtRlk2RkdJZ0lQYm01YWc9PSIsInZhbHVlIjoiTW1LNnVTZHFkbWwvQkVBbWo2VGE3UT09IiwibWFjIjoiZWJmMWM1MjM4ZTk4MzI4OGE1MTUyYTQzNzAxN2Q5MzIxMTQyNDZlMTk5ZGQ4NGI5NTVmODdiZTc0YWNjZDk3YSIsInRhZyI6IiJ9');
+                        $('#barcode-input-form').val('puspakeranol-eyJpdiI6Ik1BZXpCZDJvSTczc0lpcnNnbm1yUmc9PSIsInZhbHVlIjoiYjR0bXpqa29EN2hwNXNUMzJlMS9idz09IiwibWFjIjoiYzQ0NDg3YTMyOGUwZDZkOTA1Yjk4ZWNhMDA1Zjc5NDAzNjg3OTQzNTRlNGZhMmYxNjE3NTdkZTRkYWUwNTUwYSIsInRhZyI6IiJ9');
                     },300);
 
 
@@ -572,7 +572,9 @@
                     //process
 
                 }
+
                 $( "#barcodeSubmitCode" ).on( "submit", function(e) {
+                    barcodeOnSubmit()
                     var action = '{{ route('kiosk.submit_barcode') }}';
                     console.log(action)
 
@@ -582,30 +584,22 @@
                         .then(function (response) {
                             console.log(response.data)
 
-                            //return console.log(response.data)
-
-                            // return
                             if (response.data.success == 1) {
-                                alert(response.data.message)
+                                statePrint(response.data.noAntrian,response.data.pelayanan);
+                                // alert(response.data.message)
                                 //this is not found data
                                 // onLoadingKioskButton('off', 'online');
                                 // statePrint(response.data.noAntrian,response.data.pelayanan);
                                 return
                             } else {
-                                // if(response.data.code=="booking_not_found") {
-                                //     onLoadingKioskButton('off', 'online');
-                                //     stateNotFoundData();
-                                //     return
-                                // }else{
-                                //     swal("Ups!",response.data.message,'warning')
-                                // }
+                                stateNotFoundData(response.data,"barcode");
+
                             }
                         })
                         .catch(function (error) {
                             swal("Ups!","Terjadi kesalahan silahkan ulangi",'error');
+                            activateBarcodeScan();
                             // alert('Terjadi kesalahan silahkan ulangi')
-
-
                         }).then(function () {
 
                         });
@@ -615,11 +609,17 @@
                   // do something
                 });
 
+                function barcodeOnSubmit(){
 
+                }
 
-                function stateNotFoundData() {
+                function stateNotFoundData(response,source) {
                     $('.modal-kiosk .step-state').hide();
                     $('.modal-kiosk .step-state#error-state').show();
+                    $('#error_title').text('').text(response.title);
+                    $('#error_desc').html('').html(response.message);
+                    $('#retry-input-online').data('backto',source);
+
                 }
 
                 function statePrint(noAntrian,pelayanan) {
@@ -628,7 +628,7 @@
                     $('.modal-kiosk .step-state.print-state .print-no-out').text('-')
                     $('.modal-kiosk .step-state.print-state .print-no-out').text(noAntrian)
 
-                    printNoAntrian(noAntrian,pelayanan);
+                    //printNoAntrian(noAntrian,pelayanan);
 
 
                     var timeleft = 5;
@@ -730,32 +730,26 @@
                     })
                         .then(function (response) {
 
-                            //return console.log(response.data)
-
-                            // return
                             if (response.data.success == 1) {
                                 //this is not found data
                                 onLoadingKioskButton('off', 'online');
                                 statePrint(response.data.noAntrian,response.data.pelayanan);
                                 return
                             } else {
-                                if(response.data.code=="booking_not_found") {
-                                    onLoadingKioskButton('off', 'online');
-                                    stateNotFoundData();
-                                    return
-                                }else{
-                                    swal("Ups!",response.data.message,'warning')
-                                }
+                                onLoadingKioskButton('off', 'online');
+                                stateNotFoundData(response.data,"handphone");
+                                return
                             }
                         })
                         .catch(function (error) {
                             swal("Ups!","Terjadi kesalahan silahkan ulangi",'error');
+                            activateInputPhoneMode();
                             // alert('Terjadi kesalahan silahkan ulangi')
                             onLoadingKioskButton('off', 'online');
 
                         }).then(function () {
-                        onLoadingKioskButton('off', 'online');
-                    });
+                            onLoadingKioskButton('off', 'online');
+                        });
                 })
 
                 $('.modal-kiosk').on('click', '.item-pelayanan', function (e) {
@@ -794,8 +788,14 @@
                     })
                 })
 
-                $('#retry-input-phone').on('click', function () {
-                    activateInputPhoneMode()
+                $('#retry-input-online').on('click', function () {
+                    if($(this).data('backto') == "barcode"){
+                        activateBarcodeScan();
+
+                    }else{
+                        activateInputPhoneMode()
+                    }
+
                     // $('#phone').focus();
 
                 })
@@ -842,7 +842,7 @@
                     //get pelayanan active
 
 
-                    //$('.step-state').hide()
+                    $('.step-state').hide()
                     $('#pick-layanan-state').show()
 
                 })

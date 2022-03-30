@@ -33,6 +33,13 @@
 body{
     font-family: 'poppinslight';
     overflow: hidden;
+    max-width: 100%;
+}
+.modal-kiosk {
+    position: absolute !important;
+}
+#KioskBoard-VirtualKeyboard{
+    position: absolute !important;
 }
 
 
@@ -196,6 +203,10 @@ img.mascot-bottom-signage{
     /* background-color: #555; */
 
     /* border-radius: 0.5rem; */
+}
+
+.method_list_online{
+    background-color: #469278 !important;
 }
 
 .modal-kiosk i.bi {

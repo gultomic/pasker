@@ -66,7 +66,9 @@ class StafPelayanan extends Component
         $today_coll = PJ::where('pelayanan_id', $this->pid)
                 ->where('tanggal', '=', $date)
                 ->where('refs->antrian', '!=', "")
+                ->orderBy("refs->daftar",'desc')
                 ->orderBy("refs->antrian")
+
                 ->get();
 
 

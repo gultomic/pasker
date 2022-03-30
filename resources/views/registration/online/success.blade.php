@@ -11,8 +11,8 @@
             </div>
             <div class="row pt-2 text-center ">
 
-            <div class="col-lg-12 pb-5">
-                <i class="bi bi-patch-check-fill" style="font-size: 8rem"></i>
+            <div class="col-lg-12 pb-5 mt-md-n5 mt-0">
+                <i class="bi bi-patch-check-fill" style="font-size: 7rem"></i>
                 <h1>Pendaftaran Berhasil !</h1>
                 <div><p>Terima kasih pendaftaranmu telah berhasil. Silahkan datang ke
                     <br>
@@ -22,6 +22,7 @@
                     <h4>
                         {{ session('booking_time') }}
                     </h4>
+                    <p>{{ session('booking_author') }}</p>
                     @endif
                     <br>
                     @if (session('booking_qrcode'))

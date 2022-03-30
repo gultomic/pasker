@@ -7,8 +7,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RegistrationController;
 use Illuminate\Support\Facades\Session;
 use App\Faker;
-//use Illuminate\Support\Facades\Crypt;
-//use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 // Route::get('/', function () {
 //     return view('welcome', [
@@ -30,6 +30,17 @@ Route::get('/monitor', function () {
 //    try {
 //        $decrypted = Crypt::decryptString($string);
 //        return "ini".$decrypted;
+//    } catch (DecryptException $e) {
+//        //
+//        return $e;
+//    }
+//});
+//
+//Route::get('/encrypt', function () {
+//    $string = request('id');
+//    try {
+//        $decrypted = Crypt::encryptString($string);
+//        return $decrypted;
 //    } catch (DecryptException $e) {
 //        //
 //        return $e;

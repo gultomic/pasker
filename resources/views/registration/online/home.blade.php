@@ -409,8 +409,7 @@
 
         onGenerate: function(ct,$input) {
 
-            jQuery('.xdsoft_time_box small.loadingtime').remove()
-            jQuery('.xdsoft_time_box').append('<small class="loadingtime">Loading..</small>')
+
 
 
             $input.prop('readonly', true);
@@ -504,6 +503,10 @@
     });
 
      function getAvailableQuota(date,pelayanan){
+
+         jQuery('.xdsoft_time_box small.loadingtime').remove()
+         jQuery('.xdsoft_time_box').append('<small class="loadingtime">Loading..</small>')
+
          jQuery('#time-picker').val('')
             jQuery('.xdsoft_time_variant').hide()
           $('#statushour').hide();
@@ -524,6 +527,7 @@
                  jQuery('.xdsoft_time_variant').hide()
 
              }).then(function () {
+                 jQuery('.xdsoft_time_box small.loadingtime').remove()
                 //$('.xdsoft_time_box small.loadingtime').hide()
             });
      }
