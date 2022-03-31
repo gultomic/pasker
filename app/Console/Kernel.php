@@ -19,6 +19,10 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
 
+        //BACKUP
+        $schedule->command('backup:clean')->daily()->at('01:00');
+        $schedule->command('backup:run')->daily()->at('01:30');
+
         //tasking to change status PENDING TO
         $schedule->call(function () {
             PelayananJadwal::where('tanggal', '=', Carbon::yesterday()->format('Y-m-d'))
