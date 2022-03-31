@@ -79,8 +79,8 @@ $cleanType = strtolower(str_replace(' ', '', $title));
                             @if (in_array("absent", $btnActive))
                                 @if($cleanType == "berjalan" && $item->pelaksana_id != auth()->user()->id)
                                 @else
-                                <button title="Tidak Hadir"
-                                        onclick="confirm('Yakin ingin menyatakan pengunjung tidak hadir ?') || event.stopImmediatePropagation()"
+                                <button title="Batal Hadir"
+                                        onclick="confirm('Yakin ingin menyatakan pengunjung batal hadir ?') || event.stopImmediatePropagation()"
                                         wire:click='setAction("{{ $item->id }}","tidak_hadir")'
                                         class="btn btn-danger mr-1 mb-2">
                                     <i class="bi bi-person-x-fill"></i>

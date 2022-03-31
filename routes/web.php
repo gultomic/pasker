@@ -36,16 +36,16 @@ Route::get('/monitor', function () {
 //    }
 //});
 //
-//Route::get('/encrypt', function () {
-//    $string = request('id');
-//    try {
-//        $decrypted = Crypt::encryptString($string);
-//        return $decrypted;
-//    } catch (DecryptException $e) {
-//        //
-//        return $e;
-//    }
-//});
+Route::get('/encrypt', function () {
+    $string = request('id');
+    try {
+        $decrypted = Crypt::encryptString($string);
+        return $decrypted;
+    } catch (DecryptException $e) {
+        //
+        return $e;
+    }
+});
 
 Route::get('/midone/dashboard1', function () {
 

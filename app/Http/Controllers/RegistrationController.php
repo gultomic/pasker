@@ -1,5 +1,4 @@
 <?php
-//TODO : should we update existing client with same phone number ? for now not update current data
 // TODO : update telat
 namespace App\Http\Controllers;
 
@@ -203,6 +202,7 @@ class RegistrationController extends Controller
     }
 
     public function kiosk_submit_barcode(Request $request){
+
         if(empty($request->barcode)){
             return response()->json([
                 'success' => 0,
@@ -287,7 +287,7 @@ class RegistrationController extends Controller
                     }
 
                     //do check kesiangan
-                    if(($jambooking == $currHour && $currMinute > 59) || $jambooking < $currHour){
+                    if(($jambooking == $currHour && $currMinute > 30) || $jambooking < $currHour){
 
                         $return['title'] = "Jadwal Anda Telah Terlewat";
                         $return['message'] = "Jadwal anda telah terlewat. Jadwal anda hari ini pukul : ".$jambooking.":00 - ".$jambooking.":30 <br/> Silahkan ambil antrian offline jika anda menginginkan kunjungan saat ini";

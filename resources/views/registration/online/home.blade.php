@@ -277,11 +277,6 @@
 <script>
 
 
-    // TODO : show only available quota
-
-
-
-
 
     jQuery.datetimepicker.setLocale('id');
     // $('#datetimepicker').on('click',function (){

@@ -126,7 +126,7 @@
 
                     </div>
                     <div class="text-3xl font-medium leading-8 mt-6">{{ count($collection_tidakhadir) }}</div>
-                    <div class="text-base text-gray-600 mt-1">Tidak Hadir</div>
+                    <div class="text-base text-gray-600 mt-1">Batal Hadir</div>
                 </div>
             </div>
         </div>
@@ -138,7 +138,7 @@
     <x-list-antrian-staff-action title="Pending" :collection="$collection_pending" :btnActive="['panggil','proses','absent']" icon="bi-stopwatch text-theme-12"/>
     <x-list-antrian-staff-action title="Menunggu" :collection="$collection" :btnActive="['panggil','pending','proses','absent']" icon="bi-hourglass-split text-theme-6"/>
     <x-list-antrian-staff-action title="Berjalan" :collection="$collection_berjalan" :btnActive="['pending','proses','absent']" icon=" bi-box-arrow-right text-gray-600"/>
-    <x-list-antrian-staff-action title="Tidak Hadir" :collection="$collection_tidakhadir" :btnActive="['panggil','pending','proses']" icon="bi-person-x-fill text-gray-600"/>
+    <x-list-antrian-staff-action title="Batal Hadir" :collection="$collection_tidakhadir" :btnActive="['panggil','pending','proses']" icon="bi-person-x-fill text-gray-600"/>
     <x-list-antrian-staff-action title="Selesai" :collection="$collection_selesai" :btnActive="['biodata']" icon="bi-check-circle-fill text-theme-9"/>
 
 

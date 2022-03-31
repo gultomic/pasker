@@ -1,3 +1,6 @@
+{{--TODO : Buang static qrcode--}}
+{{--TODO : aktifin print function--}}
+
 @extends('layouts.bootstrap_public')
 
 @section('content')
@@ -149,6 +152,13 @@
                         <div class="alert alert-danger phonenot0" style="display: none;font-size: 0.9rem">
                             No Handphone harus diawali dengan angka 0
                         </div>
+
+                        <div class="row text-center justify-content-center spinnerkiosk-phone-submit" style="display: none">
+                            <div class=" spinner-border text-success" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+
                         <div class="input-phone-area">
                             <input data-kioskboard-type="numpad" type="number" id="phone"
                                    class="form-control js-num-virtual-keyboard"
@@ -159,17 +169,25 @@
                             {{--                            </div>--}}
                             {{--                            --}}
                             {{--                        </div>--}}
-                        </div>
+
 
                         <button id="submit-phone" disabled data-href="{{route('kiosk.submit_phone')}}"
                                 class="btn btn-pasker-main btn-lg text-white mt-4">SUBMIT
                         </button>
+                        </div>
                     </div>
 
                     <div class="step-state py-5" id="barcodeinput-state" style="display:none;">
                         <h2>Scan Barcode</h2>
                         <p>Silahkan arahkan QRCode pada barcode scanner</p>
-                        <img src="{{ asset('assets/barcodescan.png') }}" class="img-fluid my-3" alt="">
+
+                        <div class="row text-center justify-content-center spinnerkiosk-barcode-scan" style="display: none">
+                            <div class=" spinner-border text-success" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+
+                        <img src="{{ asset('assets/barcodescan.png') }}" class="img-fluid my-3 illustrator-barcode-scan" alt="">
                         <form  id="barcodeSubmitCode">
                             <input type="text" id="barcode-input-form" style="display:none;">
                         </form>
@@ -292,7 +310,7 @@
         <script>
 
             function fade(element) {
-                console.log(element.style);
+                //console.log(element.style);
                 var op = 1;  // initial opacity
                 var timer = setInterval(function () {
                     if (op <= 0.1){
@@ -392,7 +410,7 @@
 
                             tagline[i].addEventListener('animationend', (e) => {
                                 numberTaglineIn++
-                                console.log(numberTaglineIn)
+                                //console.log(numberTaglineIn)
                                 checkNumberCompleted('startIn');
                             });
 
@@ -561,28 +579,30 @@
 
                     setTimeout(function () {
                         $('#barcode-input-form').val('').focus();
-                        $('#barcode-input-form').val('puspakeranol-eyJpdiI6Ik1BZXpCZDJvSTczc0lpcnNnbm1yUmc9PSIsInZhbHVlIjoiYjR0bXpqa29EN2hwNXNUMzJlMS9idz09IiwibWFjIjoiYzQ0NDg3YTMyOGUwZDZkOTA1Yjk4ZWNhMDA1Zjc5NDAzNjg3OTQzNTRlNGZhMmYxNjE3NTdkZTRkYWUwNTUwYSIsInRhZyI6IiJ9');
+                        //$('#barcode-input-form').val('puspakeranol-eyJpdiI6ImoxbkpoY1Q0SlFSQjJNTnJKeDB4aGc9PSIsInZhbHVlIjoiWkhaRG40QlhDTkVod0g5aXA2MEgzUT09IiwibWFjIjoiM2VjZDYzOWNmZGIyNzU5YmQ2YTkxOTc3Mjk1ZjU3NDliMzcwNTk1NjU3YWE3ZDVmNDdhZTgwODEwNWFmMjQzZiIsInRhZyI6IiJ9');
                     },300);
 
 
-                    setTimeout(function () {
-                        $( "#barcodeSubmitCode" ).submit();
-                    },3000);
+                    // setTimeout(function () {
+                    //     $( "#barcodeSubmitCode" ).submit();
+                    // },3000);
 
                     //process
 
                 }
 
                 $( "#barcodeSubmitCode" ).on( "submit", function(e) {
-                    barcodeOnSubmit()
+                    e.preventDefault();
+                    barcodeOnSubmit(true)
+                    // return;
                     var action = '{{ route('kiosk.submit_barcode') }}';
-                    console.log(action)
+
 
                     axios.post(action, {
                         barcode: $('#barcode-input-form').val()
                     })
                         .then(function (response) {
-                            console.log(response.data)
+                            // console.log(response.data)
 
                             if (response.data.success == 1) {
                                 statePrint(response.data.noAntrian,response.data.pelayanan);
@@ -597,20 +617,35 @@
                             }
                         })
                         .catch(function (error) {
-                            swal("Ups!","Terjadi kesalahan silahkan ulangi",'error');
-                            activateBarcodeScan();
+                            stateNotFoundData({
+                                "title":"Error",
+                                "message":"Terjadi kesalahan pada sistem, silahkan ulangi",
+                            },"barcode");
+                            // swal("Ups!","Terjadi kesalahan silahkan ulangi",'error');
+                            // activateBarcodeScan();
                             // alert('Terjadi kesalahan silahkan ulangi')
                         }).then(function () {
-
+                            barcodeOnSubmit(false)
                         });
 
-                    e.preventDefault();
+
 
                   // do something
                 });
 
-                function barcodeOnSubmit(){
-
+                function barcodeOnSubmit(active){
+                    //hide state and show loading
+                    if(active) {
+                        $('.spinnerkiosk-barcode-scan').show()
+                        $('.illustrator-barcode-scan').hide()
+                    }else{
+                        $('.spinnerkiosk-barcode-scan').hide()
+                        $('.illustrator-barcode-scan').show()
+                        setTimeout(function () {
+                            $('#barcode-input-form').val('').focus();
+                            //$('#barcode-input-form').val('puspakeranol-eyJpdiI6ImoxbkpoY1Q0SlFSQjJNTnJKeDB4aGc9PSIsInZhbHVlIjoiWkhaRG40QlhDTkVod0g5aXA2MEgzUT09IiwibWFjIjoiM2VjZDYzOWNmZGIyNzU5YmQ2YTkxOTc3Mjk1ZjU3NDliMzcwNTk1NjU3YWE3ZDVmNDdhZTgwODEwNWFmMjQzZiIsInRhZyI6IiJ9');
+                        },300);
+                    }
                 }
 
                 function stateNotFoundData(response,source) {
@@ -628,7 +663,7 @@
                     $('.modal-kiosk .step-state.print-state .print-no-out').text('-')
                     $('.modal-kiosk .step-state.print-state .print-no-out').text(noAntrian)
 
-                    //printNoAntrian(noAntrian,pelayanan);
+                    printNoAntrian(noAntrian,pelayanan);
 
 
                     var timeleft = 5;
@@ -701,6 +736,7 @@
 
                     //e.preventDefault();
                     //this.prop( "disabled", true );
+                    e.preventDefault()
                     let action = $(this).data('href');
                     let phone = $('#phone').val();
 
@@ -724,7 +760,8 @@
                     //$('.modal-kiosk .step-state').hide();
                     // $('.modal-kiosk .step-state#error-state').show();
 
-                    onLoadingKioskButton('on', 'online');
+                    phoneOnSubmit(true)
+
                     axios.post(action, {
                         phone: phone
                     })
@@ -732,25 +769,37 @@
 
                             if (response.data.success == 1) {
                                 //this is not found data
-                                onLoadingKioskButton('off', 'online');
                                 statePrint(response.data.noAntrian,response.data.pelayanan);
                                 return
                             } else {
-                                onLoadingKioskButton('off', 'online');
                                 stateNotFoundData(response.data,"handphone");
-                                return
                             }
                         })
                         .catch(function (error) {
-                            swal("Ups!","Terjadi kesalahan silahkan ulangi",'error');
-                            activateInputPhoneMode();
-                            // alert('Terjadi kesalahan silahkan ulangi')
-                            onLoadingKioskButton('off', 'online');
+                            stateNotFoundData({
+                                "title":"Error",
+                                "message":"Terjadi kesalahan pada sistem, silahkan ulangi",
+                            },"handphone");
 
                         }).then(function () {
-                            onLoadingKioskButton('off', 'online');
+                            phoneOnSubmit(false)
                         });
                 })
+
+                function phoneOnSubmit(active){
+                    //hide state and show loading
+                    if(active) {
+                        $('.spinnerkiosk-phone-submit').show()
+                        $('.input-phone-area').hide()
+                    }else{
+                        $('.spinnerkiosk-phone-submit').hide()
+                        $('.input-phone-area').show()
+                        setTimeout(function () {
+                            $('#phone').val('').focus();
+                            //$('#barcode-input-form').val('puspakeranol-eyJpdiI6ImoxbkpoY1Q0SlFSQjJNTnJKeDB4aGc9PSIsInZhbHVlIjoiWkhaRG40QlhDTkVod0g5aXA2MEgzUT09IiwibWFjIjoiM2VjZDYzOWNmZGIyNzU5YmQ2YTkxOTc3Mjk1ZjU3NDliMzcwNTk1NjU3YWE3ZDVmNDdhZTgwODEwNWFmMjQzZiIsInRhZyI6IiJ9');
+                        },300);
+                    }
+                }
 
                 $('.modal-kiosk').on('click', '.item-pelayanan', function (e) {
 

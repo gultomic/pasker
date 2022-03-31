@@ -137,8 +137,9 @@ class StafPelayanan extends Component
 
 
         if($act == 'biodata'){
+            $state = $item->klien_id != 0 ? "biodata" : "init_biodata";
 
-            $this->emit('openModal', 'staff-pelayanan-modal-call',['pj'=>$item,'state'=>'biodata']);
+            $this->emit('openModal', 'staff-pelayanan-modal-call',['pj'=>$item,'state'=>$state]);
             return;
         }
 

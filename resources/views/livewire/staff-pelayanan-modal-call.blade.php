@@ -6,7 +6,7 @@
             Pemanggilan Antrian
             @break
 
-            @case('biodata')
+            @case('biodata' || 'init_biodata')
             Biodata Pengunjung
             @break
 
@@ -43,14 +43,15 @@
             >
                 <i class="bi bi-megaphone"></i>&nbsp;Panggil Ulang</button>
             <button type="button" class="btn  w-32 btn-warning ml-3 mb-2" wire:click='setActionModal("{{ $data->id }}","pending")'><i class="bi bi-stopwatch"></i>&nbsp;Pending</button>
-            <button type="button" class="btn  w-32 btn-danger ml-3 mb-2" onclick="confirm('Yakin ingin menyatakan pengunjung tidak hadir ?') || event.stopImmediatePropagation()" wire:click='setActionModal("{{ $data->id }}","tidak_hadir")'>
-                <i class="bi bi-person-x-fill"></i>&nbsp;Tidak Hadir</button>
-            <button type="button" class="btn  w-32 btn-success ml-3 mb-2" wire:click='setActionModal("{{ $data->id }}","biodata")'><i class="bi bi-box-arrow-right"></i>&nbsp;Proses</button>
+            <button type="button" class="btn  w-32 btn-danger ml-3 mb-2" onclick="confirm('Yakin ingin menyatakan pengunjung batal hadir ?') || event.stopImmediatePropagation()" wire:click='setActionModal("{{ $data->id }}","tidak_hadir")'>
+                <i class="bi bi-person-x-fill"></i>&nbsp;Batal Hadir</button>
+
+            <button type="button" class="btn  w-32 btn-success ml-3 mb-2" @if($klienID=="") wire:click='setBiodataBaru("{{ $data->id }}")' @else wire:click='setActionModal("{{ $data->id }}","biodata")' @endif><i class="bi bi-box-arrow-right"></i>&nbsp;Proses</button>
 
         </div>
         @endif
 
-        @if($state == 'biodata')
+        @if($state == 'biodata' || $state == 'init_biodata')
             <div class="flex mb-3">
                 <div class="w-10 h-10 mr-2 flex-none ">
                     <i class="bi bi-person" style="font-size: 4rem"></i>
@@ -59,13 +60,15 @@
                     <h3 class="text-xl leading-6 font-bold text-orange-pasker-light ">Biodata Pengunjung</h3>
                     <p class="text-gray-600">Silahkan isi biodata pengunjung</p>
                 </div>
+
+
             </div>
 
-            <div class="">
-                <label for="regular-form-1" class="form-label">Nama Lengkap</label>
-                <input wire:model="name" type="text" class="form-control  @error('name') border-theme-6 @enderror"" placeholder="Masukkan Nama Lengkap" >
-                @error('name')<div class="text-theme-6 mt-2">{{ $message }}</div>@enderror
-            </div>
+            @if($clientIsNew && $state == 'init_biodata')
+                <div class="alert alert-warning show mb-2">
+                        * Biodata tidak ditemukan. Silahkan lanjutkan memasukkan biodata pengunjung jika memang pengunjung baru.
+                </div>
+            @endif
 
             <div class="mt-3">
                 <label for="regular-form-1" class="form-label">No. Handphone</label>
@@ -74,17 +77,43 @@
 
             </div>
 
+
+            @if($state == 'biodata')
+
+            <div class="mt-3">
+                <label for="regular-form-1" class="form-label">Nama Lengkap</label>
+                <input wire:model="name" type="text" class="form-control  @error('name') border-theme-6 @enderror" placeholder="Masukkan Nama Lengkap" >
+                @error('name')<div class="text-theme-6 mt-2">{{ $message }}</div>@enderror
+            </div>
+
+
+
             <div class="mt-3">
                 <label for="regular-form-2" class="form-label">Email</label>
                 <input wire:model="email"  type="text" class="form-control @error('email')border-theme-6 @enderror " placeholder="Masukkan Email">
                 @error('email')<div class="text-theme-6 mt-2">{{ $message }}</div>@enderror
             </div>
+
+            @endif
+
             <input wire:model="klienID" type="hidden" >
             <input wire:model="formType" type="hidden" >
 
 
             <div class="mt-5 flex justify-center">
-                <button wire:click.prevent="store" type="submit" class="btn  w-32 btn-primary mr-1 mb-2" wire:click.prevent="store" ><i class="bi bi-save"></i>&nbsp;Simpan</button>
+                @if($state == 'biodata')
+                    <button wire:click.prevent="store" type="submit" class="btn  w-32 btn-primary mr-1 mb-2" ><i class="bi bi-save"></i>&nbsp;Simpan</button>
+                @endif
+                @if($state == 'init_biodata')
+
+                    <button wire:click.prevent="search" type="submit" class="btn  w-32 btn-primary mr-1 mb-2" ><i class="bi bi-search"></i>&nbsp;Search</button>
+
+                    @if($clientIsNew)
+
+                        <button wire:click='setState("{{ $data->id }}","biodata")' type="button" class="btn  w-32 btn-success mr-1 ml-2 mb-2" ><i class="bi bi-arrow-right-circle"></i>&nbsp;Input baru</button>
+                    @endif
+
+                @endif
             </div>
 
 
