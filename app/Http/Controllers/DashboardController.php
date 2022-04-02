@@ -8,9 +8,12 @@ use App\Models\Pelayanan;
 use App\Models\PelayananJadwal as PE;
 use App\Models\Config;
 use App\Models\User;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\PelaksanaExport;
 use Carbon\Carbon;
 use Auth;
 use DB;
+use PDF;
 
 class DashboardController extends Controller
 {
@@ -85,7 +88,6 @@ class DashboardController extends Controller
                     $indeks = ($skor / 3) / $total * 100;
                 }
 
-
                 return [
                     'nama' => $q->profile->refs['fullname'],
                     'email' => $q->email,
@@ -96,8 +98,24 @@ class DashboardController extends Controller
                     'indeks_kepuasan' => $indeks,
                 ];
             });
-            // dd($data);
+
             return $data;
+    }
+
+    public function adminStafExport ()
+    {
+        $time = Carbon::now()->format('Ymd-His');
+        return Excel::download(new PelaksanaExport($this->adminStaf()), "leaderboard_pelaksana_$time.xlsx");
+    }
+
+    public function adminStafPdf ()
+    {
+        $tim = \Carbon\Carbon::now()->format('Ymd-His');
+        $pdf = PDF::loadview('dompdf.tabel_pelaksana', [
+            'collection' => $this->adminStaf(),
+            'title' => 'Tabel Pelaksana'
+        ]);
+        return $pdf->stream("tabel_pelaksana_$tim.xlsx");
     }
 
     public function adminChart ()
@@ -105,15 +123,11 @@ class DashboardController extends Controller
         $data = [
             'bar' => PE::all()
                 ->groupBy('tanggal')
-                // ->groupBy(function($d) {
-                //     return Carbon::parse($d->tanggal)->format('Y-m');
-                // })
                 ->mapWithKeys(function($q, $k) {
                     return [$k => $q->count()];
                 }),
             'pie' => $this->adminPelayanan(),
         ];
-        // dd($pie);
         return $data;
     }
 

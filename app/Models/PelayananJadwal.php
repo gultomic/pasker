@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use App\Traits\Uuid;
+use App\Events\QueuesService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -77,7 +78,8 @@ class PelayananJadwal extends Model
         $PJId=0,
         $ambilAntrian=true,
         $addRefs=[],
-        $tanggal=null
+        $tanggal=null,
+        $withEvent = true,
     ){
         try {
 
@@ -116,8 +118,8 @@ class PelayananJadwal extends Model
             //START CREATE ANTRIAN
             $no_antrian ="";
             if($ambilAntrian) {
-                $trailing_no = str_pad($pelayanan->antrianHariIni()->where('refs->antrian', '!=', "")->count() + 1, 3, '0', STR_PAD_LEFT);
-                $no_antrian = $pelayanan->refs['kode'] . '' . $trailing_no;
+                $trailing_no = str_pad($pelayanan->antrianHariIni()->where('refs->antrian', '!=', "")->where('refs->daftar', '=', $daftarType)->count() + 1, 3, '0', STR_PAD_LEFT);
+                $no_antrian = $pelayanan->refs['kode'] . '' . $trailing_no.( $daftarType == "online" ? " OL":"" );
             }
 
             $PJ = new PJ();
@@ -144,6 +146,14 @@ class PelayananJadwal extends Model
             }
 
             $PJ->save();
+
+            if($ambilAntrian) {
+                event(new QueuesService([
+                    'call' => false,
+                    'pid' => $PJ->pelayanan_id,
+                    'type' => 'staff'
+                ]));
+            }
 
             DB::connection('mysql')->commit();
             $return = ['error' => 0, 'data' => $PJ, 'message' => "Berhasil Membuat Antrian"];

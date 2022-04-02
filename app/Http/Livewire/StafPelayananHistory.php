@@ -5,16 +5,18 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\PelayananJadwal as PJ;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\RiwayatPelayanan;
 use Auth;
 
 class StafPelayananHistory extends Component
 {
-    public $startDate, $endDate;
+    public $collection, $startDate, $endDate;
 
     public function render ()
     {
         $this->startDate == null
-            ? $startDate = '1900-01-01'
+            ? $startDate = '2020-01-01'
             : $startDate = $this->startDate;
 
         $bydate = $this->totalCollection()
@@ -31,8 +33,10 @@ class StafPelayananHistory extends Component
                 ];
             });
 
+        $this->collection = collect($bydate)->values();
+
         return view('livewire.staf-pelayanan-history', [
-            'bydate' => collect($bydate)->values(),
+            'bydate' => $this->collection,
         ]);
     }
 
@@ -56,5 +60,25 @@ class StafPelayananHistory extends Component
                     'tanggal' => $q->tanggal,
                 ];
             });
+    }
+
+    public function export ()
+    {
+        $title = str_replace(" ","_",strtolower(Auth::user()->profile->refs['fullname']));
+        $time = Carbon::now()->format('Ymd-His');
+
+        return Excel::download(
+            new RiwayatPelayanan($this->collection, Auth::user()->profile->refs['fullname']),
+            $title."_".$time.".xlsx"
+        );
+
+    }
+
+    public function exportPdf ()
+    {
+        redirect()->with([
+            'collection' => $this->collection,
+            'title' => Auth::user()->profile->refs['fullname'],
+        ])->route('staf.pelayanan.history.pdf');
     }
 }

@@ -61,12 +61,28 @@
         <div class="col-span-12 mt-8">
             <div class="flex items-center h-10 intro-y">
                 <h2 class="mr-5 text-lg font-medium truncate">Tabel Pelaksana</h2>
-                <div class="flex items-center ml-auto text-theme-1 dark:text-theme-10">
-                    <i data-feather="users" class="w-5 h-5 mr-3"></i>
+                <div class="flex items-center ml-auto">
+                    <a href="{{ route('admin.pelaksana.pdf') }}"
+                        class="mr-2 text-theme-6 tooltip -intro-y"
+                        data-theme="light"
+                        title="Unduh excel">
+                        <i class="text-xl fas fa-file-pdf"></i>
+                    </a>
+                    <a href="{{ route('admin.pelaksana.export') }}"
+                        class="mr-4 tooltip -intro-y"
+                        data-theme="light"
+                        title="Unduh excel"
+                        style="color: #018701;">
+                        <i class="text-xl fas fa-file-excel"></i>
+                    </a>
+                    <i data-feather="users" class="w-5 h-5 mr-3 text-theme-1"></i>
                 </div>
             </div>
 
-            <div class="mt-8 overflow-auto intro-y lg:overflow-visible sm:mt-0">
+            <div class="mt-8 overflow-auto intro-y lg:overflow-visible sm:mt-0"
+                x-data="alpTable({{ $collection['staf'] }}, 3)" x-cloak>
+
+                @if ($collection['staf']->count() > 0)
                 <table class="table table-report sm:mt-2">
                     <thead>
                         <tr>
@@ -79,42 +95,87 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($collection['staf'] as $staf)
+                        <template x-for="(item,x) in displayTable" :key="x" x-cloak>
                             <tr class="intro-x">
                                 <td class="w-40">
                                     <div class="flex">
                                         <div class="w-10 h-10 rounded-full image-fit zoom-in">
-                                            <img alt="{{ $staf['nama'] }}"
-                                                class="rounded-full tooltip"
-                                                src="{{ asset($staf['photo']) }}"
-                                                title="{{ $staf['nama'] }}">
+                                            <img class="rounded-full tooltip"
+                                                x-bind:alt="item.nama"
+                                                x-bind:src="item.photo"
+                                                x-bind:title="item.nama">
                                         </div>
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="font-medium whitespace-nowrap">{{ $staf['nama'] }}</div>
-                                    <div class="text-gray-600 text-xs whitespace-nowrap mt-0.5">{{ $staf['email'] }}</div>
+                                    <div class="font-medium whitespace-nowrap" x-text="item.nama"></div>
+                                    <div class="text-gray-600 text-xs whitespace-nowrap mt-0.5" x-text="item.email"></div>
                                 </td>
-                                <td class="text-center">{{ $staf['jumlah_pelayanan'] }} Pelayanan</td>
+                                <td class="text-center">
+                                    <div x-text="item.jumlah_pelayanan+' Pelayanan'"></div>
+                                </td>
                                 <td class="w-40">
-                                    <div class="flex items-center justify-center text-theme-9">
-                                        {{ number_format($staf['total_pelayanan'], 0, ',', '.') }}
-                                    </div>
+                                    <div class="flex items-center justify-center text-theme-9"
+                                        x-text="item.total_pelayanan.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')"></div>
                                 </td>
                                 <td>
-                                    <div class="flex items-center justify-center">
-                                        {{ number_format($staf['skor_survei'], 0, ',', '.') }}
-                                    </div>
+                                    <div class="flex items-center justify-center"
+                                        x-text="item.skor_survei.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')"></div>
                                 </td>
                                 <td>
-                                    <div class="flex items-center justify-center text-theme-1">
-                                        {{ round($staf['indeks_kepuasan']) }}%
+                                    <div class="flex items-center justify-center text-theme-1"
+                                        x-text="item.indeks_kepuasan.toFixed(1)+'%'">
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach
+                        </template>
                     </tbody>
                 </table>
+
+                <div class="flex flex-wrap items-center justify-between mt-3 intro-y sm:flex-row sm:flex-nowrap">
+                    <ul class="pagination">
+                        <li>
+                            <button class="p-1"
+                                x-bind:class="pageNumber==1?'text-gray-400':'hover:bg-gray-300'"
+                                x-bind:disabled="pageNumber==1?true:false"
+                                x-on:click="prevPage">
+                                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                    class="w-5 h-5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                            </button>
+                        </li>
+
+                        <template x-for="x in pageCount" :key="x">
+                            <li>
+                                <button class="px-2 py-1 mx-1"
+                                    x-bind:class="pageNumber==x?'border-b border-gray-500':'hover:bg-gray-300'"
+                                    x-text="x"
+                                    x-on:click="viewPage(x)"></button>
+                            </li>
+                        </template>
+
+                        <li>
+                            <button class="p-1"
+                                x-bind:class="pageNumber==pageCount?'text-gray-400':'hover:bg-gray-300'"
+                                x-bind:disabled="pageNumber==pageCount?true:false"
+                                x-on:click="nextPage">
+                                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                                    fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                    class="w-5 h-5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </button>
+                        </li>
+                    </ul>
+
+                    <select class="w-20 mt-3 form-select box sm:mt-0"
+                        x-on:change="alpPaginate($event.target.value)" x-model="paginate">
+                        <option value="3">3</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+                @else
+                    <div>Tidak dapat menemukan data.</div>
+                @endif
             </div>
         </div>
     </div>

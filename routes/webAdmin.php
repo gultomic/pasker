@@ -1,10 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use App\Http\Controllers\DashboardController;
 
 Route::name('admin.')
     ->prefix('admin')
-    ->middleware(['auth'])
+    ->middleware(['auth', 'admin', 'access'])
     ->group(function() {
         Route::get('/pelayanan', function () {
             return view('admin.pelayanan', [
@@ -28,6 +30,17 @@ Route::name('admin.')
                 'id' => $id,
             ]);
         })->name('pelayanan.history');
+
+        Route::get('/pelayanan/history-pdf', function(Request $request) {
+            $title = $request->session()->get('title');
+            $tit = str_replace(" ","_",strtolower($title));
+            $tim = \Carbon\Carbon::now()->format('Ymd-His');
+            $pdf = PDF::loadview('dompdf.riwayat_pelayanan', [
+                'collection' => $request->session()->get('collection'),
+                'title' => $request->session()->get('title')
+            ]);
+            return $pdf->stream($tit."_".$tim.".xlsx");
+        })->name('pelayanan.history.pdf');
 
         Route::get('/akun', function () {
             return view('admin.akun', [
@@ -72,4 +85,10 @@ Route::name('admin.')
                 'header' => 'Daftar Pertanyaan',
             ]);
         })->name('pertanyaan');
+
+        Route::get('export-leaderboard-pelaksana', [DashboardController::class, 'adminStafExport'])->name('pelaksana.export');
+        Route::get('tabel-pelaksana-pdf', [DashboardController::class, 'adminStafPdf'])->name('pelaksana.pdf');
+
+        Route::get('system-logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
+
     });

@@ -1,3 +1,6 @@
+{{--TODO : Buang static qrcode--}}
+{{--TODO : aktifin print function--}}
+
 @extends('layouts.bootstrap_public')
 
 @section('content')
@@ -129,12 +132,33 @@
                     </div>
 
                     <div class="py-5 step-state" id="init-state">
+                        <h2>Pilih Metode</h2>
+                        <div class="row text-center justify-content-center mt-4">
+                            <div id="online-barcode-input" class="col-5 method_list_online py-5 mr-2">
+                                <i class="bi bi-upc-scan"></i>
+                                <span class="d-block">Scan Barcode</span>
+                            </div>
+                            <div id="online-input-phone" class="col-5 method_list_online py-5 mr-2">
+                                <i class="bi bi-phone"></i>
+                                <span class="d-block">Input No Handphone</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="py-5 step-state" id="inputphone-state" style="display:none;">
                         <h2 class="text-center text-pasker ">Masukkan No. Handphone</h2>
                         <p class="text-center">Masukkan No. Handphone yang anda daftarkan pada saat registrasi
                             online</p>
                         <div class="alert alert-danger phonenot0" style="display: none;font-size: 0.9rem">
                             No Handphone harus diawali dengan angka 0
                         </div>
+
+                        <div class="row text-center justify-content-center spinnerkiosk-phone-submit" style="display: none">
+                            <div class=" spinner-border text-success" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+
                         <div class="input-phone-area">
                             <input data-kioskboard-type="numpad" type="number" id="phone"
                                    class="form-control js-num-virtual-keyboard"
@@ -145,23 +169,39 @@
                             {{--                            </div>--}}
                             {{--                            --}}
                             {{--                        </div>--}}
-                        </div>
+
 
                         <button id="submit-phone" disabled data-href="{{route('kiosk.submit_phone')}}"
                                 class="btn btn-pasker-main btn-lg text-white mt-4">SUBMIT
                         </button>
+                        </div>
+                    </div>
+
+                    <div class="step-state py-5" id="barcodeinput-state" style="display:none;">
+                        <h2>Scan Barcode</h2>
+                        <p>Silahkan arahkan QRCode pada barcode scanner</p>
+
+                        <div class="row text-center justify-content-center spinnerkiosk-barcode-scan" style="display: none">
+                            <div class=" spinner-border text-success" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+
+                        <img src="{{ asset('assets/barcodescan.png') }}" class="img-fluid my-3 illustrator-barcode-scan" alt="">
+                        <form  id="barcodeSubmitCode">
+                            <input type="text" id="barcode-input-form" style="display:none;">
+                        </form>
+
                     </div>
 
 
                     <div class="py-5 step-state" id="error-state" style="display: none">
-                        <h2 class="text-center text-danger ">Tidak Ditemukan</h2>
-                        <p>No Handphone Anda tidak ditemukan pada jadwal hari ini.</p>
+                        <h2 class="text-center text-danger " id="error_title"></h2>
+
                         <i class="bi bi-emoji-frown text-muted"></i>
 
-                        <p class="text-muted">Pastikan No. Handphone yang Anda masukkan benar dan telah terjadwal hari
-                            ini.<br>
-                            Atau silahkan ambil Antrian Offline</p>
-                        <button id="retry-input-phone" class="btn btn-pasker-main text-white mt-4">COBA KEMBALI</button>
+                        <p class="text-muted" id="error_desc"></p>
+                        <button id="retry-input-online" data-backto="" class="btn btn-pasker-main text-white mt-4">COBA KEMBALI</button>
                     </div>
 
 
@@ -270,7 +310,7 @@
         <script>
 
             function fade(element) {
-                console.log(element.style);
+                //console.log(element.style);
                 var op = 1;  // initial opacity
                 var timer = setInterval(function () {
                     if (op <= 0.1){
@@ -318,7 +358,7 @@
             function taglineIn() {
 
                 setTimeout(function () {
-                console.log("tagin")
+                //console.log("tagin")
                 numberTaglineIn = 0;
 
                 if(isStartRepeat) {
@@ -340,7 +380,7 @@
 
                     tagline[i].addEventListener('animationend', (e) => {
                         numberTaglineIn++
-                        console.log(numberTaglineIn)
+                        //console.log(numberTaglineIn)
                         checkNumberCompleted('startOut');
                     });
 
@@ -351,7 +391,7 @@
             }
 
             function taglineOut() {
-                    console.log("tagout")
+                    //console.log("tagout")
 
 
                     setTimeout(function () {
@@ -370,7 +410,7 @@
 
                             tagline[i].addEventListener('animationend', (e) => {
                                 numberTaglineIn++
-                                console.log(numberTaglineIn)
+                                //console.log(numberTaglineIn)
                                 checkNumberCompleted('startIn');
                             });
 
@@ -383,7 +423,7 @@
 
             function checkNumberCompleted(toNext){
                 if(numberTaglineIn >= tagline.length){
-                    console.log(toNext)
+                    //console.log(toNext)
                     if(toNext == "startOut"){
                         taglineOut()
                     }else{
@@ -414,9 +454,7 @@
             $(function () {
 
 // Initialize KioskBoard (default/all options)
-
                 KioskBoard.init({
-
                     /*!
                     * Required
                     * An Array of Objects has to be defined for the custom keys. Hint: Each object creates a row element (HTML) on the keyboard.
@@ -504,18 +542,119 @@
 
 
                 $('#onlineModal').on('shown.bs.modal', function (e) {
-                    $("#submit-phone").prop("disabled", true);
+
                     $('.modal-kiosk .step-state').hide();
                     $('.modal-kiosk .step-state#init-state').show();
-                    $('#phone').removeClass('active').addClass('active');
-                    $('#phone').val('').focus();
+
 
 
                 })
 
-                function stateNotFoundData() {
+                $('#online-input-phone').on('click', function () {
+                    activateInputPhoneMode();
+                })
+
+                $('#online-barcode-input').on('click', function () {
+                    activateBarcodeScan();
+                })
+
+
+                function activateInputPhoneMode(){
+                    $('.modal-kiosk .step-state').hide();
+                    $('#onlineModal #init-state').hide();
+                    $('#onlineModal #inputphone-state').show();
+                    $("#submit-phone").prop("disabled", true);
+                    $('#phone').removeClass('active').addClass('active');
+                    setTimeout(function () {
+                        $('#phone').val('').focus();
+                    },300);
+                }
+
+                function activateBarcodeScan(){
+
+                    $('.modal-kiosk .step-state').hide();
+                    $('#onlineModal #init-state').hide();
+
+                    $('#onlineModal #barcodeinput-state').show();
+
+                    setTimeout(function () {
+                        $('#barcode-input-form').val('').focus();
+                        //$('#barcode-input-form').val('puspakeranol-eyJpdiI6ImoxbkpoY1Q0SlFSQjJNTnJKeDB4aGc9PSIsInZhbHVlIjoiWkhaRG40QlhDTkVod0g5aXA2MEgzUT09IiwibWFjIjoiM2VjZDYzOWNmZGIyNzU5YmQ2YTkxOTc3Mjk1ZjU3NDliMzcwNTk1NjU3YWE3ZDVmNDdhZTgwODEwNWFmMjQzZiIsInRhZyI6IiJ9');
+                    },300);
+
+
+                    // setTimeout(function () {
+                    //     $( "#barcodeSubmitCode" ).submit();
+                    // },3000);
+
+                    //process
+
+                }
+
+                $( "#barcodeSubmitCode" ).on( "submit", function(e) {
+                    e.preventDefault();
+                    barcodeOnSubmit(true)
+                    // return;
+                    var action = '{{ route('kiosk.submit_barcode') }}';
+
+
+                    axios.post(action, {
+                        barcode: $('#barcode-input-form').val()
+                    })
+                        .then(function (response) {
+                            // console.log(response.data)
+
+                            if (response.data.success == 1) {
+                                statePrint(response.data.noAntrian,response.data.pelayanan);
+                                // alert(response.data.message)
+                                //this is not found data
+                                // onLoadingKioskButton('off', 'online');
+                                // statePrint(response.data.noAntrian,response.data.pelayanan);
+                                return
+                            } else {
+                                stateNotFoundData(response.data,"barcode");
+
+                            }
+                        })
+                        .catch(function (error) {
+                            stateNotFoundData({
+                                "title":"Error",
+                                "message":"Terjadi kesalahan pada sistem, silahkan ulangi",
+                            },"barcode");
+                            // swal("Ups!","Terjadi kesalahan silahkan ulangi",'error');
+                            // activateBarcodeScan();
+                            // alert('Terjadi kesalahan silahkan ulangi')
+                        }).then(function () {
+                            barcodeOnSubmit(false)
+                        });
+
+
+
+                  // do something
+                });
+
+                function barcodeOnSubmit(active){
+                    //hide state and show loading
+                    if(active) {
+                        $('.spinnerkiosk-barcode-scan').show()
+                        $('.illustrator-barcode-scan').hide()
+                    }else{
+                        $('.spinnerkiosk-barcode-scan').hide()
+                        $('.illustrator-barcode-scan').show()
+                        setTimeout(function () {
+                            $('#barcode-input-form').val('').focus();
+                            //$('#barcode-input-form').val('puspakeranol-eyJpdiI6ImoxbkpoY1Q0SlFSQjJNTnJKeDB4aGc9PSIsInZhbHVlIjoiWkhaRG40QlhDTkVod0g5aXA2MEgzUT09IiwibWFjIjoiM2VjZDYzOWNmZGIyNzU5YmQ2YTkxOTc3Mjk1ZjU3NDliMzcwNTk1NjU3YWE3ZDVmNDdhZTgwODEwNWFmMjQzZiIsInRhZyI6IiJ9');
+                        },300);
+                    }
+                }
+
+                function stateNotFoundData(response,source) {
                     $('.modal-kiosk .step-state').hide();
                     $('.modal-kiosk .step-state#error-state').show();
+                    $('#error_title').text('').text(response.title);
+                    $('#error_desc').html('').html(response.message);
+                    $('#retry-input-online').data('backto',source);
+
                 }
 
                 function statePrint(noAntrian,pelayanan) {
@@ -597,6 +736,7 @@
 
                     //e.preventDefault();
                     //this.prop( "disabled", true );
+                    e.preventDefault()
                     let action = $(this).data('href');
                     let phone = $('#phone').val();
 
@@ -620,39 +760,46 @@
                     //$('.modal-kiosk .step-state').hide();
                     // $('.modal-kiosk .step-state#error-state').show();
 
-                    onLoadingKioskButton('on', 'online');
+                    phoneOnSubmit(true)
+
                     axios.post(action, {
                         phone: phone
                     })
                         .then(function (response) {
 
-                            //return console.log(response.data)
-
-                            // return
                             if (response.data.success == 1) {
                                 //this is not found data
-                                onLoadingKioskButton('off', 'online');
                                 statePrint(response.data.noAntrian,response.data.pelayanan);
                                 return
                             } else {
-                                if(response.data.code=="booking_not_found") {
-                                    onLoadingKioskButton('off', 'online');
-                                    stateNotFoundData();
-                                    return
-                                }else{
-                                    swal("Ups!",response.data.message,'warning')
-                                }
+                                stateNotFoundData(response.data,"handphone");
                             }
                         })
                         .catch(function (error) {
-                            swal("Ups!","Terjadi kesalahan silahkan ulangi",'error');
-                            // alert('Terjadi kesalahan silahkan ulangi')
-                            onLoadingKioskButton('off', 'online');
+                            stateNotFoundData({
+                                "title":"Error",
+                                "message":"Terjadi kesalahan pada sistem, silahkan ulangi",
+                            },"handphone");
 
                         }).then(function () {
-                        onLoadingKioskButton('off', 'online');
-                    });
+                            phoneOnSubmit(false)
+                        });
                 })
+
+                function phoneOnSubmit(active){
+                    //hide state and show loading
+                    if(active) {
+                        $('.spinnerkiosk-phone-submit').show()
+                        $('.input-phone-area').hide()
+                    }else{
+                        $('.spinnerkiosk-phone-submit').hide()
+                        $('.input-phone-area').show()
+                        setTimeout(function () {
+                            $('#phone').val('').focus();
+                            //$('#barcode-input-form').val('puspakeranol-eyJpdiI6ImoxbkpoY1Q0SlFSQjJNTnJKeDB4aGc9PSIsInZhbHVlIjoiWkhaRG40QlhDTkVod0g5aXA2MEgzUT09IiwibWFjIjoiM2VjZDYzOWNmZGIyNzU5YmQ2YTkxOTc3Mjk1ZjU3NDliMzcwNTk1NjU3YWE3ZDVmNDdhZTgwODEwNWFmMjQzZiIsInRhZyI6IiJ9');
+                        },300);
+                    }
+                }
 
                 $('.modal-kiosk').on('click', '.item-pelayanan', function (e) {
 
@@ -690,15 +837,13 @@
                     })
                 })
 
-                $('#retry-input-phone').on('click', function () {
-                    $("#submit-phone").prop("disabled", true);
-                    $('.modal-kiosk .step-state').hide();
-                    $('.modal-kiosk .step-state#init-state').show();
-                    $('#phone').val('');
-                    $('#phone').removeClass('active').addClass('active');
-                    setTimeout(function () {
-                        $('#phone').focus();
-                    }, 500);
+                $('#retry-input-online').on('click', function () {
+                    if($(this).data('backto') == "barcode"){
+                        activateBarcodeScan();
+
+                    }else{
+                        activateInputPhoneMode()
+                    }
 
                     // $('#phone').focus();
 
@@ -746,7 +891,7 @@
                     //get pelayanan active
 
 
-                    //$('.step-state').hide()
+                    $('.step-state').hide()
                     $('#pick-layanan-state').show()
 
                 })
