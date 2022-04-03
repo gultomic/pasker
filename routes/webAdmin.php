@@ -60,7 +60,7 @@ Route::name('admin.')
         Route::get('/data-pengunjung', function () {
             return view('admin.pengunjung', [
                 'title' => 'Pengunjung',
-                'header' => 'Data Pengunjung',
+                'header' => 'Master Pengunjung',
             ]);
         })->name('klien');
 

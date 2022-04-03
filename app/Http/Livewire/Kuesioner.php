@@ -50,6 +50,17 @@ class Kuesioner extends Component
         $this->pertanyaan = $row->pertanyaan_id;
     }
 
+    public function remove ($id)
+    {
+        try {
+            //code...
+            $row = Kue::find($id);
+            $row->delete();
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+
     public function resetForm ()
     {
         $this->nomor = '';

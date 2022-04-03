@@ -54,7 +54,7 @@ class MenuServiceProvider extends ServiceProvider
                             [
                                 'route'=>'admin.klien',
                                 'path'=>'admin.klien*',
-                                'title'=>'Data Pengunjung',
+                                'title'=>'Master Pengunjung',
                                 'icon'=>'fas fa-users'
                             ],
                             [
