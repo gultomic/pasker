@@ -345,6 +345,7 @@
                 var sound = new Howl({
                     src: [list_nomor[x]],
                     autoplay: false,
+                    preload: true,
                     onload: function () {
 
                     },
@@ -365,6 +366,7 @@
             for (const x in list_abjad) {
                 // console.log(list_nomor[x]);
                 var sound = new Howl({
+                    preload: true,
                     src: [list_abjad[x]],
                     autoplay: false,
                     onload: function () {
@@ -384,13 +386,14 @@
                     return;
                 }
 
-
-                var noAntrian = listToCall[0].token;
+                var isOnline = listToCall[0].token.includes('OL');
+                var noAntrian = isOnline ? listToCall[0].token.replace('OL',''): listToCall[0].token;
+                var noAntrianFull = isOnline ? noAntrian+" OL": noAntrian;
                 var noLoket = listToCall[0].loket;
                 var namaLoket = listToCall[0].loketName;
                 var visitorName = listToCall[0].visitorName;
 
-                setLoketCardOnCall(namaLoket,noAntrian,visitorName);
+                setLoketCardOnCall(namaLoket,noAntrianFull,visitorName);
 
 
                 var arrNoAntrian = [];
@@ -434,6 +437,20 @@
                     }
                 })
 
+                var isOnlineSound = new Howl({
+                    src: '{{asset('/assets/suara_antrian/online.wav')}}',
+                    preload: true,
+
+                    onend: function () {
+
+                        setTimeout(function () {
+                            silakankeloket.play()
+                        }, 400)
+
+                        //noantrianSound(0, list_loket, true)
+                    }
+                })
+
 
 
                 function noantrianSound(i, list, end) {
@@ -442,8 +459,14 @@
                     if ((i + 1) == list.length) {
                         //autoplay(0, list)
                         if (!end) {
+
                             setTimeout(function () {
-                                silakankeloket.play()
+                                if(isOnline){
+                                    isOnlineSound.play()
+                                }else{
+                                    silakankeloket.play()
+                                }
+
                             }, 900)
                         }
                     } else {

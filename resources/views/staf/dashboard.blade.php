@@ -34,7 +34,13 @@
                         <div class="px-2 py-2 border rounded-md text-center">
                             <div class="text-xs text-gray-600 ">antrian</div>
                             <div class="font-medium text-lg">
-                                {{ $item->antrianHariIni()->where('refs->antrian', '!=', "")->count() }}
+                                {{
+                                    $item->antrianHariIni()
+                                    ->where('refs->status', '=', "menunggu")
+                                    ->Orwhere('refs->status', '=', "pending")
+
+                                    ->count()
+                                }}
                             </div>
                         </div>
                         <div class="px-2 py-2 border rounded-md text-center">

@@ -88,4 +88,7 @@ Route::name('admin.')
 
         Route::get('export-leaderboard-pelaksana', [DashboardController::class, 'adminStafExport'])->name('pelaksana.export');
         Route::get('tabel-pelaksana-pdf', [DashboardController::class, 'adminStafPdf'])->name('pelaksana.pdf');
+
+        Route::get('system-logs', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
+
     });

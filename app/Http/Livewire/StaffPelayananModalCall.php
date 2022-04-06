@@ -25,6 +25,7 @@ class StaffPelayananModalCall extends ModalComponent
         $this->email = $this->data->pengunjung ? $this->data->pengunjung->email : "";
         $this->klienID = $this->data->pengunjung ? $this->data->pengunjung->id : "";
         $this->formType = $form_type;
+        $this->clientIsNew = false;
 
 
     }
@@ -117,6 +118,7 @@ class StaffPelayananModalCall extends ModalComponent
 
 
         $row->save();
+        $this->klienID = $row->id;
 
         $rowPJ = PJ::find($this->data->id);
         $rowPJ->klien_id = $row->id;
@@ -136,11 +138,44 @@ class StaffPelayananModalCall extends ModalComponent
 
     }
 
+    public function search(){
+
+        $this->validate([
+            'phone' => [
+                'required',
+                'regex:/^[0][0-9]{4,}/'
+            ],
+        ]);
+
+        $klien = Klien::where('phone',$this->phone)->first();
+        $this->name = "";
+        $this->email = "";
+        if(empty($klien)){
+            $this->clientIsNew = true;
+            $this->state = "init_biodata";
+        }
+
+        if(!empty($klien)){
+            $this->name = $klien->name ;
+            $this->email = $klien->email;
+            $this->state = "biodata";
+            $this->klienID = $klien->id;
+        }
+
+
+    }
+
     public function setState($dataID,$act){
         $this->state = $act;
         if($act == 'biodata'){
+            $this->clientIsNew = false;
             $this->data = PJ::find($dataID);
         }
+    }
+
+    public function setBiodataBaru($dataId){
+         $this->state = "init_biodata";
+         $this->data = PJ::find($dataId);
     }
 
     public function render()

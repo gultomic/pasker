@@ -25,7 +25,14 @@
             @if (session('exist_request_date'))
             <div class="alert alert-warning" role="alert" style="font-size: 0.9rem">
                 <strong>Pendaftaran Tidak Berhasil</strong>
-                <p>Anda telah memiliki jadwal pada hari yang sama <br/>{{ session('exist_request_date') }}</p>
+                <p>Anda telah memiliki jadwal pada hari <br/>{{ session('exist_request_date') }}.<br/>Silahkan lakukan kunjungan terlebih dahulu</p>
+            </div>
+            @endif
+
+            @if (session('client_error'))
+            <div class="alert alert-warning" role="alert" style="font-size: 0.9rem">
+                <strong>Pendaftaran Tidak Berhasil</strong>
+                <p>{!!  nl2br(session('client_error')) !!}</p>
             </div>
             @endif
 
@@ -40,13 +47,13 @@
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Nama Lengkap *</label>
                     <input type="text" class="form-control" id="nama-lengkap" name="nama" autocomplete="off"
-                        required="true">
+                        required="true" value="{{ old('nama', "") }}">
                 </div>
 
                 <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">No. Handphone *</label>
                     <input type="number" class="form-control" id="no-handphone" name="phone" autocomplete="off"
-                        required="true">
+                        required="true" value="{{ old('phone', "") }}">
 {{--                    <div class="input-group input-group mb-3">--}}
 {{--                        <div class="input-group-prepend">--}}
 {{--                            <span class="input-group-text" id="inputGroup-sizing-sm" style="font-size: 0.8rem">+62</span>--}}
@@ -60,7 +67,19 @@
                 <div class="mb-4">
                     <label for="exampleFormControlInput1" class="form-label">Email</label>
                     <input type="email" class="form-control" id="email" name="email" autocomplete="off"
+                           value="{{ old('email', "") }}"
                         >
+                </div>
+
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Pilih Pelayanan</label>
+                    <select class="custom-select d-block w-100" id="pelayanan_input" name="pelayanan">
+                        <option value="">--Pilih Pelayanan--</option>
+                        @foreach ( $pelayanan as $item )
+                        <option value="{{ $item->id }}">{{ $item->title }}</option>
+                        @endforeach
+                    </select>
+
                 </div>
 
                 <div class="mb-3">
@@ -81,19 +100,14 @@
                         </div>
 
                     </div>
+                    <div id="statushour" class="alert alert-warning" role="alert" style="font-size: 0.9rem;display: none">
+
+                    </div>
+
 
                 </div>
 
-                <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">Pilih Pelayanan</label>
-                    <select class="custom-select d-block w-100" name="pelayanan">
-                        <option value=""></option>
-                        @foreach ( $pelayanan as $item )
-                        <option value="{{ $item->id }}">{{ $item->title }}</option>
-                        @endforeach
-                    </select>
 
-                </div>
 
                 <button type="submit" class="btn bg-yellow-pasker btn-lg mt-3 mb-3 w-100 ">Daftar
                     &nbsp;&nbsp;&nbsp;<i class="bi bi-arrow-right"></i>
@@ -182,7 +196,7 @@
             <h3 class="text-pasker mb-3 "> Selamat Datang di <strong class="poppinsmedium">PASKER.ID</strong></h3>
             <p>Pasker ID adalah tempat buat teman-teman Jobers mendapatkan informasi lowongan dari seluruh Indonesia sesuai dengan keahlian atau skill yang dimiliki, ataupun buat teman-teman employer menemukan calon employee yang berkualitas dan kapabel.</p>
             <p>Lewat Karirhub, Pasker ID menawarkan berbagai informasi pasar kerja yang dapat teman-teman akses dengan mudah dan gratis! </p>
-            <p>Selain layanan informasi pasar kerja, Pasker ID juga melayani teman-teman Jobers untuk menemukan potensi diri, jadi teman-teman Jobers lebih mudah menemukan pekerjaan yang cocok. Dengan informasi lowongan yang terverifikasi (no hoax) dan terse
+            <p>Selain layanan informasi pasar kerja, Pasker ID juga melayani teman-teman Jobers untuk menemukan potensi diri, jadi teman-teman Jobers lebih mudah menemukan pekerjaan yang cocok. Dengan informasi lowongan yang terverifikasi (no hoax) dan tersebar di seluruh Indonesia, serta dengan layanan dari petugas yang professional, Pasker ID siap membantu teman-teman mendapatkan pekerjaan yang sesuai dengan potensi dan skill teman-teman.</p>
             <p class="text-orange-pasker-light" style="text-transform:uppercase;font-size:0.8em;margin-bottom:0 !important;">Dr.
                 Dra. Hj. Ida Fauziyah, M.Si</p>
             <p class="text-secondary" style="font-size:0.8em;">Menteri Ketenagakerjaan Republik Indonesia</p>
@@ -263,11 +277,6 @@
 <script>
 
 
-    // TODO : show only available quota
-
-
-
-
 
     jQuery.datetimepicker.setLocale('id');
     // $('#datetimepicker').on('click',function (){
@@ -277,6 +286,7 @@
     var holidays =[];
     var jamloket = JSON.parse(@json($jam_loket));
     var tglmerahDB = JSON.parse(@json($tglMerah));
+    var availableQuota = [];
 
     var tanggalmerah = [];
     var convert = Object.keys(tglmerahDB).map((key) => [Number(key), tglmerahDB[key]]);
@@ -305,13 +315,23 @@
     window.minTimeObj = '';
     window.maxTimeObj = '';
 
+    $('#pelayanan_input').on('change',function(){
+        $('#date-picker').val('');
+        $('#time-picker').val('')
+    })
 
     jQuery('#date-picker').datetimepicker({
         timepicker: false,
         onSelectDate: function (ct,$input) {
+            if($('#pelayanan_input').val()==""){
+                $('#date-picker').val('');
+                alert('Silahkan pilih pelayanan terlebih dahulu')
+                return;
+            }
             console.log('onchangedatetim');
             console.log('bef')
-            console.log($('#date-picker').val())
+            console.log("ini"+$('#date-picker').val())
+            console.log("ini"+moment($('#date-picker').val(),'DD MMM Y').format('YYYYMMDD'))
 
             console.log('aff')
             console.log(ct)
@@ -321,18 +341,21 @@
             var maxTimeBef = jamloket[moment(ct).format('d')].jam_tutup
             window.maxTimeObj = maxTimeBef.replace(maxTimeBef.substr(maxTimeBef.length - 1), '1')
 
-            jQuery('#time-picker').val('')
+            getAvailableQuota(moment($('#date-picker').val(),'DD MMM Y').format('YYYYMMDD'),$('#pelayanan_input').val());
 
             // setTimeout(function () {
             //     $(".xdsoft_time_variant").css({"margin-top": 0});
             // }, 10)
             //jQuery('#time-picker').setOptions({allowTimes: ['09:00']})
+
+
         },
         onGenerate: function(ct,$input) {
             var test = moment().add(2,'days').format('YYYYMMDD');
             console.log(test)
             //$(this).find('.xdsoft_date.xdsoft_weekend').remove();
             $('.xdsoft_calendar table thead tr th').filter(thlibur).remove();
+
             $input.prop('readonly', true);
             var $this = $(this);
             harilibur.forEach(function (day) {
@@ -359,6 +382,7 @@
         // allowTimes:[
         //  '09:00', '10:00', '11:00','12:00','13:00','14:00','15:00','16:00'
         // ],
+
         onShow: function (ct) {
             console.log(minTimeObj)
             console.log(maxTimeObj)
@@ -379,8 +403,32 @@
         format: 'H:i',
 
         onGenerate: function(ct,$input) {
+
+
+
+
             $input.prop('readonly', true);
             var $this = $(this);
+            $('[data-hour="12"]').remove();
+            var noQuota  = availableQuota.filter(function(obj) {
+              return obj.quota <= 0;
+            });
+
+            if(noQuota.length > 0){
+                noQuota.forEach(function (obj){
+                    jQuery('[data-hour="'+obj.jam+'"]').remove();
+                })
+            }
+
+            if((noQuota.length >= availableQuota.length) && availableQuota.length > 0  ){
+                $('#statushour').show();
+                $('#statushour').html('Mohon maaf. seluruh quota sudah penuh, silahkan pilih tanggal lain ')
+                //alert("Mohon maaf. seluruh quota sudah penuh, silahkan pilih tanggal lain ")
+                 jQuery('.xdsoft_time_variant').hide()
+
+            }
+
+            //console.log(noQuota)
             // $this.find('.xdsoft_date').removeClass('xdsoft_disabled');
             // $this.find('.xdsoft_time').removeClass('xdsoft_disabled');
         },
@@ -448,6 +496,36 @@
 
         }
     });
+
+     function getAvailableQuota(date,pelayanan){
+
+         jQuery('.xdsoft_time_box small.loadingtime').remove()
+         jQuery('.xdsoft_time_box').append('<small class="loadingtime">Loading..</small>')
+
+         jQuery('#time-picker').val('')
+            jQuery('.xdsoft_time_variant').hide()
+          $('#statushour').hide();
+         // jQuery('.xdsoft_time_box small.loadingtime').show();
+         // jQuery('.xdsoft_time_box small.loadingtime').text('Loading.. ')
+         axios.post('{{ route('registration.getQuotaPerDay') }}', {
+             day: date,
+             pelayanan:pelayanan
+         })
+             .then(function (response) {
+                 // console.log(response)
+                 jQuery('.xdsoft_time_variant').show()
+                 availableQuota = response.data;
+             })
+             .catch(function (error) {
+                 jQuery('.xdsoft_time_box small.loadingtime').text('Error')
+                 alert("Error, gagal mendapatkan info kuota jam tersedia, silahkan pilih tanggal lain atau reload halaman")
+                 jQuery('.xdsoft_time_variant').hide()
+
+             }).then(function () {
+                 jQuery('.xdsoft_time_box small.loadingtime').remove()
+                //$('.xdsoft_time_box small.loadingtime').hide()
+            });
+     }
 
 
 
